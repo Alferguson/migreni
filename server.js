@@ -34,11 +34,6 @@ app.use("/", doseRoutes);
 app.use("/", migraineRoutes);
 app.use("/", treatmentRoutes);
 app.use("/", userRoutes);
-// require("./controllers/dose_controller")(app);
-// require("./controllers/migraine_controller")(app);
-// require("./controllers/treatment_controller")(app);
-// require("./controllers/user_controller")(app);
-
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
