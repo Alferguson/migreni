@@ -1,6 +1,7 @@
 var express = require("express");
 var db = require("../models");
 var router = express.Router();
+var path = require("path");
 
 // POST route to create new treatments when user clicks submit
 router.post("/api/treatments/:id", function(req, res) {
@@ -26,5 +27,7 @@ db.Treatment.update(
     res.json(dbTreatments);
   });
 });  
-
+router.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "../views/test.html"));
+});
 module.exports = router;

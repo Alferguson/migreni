@@ -1,6 +1,7 @@
 var express = require("express");
 var db = require("../models");
 var router = express.Router();
+var path = require("path");
 
 // POST route to create new doses when user clicks submit
 router.post("/api/doses/:id", function(req, res) {
@@ -24,5 +25,7 @@ router.put("/api/doses", function(req, res) {
       res.json(dbDose);
     });
 });  
-
+router.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "../views/test.html"));
+});
 module.exports = router;

@@ -1,6 +1,7 @@
 var express = require("express");
 var db = require("../models");
 var router = express.Router();
+var path = require("path");
 
 // GET route to display all migraine data when user clicks "Display previous migraines"
 router.get("/api/migraines/:id", function(req, res) {
@@ -67,5 +68,7 @@ router.delete("/api/migraines/:id", function(req, res) {
     res.json(dbMigraine);
   });
 });
-
+router.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "../views/test.html"));
+});
 module.exports = router;

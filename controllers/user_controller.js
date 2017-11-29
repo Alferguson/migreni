@@ -1,19 +1,23 @@
 var express = require("express");
 var db = require("../models");
 var router = express.Router();
+var path = require("path");
 
 // GET route to display user name at user's page
 router.get("/api/user/:id", function(req, res) {
   db.User.findOne({
   	// display username
-  	username: username
+  	username: username,
     // display all data where user id = database id
     where: {
       uuid: req.params.id
     },
   }).then(function(dbUser) {
+  	// res.sendFile()
     // display on handlebars, may not work
-    res.json(dbUser).render("index", { user: dbUser });
+    // res.json(dbUser).render("index", { user: dbUser });
+        res.json(dbUser).sendFile(path.join(__dirname, "../views/test.html"));
+
   });
 });
 
@@ -42,5 +46,7 @@ router.delete("/api/user/:id", function(req, res) {
     res.json(dbUser);
   });
 });
-
+  router.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "../views/test.html"));
+  });
 module.exports = router;
