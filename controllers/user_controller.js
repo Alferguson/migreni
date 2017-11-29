@@ -1,45 +1,46 @@
+var express = require("express");
 var db = require("../models");
+var router = express.Router();
 
-module.exports = function(app) {
-
-  // GET route to display user name at user's page
-  app.get("/api/user/:id", function(req, res) {
-    db.User.findOne({
-    	// display username
-    	username: username
-      // display all data where user id = database id
-      where: {
-        uuid: req.params.id
-      },
-    }).then(function(dbUser) {
-      // display on handlebars, may not work
-      res.json(dbUser).render("index", { user: dbUser });
-    });
+// GET route to display user name at user's page
+router.get("/api/user/:id", function(req, res) {
+  db.User.findOne({
+  	// display username
+  	username: username
+    // display all data where user id = database id
+    where: {
+      uuid: req.params.id
+    },
+  }).then(function(dbUser) {
+    // display on handlebars, may not work
+    res.json(dbUser).render("index", { user: dbUser });
   });
+});
 
-  // POST route to create new users new account is set up with google OAuth
-  app.post("/api/user", function(req, res) {
-    db.User.create({
-      username: req.body.username,
-      email: req.body.email,
-      gender: req.body.gender,
-      age: req.body.age,
-      // maybe birthday instead to calculate age
-      location: req.body.location
-    }).then(function(dbUser) {
-      // HOW TO target user ID
-      res.json(dbUser);
-    });
+// POST route to create new users new account is set up with google OAuth
+router.post("/api/user", function(req, res) {
+  db.User.create({
+    username: req.body.username,
+    email: req.body.email,
+    gender: req.body.gender,
+    age: req.body.age,
+    // maybe birthday instead to calculate age
+    location: req.body.location
+  }).then(function(dbUser) {
+    // HOW TO target user ID
+    res.json(dbUser);
   });
+});
 
-  // to delete user account 
-  app.delete("/api/user/:id", function(req, res) {
-    db.User.destroy({
-      where: {
-        uuid: req.params.id
-      }
-    }).then(function(dbUser) {
-      res.json(dbUser);
-    });
+// to delete user account 
+router.delete("/api/user/:id", function(req, res) {
+  db.User.destroy({
+    where: {
+      uuid: req.params.id
+    }
+  }).then(function(dbUser) {
+    res.json(dbUser);
   });
-};
+});
+
+module.exports = router;
