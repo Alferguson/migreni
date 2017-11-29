@@ -1,6 +1,12 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var methodOverride = require('method-override');
+var exphbs = require("express-handlebars");
+var doseRoutes = require("./controllers/dose_controller");
+var migraineRoutes = require("./controllers/migraine_controller");
+var treatmentRoutes = require("./controllers/treatment_controller");
+var userRoutes = require("./controllers/user_controller");
+var db = require("./models");
 
 // Sets up the Express App
 // =============================================================
@@ -19,13 +25,15 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 // Static directory
 app.use(express.static("public"));
 
-var exphbs = require("express-handlebars");
+
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
-// Routes
-// =============================================================
-require("./controllers")(app);
+
+app.use("/", doseRoutes);
+app.use("/", migraineRoutes);
+app.use("/", treatmentRoutes);
+app.use("/", userRoutes);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
