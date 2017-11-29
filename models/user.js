@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
     			msg: "The email must be in a valid format"
     		}
     	}
-    }
+    },
     gender: {
     	type: DataTypes.STRING(20),
 
@@ -45,9 +45,9 @@ module.exports = function(sequelize, DataTypes) {
   };
 
   User.associate = function(models) {
-  	User.hasMany(models.Treatment, {
-  		as: "Treatments"
-  	});
+    User.belongsToMany(models.Treatment, {
+    	through: {model: models.UserTreatment}
+    });
   };
 
   return User;

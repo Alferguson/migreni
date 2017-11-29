@@ -1,8 +1,8 @@
 module.exports = function(sequelize, Datatypes) {
   var Treatment = sequelize.define("Treatment", {
     name: {
-      type: Datatypes.STRING
-      allowNull: false
+      type: Datatypes.STRING,
+      allowNull: false,
       validate: {
         len: {
           args: [1, 255],
@@ -20,18 +20,14 @@ module.exports = function(sequelize, Datatypes) {
   });
 
   Treatment.associate = function(models) {
-    Treatment.belongsTo(models.Migraine, {
-      foreignKey: {
-
-      }
+    Treatment.belongsToMany(models.Migraine, {
+      through: {model: models.MigraineTreatment}
     });
   };
 
   Treatment.associate = function(models) {
-    Treatment.belongsTo(models.User, {
-      foreignKey: {
-
-      }
+    Treatment.belongsToMany(models.User, {
+    	through: {model: models.UserTreatment}
     });
   };
 

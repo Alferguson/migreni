@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
 				min: {
 					args: 1,
 					msg: "The intensity must be at least 1"
-				}
+				},
 				max: {
 					args: 10,
 					msg: "The Intensity must be at most 10"
@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
 		trigger: {
 			type: DataTypes.STRING,
 		}
-	};
+	});
 
 	Migraine.associate = function(models) {
 		Migraine.belongsTo(models.User, {
@@ -40,5 +40,11 @@ module.exports = function(sequelize, DataTypes) {
 		});
 	};
 
-	
-})
+	Migraine.associate = function(models) {
+		Migraine.belongsToMany(models.Treatment, {
+			through: {model: models.MigraineTreatment}
+		});
+	}
+
+	return Migraine;
+}
