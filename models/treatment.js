@@ -27,6 +27,8 @@ module.exports = function(sequelize, Datatypes) {
         }
       }
     }
+  }, {
+    timestamps: false
   });
 
   Treatment.associate = function(models) {

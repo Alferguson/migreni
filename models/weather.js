@@ -10,6 +10,8 @@ module.exports = function(sequelize, DataTypes) {
 		sea_level: DataTypes.DECIMAL,
 		grnd_level: DataTypes.DECIMAL,
 		precip: DataTypes.DECIMAL
+	}, {
+		timestamps: false
 	});
 
 	Weather.associate = function(models){
