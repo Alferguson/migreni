@@ -1,0 +1,35 @@
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #525250;
+    color: #f0f0eb;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #525250;
+    color: #f0f0eb;
+}
+
+.survey {
+    background: #f0f0eb;
+    padding-bottom: 80px;
+}
+
+.sidebar {
+    background: #8a8a87;
+    padding-bottom: 80px;
+}
+
+.weather {
+    max-width: 360px;
+    margin: 0 auto;
+}
