@@ -38,13 +38,11 @@ module.exports = function(sequelize, DataTypes) {
 				allowNull: false
 			}
 		});
-	};
 
-	Migraine.associate = function(models) {
 		Migraine.belongsToMany(models.Treatment, {
 			through: {model: models.MigraineTreatment}
 		});
-	}
+	};
 
 	return Migraine;
 }

@@ -41,11 +41,9 @@ module.exports = function(sequelize, DataTypes) {
   	User.hasMany(models.Migraine, {
   		onDelete: "CASCADE",
   		as: "Migraines"
-  	});
-  };
+  	}); 
 
-  User.associate = function(models) {
-    User.belongsToMany(models.Treatment, {
+  	User.belongsToMany(models.Treatment, {
     	through: {model: models.UserTreatment}
     });
   };

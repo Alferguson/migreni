@@ -16,20 +16,33 @@ module.exports = function(sequelize, Datatypes) {
     },
     description: {
       type: Datatypes.TEXT
+    },
+    category: {
+    	type: Datatypes.STRING(40),
+    	allowNull: false,
+      validate: {
+        len: {
+          args: [1, 40],
+          msg: "Treatment category must be between 1 and 40 characters"
+        }
+      }
     }
   });
 
   Treatment.associate = function(models) {
+  	Treatment.hasMany(models.Dose, {
+  		onDelete: 'CASCADE',
+  		as: 'Doses'
+  	});
+
     Treatment.belongsToMany(models.Migraine, {
       through: {model: models.MigraineTreatment}
     });
-  };
-
-  Treatment.associate = function(models) {
+    
     Treatment.belongsToMany(models.User, {
     	through: {model: models.UserTreatment}
     });
-  };
+  }
 
   return Treatment;
 }
