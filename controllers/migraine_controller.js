@@ -9,6 +9,7 @@ module.exports = function(app) {
       where: {
         uuid: req.params.uuid
       },
+      include: ["Weather"],
       // display by when they were created via descend
       order: [
         ["createdAt", "DESC"]
@@ -29,7 +30,7 @@ module.exports = function(app) {
       triggers: req.body.triggers
     }).then(function(dbMigraine) {
       // HOW TO target user ID
-      res.json(dbMigraine);
+      res.json({ uuid: dbMigraine.uuid });
     });
   });
 

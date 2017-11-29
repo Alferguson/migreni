@@ -28,7 +28,7 @@ module.exports = function(app) {
       location: req.body.location
     }).then(function(dbUser) {
       // HOW TO target user ID
-      res.json(dbUser);
+      res.json({ uuid: dbUser.uuid });
     });
   });
 
