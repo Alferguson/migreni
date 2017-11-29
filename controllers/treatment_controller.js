@@ -4,15 +4,14 @@ module.exports = function(app) {
 
   // POST route to create new treatments when user clicks submit
   app.post("/api/treatments/:id", function(req, res) {
-    // grab data from 4 questions, WHAT DO ABOUT MEDS AND WEATHER???
     db.Treatment.create({
       name: req.body.name,
       // acute is a BOOLEAN so keep in mind
       acute: req.body.acute,
       category: req.body.category
-    }).then(function(dbMigraine) {
+    }).then(function(dbTreatments) {
       // HOW TO target user ID
-      res.json(dbMigraine);
+      res.json(dbTreatments);
     });
   });
   // PUT route for updating treatments
@@ -27,5 +26,4 @@ module.exports = function(app) {
         res.json(dbTreatments);
       });
   });  
-
 }	

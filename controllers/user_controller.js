@@ -19,7 +19,6 @@ module.exports = function(app) {
 
   // POST route to create new users new account is set up with google OAuth
   app.post("/api/user", function(req, res) {
-    // grab data from 4 questions, WHAT DO ABOUT MEDS AND WEATHER???
     db.User.create({
       username: req.body.username,
       email: req.body.email,

@@ -30,7 +30,6 @@ module.exports = function(app) {
     // grab data from 4 questions, WHAT DO ABOUT MEDS AND WEATHER???
     db.Migraine.create({
       intensity: req.body.intensity,
-      comment: req.body.comment,
       location: req.body.location,
       date: req.body.date,
       trigger: req.body.trigger
