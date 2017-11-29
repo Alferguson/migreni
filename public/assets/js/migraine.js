@@ -25,5 +25,12 @@ $(document.body).ready(function() {
         else $(".meds-2-visibility").hide();
     });
 
+    $("#submit").on("click", function() {
+        var responses = [];
+        $(".response").each(function() {
+            responses.push($(this).val().trim());
+        });
+        console.log(responses);
+    });
 });
 
