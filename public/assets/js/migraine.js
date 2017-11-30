@@ -1,60 +1,17 @@
 
-function getLocation() {
-    if (navigator.geolocation) navigator.geolocation.getCurrentPosition(getWeather, error);
-    else console.log("Geolocation is not supported by this browser.");
-}
 
-function error(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            console.log("User denied the request for Geolocation.");
-            break;
-        case error.POSITION_UNAVAILABLE:
-            console.log("Location information is unavailable.");
-            break;
-        case error.TIMEOUT:
-            console.log("The request to get user location timed out.");
-            break;
-        case error.UNKNOWN_ERROR:
-            console.log("An unknown error occurred.");
-            break;
-    }
-}
-
-function getWeather(position) {
-    var key = "75c2d4ad99db9a0ce09e0a27d9dca4fd";
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&APPID=" + key;
-    $.ajax({
-        url: queryURL,
-        method: "GET" 
-    }).done(function(response) {
-        console.log(response);
-        var tempF = (9 / 5) * (response.main.temp - 273)  + 32;
-        $("#weather-temp").html(tempF.toFixed(2) + "&deg; (F)");
-        $("#weather-city").html(response.name);
-        var currentWeather = {
-            temp: 0,
-            temp_min: 0,
-            temp_max: 0,
-            humidity: 0,
-            pressure: 0,
-            sea_level: 0,
-            grnd_level: 0,
-            precip: 0
-        };
-        // $.ajax("/api/weather", {
-        //     type: "POST",
-        //     data: currentWeather
-        // }).done(function(result) {
-        //     console.log("sent " + currentWeather);
-        // });
-    });
+function toFahrenheit(kelvin) {
+    return ((9 / 5) * (kelvin - 273)  + 32);
 }
 
 
 $(document.body).ready(function() {
 
-    getLocation();
+
+    var url = window.location.href;
+    // Get the user id from the url
+    // In localhost:8080/user/id
+    var userId = url.split("user/")[1];
 
     $(".calendar").pignoseCalendar();
     $(".date-visibility").hide();
@@ -62,76 +19,75 @@ $(document.body).ready(function() {
     $(".meds-2-visibility").hide();
   
     $("#q1").change(function(event) {
-      var answer = $("#q1 option:selected").text();
-      if (answer === "No") $(".date-visibility").show();
-      else $(".date-visibility").hide();
+        var answer = $("#q1 option:selected").text();
+        if (answer === "No") $(".date-visibility").show();
+        else $(".date-visibility").hide();
     });
 
-  $("#q4").change(function(event) {
-    var answer = $("#q4 option:selected").text();
-    if (answer === "Yes") $(".meds-1-visibility").show();
-    else $(".meds-1-visibility").hide();
-  });
-
-  $("#q7").change(function(event) {
-    var answer = $("#q7 option:selected").text();
-    if (answer === "Yes") $(".meds-2-visibility").show();
-    else $(".meds-2-visibility").hide();
-  });
-
-  $("#submit").on("click", function() {
-
-    var dateVal = $("#date-val").val().trim();
-    if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
-    var responses = {
-        intensity: $("#intensity-val").val().trim(),
-        location: $("#weather-city").text(),
-        date: dateVal,
-        trigger: $("#trigger-val").val().trim()
-    };
-    console.log(responses);
-    $.ajax("/api/migraines", {
-        type: "POST",
-        data: responses
-    }).then(function(result) {
-        console.log("sent " + responses);
+    $("#q4").change(function(event) {
+        var answer = $("#q4 option:selected").text();
+        if (answer === "Yes") $(".meds-1-visibility").show();
+        else $(".meds-1-visibility").hide();
     });
 
-    // object to be sent via POST request to migraine_controller.js
-    var newMigraine = {
-      // if func for date can be null if response[0] is true OR do that in controller???
-      date: responses[1],
-      intensity: responses[2],
-      trigger: responses[9]
+    $("#q7").change(function(event) {
+        var answer = $("#q7 option:selected").text();
+        if (answer === "Yes") $(".meds-2-visibility").show();
+        else $(".meds-2-visibility").hide();
+    });
+
+    var currentWeather = {};
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var key = "75c2d4ad99db9a0ce09e0a27d9dca4fd";
+            var queryURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&APPID=" + key;
+            $.ajax({
+                url: queryURL,
+                method: "GET" 
+            }).done(function(response) {
+                // console.log(response);
+                $("#weather-temp").html(toFahrenheit(response.main.temp).toFixed(2) + "&deg; (F)");
+                $("#weather-city").html(response.name);
+                var rain = 0;
+                if (response.rain) rain = response.rain;
+                currentWeather = {
+                    temp: toFahrenheit(response.main.temp),
+                    temp_min: toFahrenheit(response.main.temp_min),
+                    temp_max: toFahrenheit(response.main.temp_max),
+                    humidity: response.main.humidity,
+                    pressure: response.main.pressure,
+                    sea_level: 0,
+                    grnd_level: 0,
+                    precip: rain
+                };
+            });
+        });
     }
 
-    // object to be sent via POST request to treatment_controller.js
-    var newChronicTreatment = {
-      name: responses[4]
-    }
+    $("#submit").on("click", function() {
 
-    // object to be sent via POST request to dose_controller.js
-    var newChronicDose = {
-      dose: responses[5]
-    }
-
-    // object to be sent via POST request to treatment_controller.js
-    var newAcuteTreatment = {
-      name: responses[7]
-    }
-
-    // object to be sent via POST request to dose_controller.js
-    var newAcuteDose = {
-      dose: responses[8]
-    }
-    
-    // Submits a new migraine and associated data via POST
-    // SHOULD THIS BE REPEATED WITH EACH OBJECT OR CAN WE DO THIS ONE WITH ALL OBJECTS?
-    function submitData(newMigraine) {
-      $.post("/api/migraines", newMigraine)
-    }
-
-
-  });
+        var dateVal = $("#date-val").val().trim();
+        if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
+        var responses = {
+            intensity: $("#intensity-val").val().trim(),
+            location: $("#weather-city").text(),
+            date: dateVal,
+            trigger: $("#trigger-val").val().trim()
+        };
+        console.log(responses);
+        $.ajax("/api/migraines/" + userId, {
+            type: "POST",
+            data: responses
+        }).then(function(resultMigraine) {
+            console.log(resultMigraine);
+            var migraineId = resultMigraine.id
+            $.ajax("/api/weather/" + migraineId, {
+                type: "POST",
+                data: currentWeather
+            }).done(function(resultWeather) {
+                console.log(resultWeather);
+            });
+        });
+    });
 });
 

@@ -27,7 +27,5 @@ db.Treatment.update(
     res.json(dbTreatments);
   });
 });  
-router.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "../views/test.html"));
-});
+
 module.exports = router;

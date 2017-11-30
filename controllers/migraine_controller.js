@@ -34,13 +34,14 @@ router.get("/api/migraines/:id", function(req, res) {
 });
 
 // POST route to create new migraines when user clicks submit
-router.post("/api/migraines", function(req, res) {
+router.post("/api/migraines/:id", function(req, res) {
   // grab data from 4 questions, WHAT DO ABOUT MEDS AND WEATHER???
   db.Migraine.create({
     intensity: req.body.intensity,
     location: req.body.location,
     date: req.body.date,
-    trigger: req.body.trigger
+    trigger: req.body.trigger,
+    UserId: req.params.id
   }).then(function(dbMigraine) {
     // HOW TO target user ID
     res.json(dbMigraine);
@@ -75,7 +76,5 @@ router.delete("/api/migraines/:id", function(req, res) {
     res.json(dbMigraine);
   });
 });
-router.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "../views/test.html"));
-});
+
 module.exports = router;
