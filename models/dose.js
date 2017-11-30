@@ -20,6 +20,8 @@ module.exports = function(sequelize, Datatypes) {
   			}
   		}
   	}
+  }, {
+    timestamps: false
   });
 
   Dose.associate = function(models) {
