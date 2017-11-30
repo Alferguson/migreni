@@ -1,5 +1,3 @@
-
-
 $(document.body).ready(function() {
     $(".calendar").pignoseCalendar();
 
