@@ -1,9 +1,10 @@
 // to get this party started
 $(document).ready(function() {
+
 	// to store user's intensity of all migraines
 	var intensity;
 	// refers to bar chart id in handlebars
-	var barChartContainer = $("#bar-chart-container");
+	var barChart = $("#bar-chart-container");
 
   // to get the url and extract userId from it
   var url = window.location.search;
@@ -17,9 +18,9 @@ $(document).ready(function() {
 	function getIntensity(user) {
 	  userId = user;
 	  if (userId) {
-	    userId = "/user_id=" + userId;
+	    userId = "id=" + userId;
 	  }
-	  $.get("/api/migraines" + userId, function(data) {
+	  $.get("/api/migraines/:" + userId, function(data) {
 	  	// HOW TO GET TIMEDATES FOR EACH INTENSITY???
 	    console.log("Migraines", data);
 	    // ideally, intensity is an array of numbers as chart.js uses that for data
@@ -34,8 +35,10 @@ $(document).ready(function() {
 	};
 
 	function initializeBarChart(intensity) {
-
-		var myBarChart = new Chart(ctx, {
+		// clear previous graph
+		barChart.empty();
+		// docs references bar car id
+		var bar-chart-container = new Chart(barChart, {
 		  type: "bar",
 	    data: {
 	    	// label all bars with date hopefully
