@@ -8,7 +8,7 @@ router.get("/api/migraines/:id", function(req, res) {
   db.Migraine.findAll({
     // display all migraines for id
     where: {
-      UserUuid: req.params.id
+      UserId: req.params.id
     },
     include: [
       {

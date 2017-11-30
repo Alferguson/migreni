@@ -7,6 +7,11 @@ var migraineRoutes = require("./controllers/migraine_controller");
 var treatmentRoutes = require("./controllers/treatment_controller");
 var userRoutes = require("./controllers/user_controller");
 var db = require("./models");
+//Authentication 
+const expressValidator = require("express-validator");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require('bcrypt');
 
 // Sets up the Express App
 // =============================================================
@@ -34,6 +39,35 @@ app.use("/", doseRoutes);
 app.use("/", migraineRoutes);
 app.use("/", treatmentRoutes);
 app.use("/", userRoutes);
+
+//Authentication setup
+// app.use(expressValidator());\
+// app.use(passport.initialize());
+
+// passport.use(new LocalStrategy((username, password, done) => {
+
+//   db.User.findAll({
+//   	attributes: [id, password],
+//   	where: 
+//   		{username: username}
+//   },
+//    (results) => {
+
+//     if (results.length === 0) {
+//       return done(null, false);
+//     } else {
+//       const hash = results[0].password.toString();
+      
+//       bcrypt.compare(password, hash, (err, response) => {
+//         if (response === true) {
+//           return done(null, { user_id: results[0].id });
+//         } else {
+//           return done(null, false);
+//         }
+//       });
+//     }
+//   });
+// }));
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
