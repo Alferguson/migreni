@@ -33,8 +33,8 @@ router.post("/api/user", function(req, res) {
     req.body.password = hash;
     db.User.create(req.body).then(function(dbUser) {
       // HOW TO target user ID
-      var user_id = dbUser.uuid;
-      req.login(user_id, function(err) {
+      var user_id = dbUser.id;
+      req.login(dbUser, function(err) {
         if (err) throw err;
         console.log("logged in " + user_id);
         return res.json(dbUser);
