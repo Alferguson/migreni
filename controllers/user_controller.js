@@ -11,7 +11,7 @@ router.get("/api/user/:id", function(req, res) {
     // display all data where user id = database id
     where: {
       uuid: req.params.id
-    },
+    }
   }).then(function(dbUser) {
   	// res.sendFile()
     // display on handlebars, may not work
