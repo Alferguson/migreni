@@ -37,7 +37,7 @@ router.post("/api/user", function(req, res) {
       req.login(dbUser, function(err) {
         if (err) throw err;
         console.log("logged in " + user_id);
-        return res.json(dbUser);
+        return res.redirect("/");
       });
     }).catch(function(err) {
 
