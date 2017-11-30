@@ -1,5 +1,6 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
 var methodOverride = require('method-override');
 var exphbs = require("express-handlebars");
 var doseRoutes = require("./controllers/dose_controller");
@@ -8,10 +9,10 @@ var treatmentRoutes = require("./controllers/treatment_controller");
 var userRoutes = require("./controllers/user_controller");
 var db = require("./models");
 //Authentication 
-const expressValidator = require("express-validator");
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require('bcrypt');
+var session = require("express-session");
+var passport = require("passport");
+// var LocalStrategy = require("passport-local").Strategy;
+var bcrypt = require('bcrypt');
 
 // Sets up the Express App
 // =============================================================
@@ -26,6 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+app.use(cookieParser());
 
 // Static directory
 app.use(express.static("public"));
@@ -41,8 +43,14 @@ app.use("/", treatmentRoutes);
 app.use("/", userRoutes);
 
 //Authentication setup
-// app.use(expressValidator());\
-// app.use(passport.initialize());
+app.use(session({
+  secret: 'ubu9fhv9b33v8hq0e3q', // should be generated with random string generator
+  resave: false,
+  saveUninitialized: false,
+  // cookie: { secure: true }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // passport.use(new LocalStrategy((username, password, done) => {
 
