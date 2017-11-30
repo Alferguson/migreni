@@ -21,9 +21,12 @@
                     <div class="calendar"></div>
                     <br>
                     <!-- weather -->
-                    <div class="weather">
-                        <a href="https://www.accuweather.com/en/us/new-york-ny/10007/weather-forecast/349727" class="aw-widget-legal"></a>
-                        <div id="awcc1511935544743" class="aw-widget-current" data-locationkey="" data-unit="f" data-language="en-us" data-useip="true" data-uid="awcc1511935544743"></div>
+                    <div class="weather card bg-light">
+                        <div class="card-header">Current Weather</div>
+                        <div class="card-body">
+                            <h4 class="card-title" id="weather-city">Loading...</h4>
+                            <p class="card-text" id="weather-temp"></p>
+                        </div>
                     </div>
                     <br>
                 </div>
@@ -43,13 +46,13 @@
                         </div>
                         <div class="date-visibility">
                             <div class="form-group">
-                                <label for="q2">Which day was your migraine?</label>
-                                <input class="response" type="date" id="q2">
+                                <label for="date-val">Which day was your migraine?</label>
+                                <input class="response" type="date" id="date-val">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="q3">How intense was your migraine (1: no intensity, 10: extreme intensity)?</label>
-                            <select class="form-control response" id="q3">
+                            <label for="intensity-val">How intense was your migraine (1: no intensity, 10: extreme intensity)?</label>
+                            <select class="form-control response" id="intensity-val">
                                 <option value=""></option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -104,9 +107,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="q10">If you know the trigger for your migraine, please enter it here.</label>
+                            <label for="trigger-val">If you know the trigger for your migraine, please enter it here.</label>
                             <br>
-                            <input class="response" type="text" id="q10">
+                            <input class="response" type="text" id="trigger-val">
                         </div>
                         <br>
 
@@ -140,7 +143,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
         <script src=https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js></script>
-        <script src="https://oap.accuweather.com/launch.js"></script>
         <script src="/assets/js/pignose.calendar.js"></script>
         <script src="/assets/js/migraine.js"></script>
     </body>

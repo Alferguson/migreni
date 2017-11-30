@@ -13,23 +13,19 @@ module.exports = function(sequelize, Datatypes) {
     acute: {
       type: Datatypes.BOOLEAN,
       allowNull: false
-    },
-    description: {
-      type: Datatypes.TEXT
-    },
-    category: {
-    	type: Datatypes.STRING(40),
-    	allowNull: false,
-      validate: {
-        len: {
-          args: [1, 40],
-          msg: "Treatment category must be between 1 and 40 characters"
-        }
-      }
     }
+  }, {
+    timestamps: false
   });
 
   Treatment.associate = function(models) {
+
+    Treatment.belongsTo(models.Category, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+
   	Treatment.hasMany(models.Dose, {
   		onDelete: 'CASCADE',
   		as: 'Doses'
