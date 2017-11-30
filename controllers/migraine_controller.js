@@ -10,11 +10,18 @@ router.get("/api/migraines/:id", function(req, res) {
     where: {
       UserUuid: req.params.id
     },
-    include: [ {
-      model: db.Treatment,
-      include: [db.Dose]
-    },
-    db.Weather
+    include: [
+      {
+        model: db.Treatment,
+        include: [db.Dose]
+        // maybe include: [
+        //   {
+        //     db.Dose,
+        //     db.Category
+        //   }
+        // ]
+      },
+      db.Weather
     ],
     // display by when they were created via descend
     order: [
