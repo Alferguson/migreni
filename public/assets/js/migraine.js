@@ -59,18 +59,13 @@ $(document.body).ready(function() {
       dose: responses[8]
     }
     
-    // object to be sent via POST request to category_controller.js
-    var newCategory = {
-      // uhhh
-    }
-
     // Submits a new migraine and associated data via POST
     // SHOULD THIS BE REPEATED WITH EACH OBJECT OR CAN WE DO THIS ONE WITH ALL OBJECTS?
     function submitData(newMigraine) {
       $.post("/api/migraines", newMigraine)
     }
 
-    
+
   });
 
 
