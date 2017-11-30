@@ -11,8 +11,6 @@ const saltRounds = 10;
 // GET route to display user name at user's page
 router.get("/api/user/:id", function(req, res) {
   db.User.findOne({
-    // display username
-    username: username,
     // display all data where user id = database id
     where: {
       id: req.params.id
@@ -37,7 +35,8 @@ router.post("/api/user", function(req, res) {
       req.login(dbUser, function(err) {
         if (err) throw err;
         console.log("logged in " + user_id);
-        return res.redirect("/");
+        console.log(req.user);
+        return res.redirect("/api/user/" + dbUser.id);
       });
     }).catch(function(err) {
 
