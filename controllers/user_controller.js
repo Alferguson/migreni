@@ -35,8 +35,9 @@ router.post("/api/user", function(req, res) {
       // HOW TO target user ID
       var user_id = dbUser.uuid;
       req.login(user_id, function(err) {
+        if (err) throw err;
         console.log("logged in " + user_id);
-        res.json(dbUser);
+        return res.json(dbUser);
       });
     }).catch(function(err) {
 
