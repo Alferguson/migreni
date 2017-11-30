@@ -25,7 +25,5 @@ router.put("/api/doses", function(req, res) {
       res.json(dbDose);
     });
 });  
-router.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "../views/test.html"));
-});
+
 module.exports = router;
