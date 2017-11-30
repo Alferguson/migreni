@@ -1,6 +1,9 @@
 // to get this party started
 $(document).ready(function() {
-	$("#create-bar-chart").on( "click", function() {
+	// on submit button click, grab id from url and create barchart from get request
+	$(document).on("submit", "#create-bar-chart", barChartFromId);
+		
+	function barChartFromId() {
 		// to store user's intensity of all migraines
 		var intensity;
 		// refers to bar chart id in handlebars
@@ -37,28 +40,28 @@ $(document).ready(function() {
 		function initializeBarChart(intensity) {
 			// clear previous graph
 			barChart.empty();
-			// docs references bar car id
+			// docs references bar chart id
 			var bar-chart-container = new Chart(barChart, {
 			  type: "bar",
 		    data: {
 		    	// label all bars with date hopefully
 		    	labels: [data.date],
 		      datasets: [{
-		          label: "Intensity over time",
-		          data: intensity,
-		          borderWidth: 1
+	          label: "Intensity over time",
+	          data: intensity,
+	          borderWidth: 1
 		      }]
 		    },    
 		    options: {
 		      scales: {
 		        yAxes: [{
-		            ticks: {
-		                beginAtZero: true
-		            }
+	            ticks: {
+	              beginAtZero: true
+	            }
 		        }]
 		      }
 		    }
 			});
 		};
-	};	
+	}
 }	
