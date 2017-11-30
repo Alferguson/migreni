@@ -5,11 +5,12 @@ var Sequelize = require('sequelize');
 /**
  * Actions summary:
  *
+ * createTable "Categories", deps: []
  * createTable "texts", deps: []
- * createTable "Treatments", deps: []
  * createTable "Users", deps: []
- * createTable "Doses", deps: [Treatments]
+ * createTable "Treatments", deps: [Categories]
  * createTable "Migraines", deps: [Users]
+ * createTable "Doses", deps: [Treatments]
  * createTable "MigraineTreatments", deps: [Migraines, Treatments]
  * createTable "UserTreatments", deps: [Treatments, Users]
  * createTable "Weather", deps: [Migraines]
@@ -18,12 +19,37 @@ var Sequelize = require('sequelize');
 
 var info = {
     "revision": 1,
-    "name": "migrani",
-    "created": "2017-11-29T21:29:18.830Z",
+    "name": "noname",
+    "created": "2017-11-30T02:11:05.639Z",
     "comment": ""
 };
 
 var migrationCommands = [{
+        fn: "createTable",
+        params: [
+            "Categories",
+            {
+                "id": {
+                    "type": Sequelize.INTEGER,
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "allowNull": false
+                },
+                "name": {
+                    "type": Sequelize.STRING(40),
+                    "validate": {
+                        "len": {
+                            "args": [1],
+                            "msg": "Category name must be at least 1 character"
+                        }
+                    },
+                    "allowNull": false
+                }
+            },
+            {}
+        ]
+    },
+    {
         fn: "createTable",
         params: [
             "texts",
@@ -42,6 +68,60 @@ var migrationCommands = [{
                 },
                 "value": {
                     "type": Sequelize.INTEGER
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "allowNull": false
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "Users",
+            {
+                "uuid": {
+                    "type": Sequelize.UUID,
+                    "primaryKey": true,
+                    "defaultValue": Sequelize.UUIDV1,
+                    "allowNull": false
+                },
+                "username": {
+                    "type": Sequelize.STRING(40),
+                    "validate": {
+                        "len": {
+                            "args": [3, 40],
+                            "msg": "The user name must have between 3 and 40 characters"
+                        }
+                    },
+                    "allowNull": false
+                },
+                "password_hash": {
+                    "type": Sequelize.STRING
+                },
+                "email": {
+                    "type": Sequelize.STRING,
+                    "validate": {
+                        "isEmail": {
+                            "args": true,
+                            "msg": "The email must be in a valid format"
+                        }
+                    }
+                },
+                "gender": {
+                    "type": Sequelize.STRING(20)
+                },
+                "age": {
+                    "type": Sequelize.INTEGER(4)
+                },
+                "location": {
+                    "type": Sequelize.STRING(40)
                 },
                 "createdAt": {
                     "type": Sequelize.DATE,
@@ -80,127 +160,12 @@ var migrationCommands = [{
                     "type": Sequelize.BOOLEAN,
                     "allowNull": false
                 },
-                "description": {
-                    "type": Sequelize.TEXT
-                },
-                "category": {
-                    "type": Sequelize.STRING(40),
-                    "validate": {
-                        "len": {
-                            "args": [1, 40],
-                            "msg": "Treatment category must be between 1 and 40 characters"
-                        }
-                    },
-                    "allowNull": false
-                },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "allowNull": false
-                },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "allowNull": false
-                }
-            },
-            {}
-        ]
-    },
-    {
-        fn: "createTable",
-        params: [
-            "Users",
-            {
-                "uuid": {
-                    "type": Sequelize.UUID,
-                    "primaryKey": true,
-                    "defaultValue": Sequelize.UUIDV1,
-                    "allowNull": false
-                },
-                "username": {
-                    "type": Sequelize.STRING(40),
-                    "validate": {
-                        "len": {
-                            "args": [3, 40],
-                            "msg": "The user name must have between 3 and 40 characters"
-                        }
-                    },
-                    "allowNull": false
-                },
-                "email": {
-                    "type": Sequelize.STRING,
-                    "validate": {
-                        "isEmail": {
-                            "args": true,
-                            "msg": "The email must be in a valid format"
-                        }
-                    }
-                },
-                "gender": {
-                    "type": Sequelize.STRING(20)
-                },
-                "age": {
-                    "type": Sequelize.INTEGER(4)
-                },
-                "location": {
-                    "type": Sequelize.STRING(40)
-                },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "allowNull": false
-                },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "allowNull": false
-                }
-            },
-            {}
-        ]
-    },
-    {
-        fn: "createTable",
-        params: [
-            "Doses",
-            {
-                "id": {
-                    "type": Sequelize.INTEGER,
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "allowNull": false
-                },
-                "value": {
-                    "type": Sequelize.DECIMAL,
-                    "validate": {
-                        "len": {
-                            "args": [1],
-                            "msg": "Dose value cannot be empty."
-                        }
-                    },
-                    "allowNull": false
-                },
-                "unit": {
-                    "type": Sequelize.STRING(20),
-                    "validate": {
-                        "len": {
-                            "args": [1],
-                            "msg": "Dose unit cannot be empty."
-                        }
-                    },
-                    "allowNull": false
-                },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "allowNull": false
-                },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "allowNull": false
-                },
-                "TreatmentId": {
+                "CategoryId": {
                     "type": Sequelize.INTEGER,
                     "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
+                    "onDelete": "CASCADE",
                     "references": {
-                        "model": "Treatments",
+                        "model": "Categories",
                         "key": "id"
                     },
                     "allowNull": true
@@ -267,6 +232,51 @@ var migrationCommands = [{
                         "key": "uuid"
                     },
                     "allowNull": false
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "Doses",
+            {
+                "id": {
+                    "type": Sequelize.INTEGER,
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "allowNull": false
+                },
+                "value": {
+                    "type": Sequelize.DECIMAL,
+                    "validate": {
+                        "len": {
+                            "args": [1],
+                            "msg": "Dose value cannot be empty."
+                        }
+                    },
+                    "allowNull": false
+                },
+                "unit": {
+                    "type": Sequelize.STRING(20),
+                    "validate": {
+                        "len": {
+                            "args": [1],
+                            "msg": "Dose unit cannot be empty."
+                        }
+                    },
+                    "allowNull": false
+                },
+                "TreatmentId": {
+                    "type": Sequelize.INTEGER,
+                    "onUpdate": "CASCADE",
+                    "onDelete": "SET NULL",
+                    "references": {
+                        "model": "Treatments",
+                        "key": "id"
+                    },
+                    "allowNull": true
                 }
             },
             {}
@@ -364,14 +374,6 @@ var migrationCommands = [{
                 },
                 "precip": {
                     "type": Sequelize.DECIMAL
-                },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "allowNull": false
-                },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "allowNull": false
                 },
                 "MigraineId": {
                     "type": Sequelize.INTEGER,

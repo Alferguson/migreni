@@ -1,5 +1,29 @@
 {
     "tables": {
+        "Categories": {
+            "tableName": "Categories",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "name": {
+                    "allowNull": false,
+                    "validate": {
+                        "len": {
+                            "args": [
+                                1
+                            ],
+                            "msg": "Category name must be at least 1 character"
+                        }
+                    },
+                    "seqType": "Sequelize.STRING(40)"
+                }
+            },
+            "indexes": []
+        },
         "Doses": {
             "tableName": "Doses",
             "schema": {
@@ -190,21 +214,15 @@
                     "allowNull": false,
                     "seqType": "Sequelize.BOOLEAN"
                 },
-                "description": {
-                    "seqType": "Sequelize.TEXT"
-                },
-                "category": {
-                    "allowNull": false,
-                    "validate": {
-                        "len": {
-                            "args": [
-                                1,
-                                40
-                            ],
-                            "msg": "Treatment category must be between 1 and 40 characters"
-                        }
+                "CategoryId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Categories",
+                        "key": "id"
                     },
-                    "seqType": "Sequelize.STRING(40)"
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -339,5 +357,5 @@
             "indexes": []
         }
     },
-    "revision": 3
+    "revision": 1
 }
