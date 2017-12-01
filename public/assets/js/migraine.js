@@ -19,102 +19,94 @@ $(document.body).ready(function() {
   $(".meds-2-visibility").hide();
 
   $("#q1").change(function(event) {
-      var answer = $("#q1 option:selected").text();
-      if (answer === "No") $(".date-visibility").show();
-      else $(".date-visibility").hide();
+    var answer = $("#q1 option:selected").text();
+    if (answer === "No") $(".date-visibility").show();
+    else $(".date-visibility").hide();
   });
 
   $("#q4").change(function(event) {
-      var answer = $("#q4 option:selected").text();
-      if (answer === "Yes") $(".meds-1-visibility").show();
-      else $(".meds-1-visibility").hide();
+    var answer = $("#q4 option:selected").text();
+    if (answer === "Yes") $(".meds-1-visibility").show();
+    else $(".meds-1-visibility").hide();
   });
 
   $("#q7").change(function(event) {
-      var answer = $("#q7 option:selected").text();
-      if (answer === "Yes") $(".meds-2-visibility").show();
-      else $(".meds-2-visibility").hide();
+    var answer = $("#q7 option:selected").text();
+    if (answer === "Yes") $(".meds-2-visibility").show();
+    else $(".meds-2-visibility").hide();
   });
 
   // weather call
   var currentWeather = {};
   if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-          var key = "75c2d4ad99db9a0ce09e0a27d9dca4fd";
-          var queryURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&APPID=" + key;
-          $.ajax({
-              url: queryURL,
-              method: "GET" 
-          }).done(function(response) {
-              // console.log(response);
-              $("#weather-temp").html(toFahrenheit(response.main.temp).toFixed(2) + "&deg; (F)");
-              $("#weather-city").html(response.name);
-              var rain = 0;
-              if (response.rain) rain = response.rain;
-              currentWeather = {
-                  temp: toFahrenheit(response.main.temp),
-                  temp_min: toFahrenheit(response.main.temp_min),
-                  temp_max: toFahrenheit(response.main.temp_max),
-                  humidity: response.main.humidity,
-                  pressure: response.main.pressure,
-                  sea_level: 0,
-                  grnd_level: 0,
-                  precip: rain
-              };
-          });
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var key = "75c2d4ad99db9a0ce09e0a27d9dca4fd";
+      var queryURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&APPID=" + key;
+      $.ajax({
+        url: queryURL,
+        method: "GET" 
+      }).done(function(response) {
+        // console.log(response);
+        $("#weather-temp").html(toFahrenheit(response.main.temp).toFixed(2) + "&deg; (F)");
+        $("#weather-city").html(response.name);
+        var rain = 0;
+        if (response.rain) rain = response.rain;
+        currentWeather = {
+          temp: toFahrenheit(response.main.temp),
+          temp_min: toFahrenheit(response.main.temp_min),
+          temp_max: toFahrenheit(response.main.temp_max),
+          humidity: response.main.humidity,
+          pressure: response.main.pressure,
+          sea_level: 0,
+          grnd_level: 0,
+          precip: rain
+        };
       });
+    });
   }
 
   // on submit btn click
-  $("#submit").on("click", function() {
-
-    // to grab dates
-    var dateVal = $("#date-val").val().trim();
+  $("#submit-survey").on("click", function() {
+    var dateVal = $("#date-val").val() == undefined ? '' : $("#date-val").val().trim();
     if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
-
-    // to grab migraine data
-    var migraines = {
-      intensity: $("#intensity-val").val().trim(),
+    // object for migraine data
+    var migraine = {
+      intensity: $("#intensity-val").val() == undefined ? '' : $("#intensity-val").val().trim(),
       location: $("#weather-city").text(),
       date: dateVal,
-      trigger: $("#trigger-val").val().trim()
+      trigger: $("#trigger-val").val() == undefined ? '' : $("#trigger-val").val().trim()
     };
 
-// put inside first ajax call
+    // put inside first ajax call
     var chronicTreatment = {
-        name: $("#chronic-treatment").val().trim(),
-        acute: false,
-        dose: {
-          value: $("#chronic-dosage").val().trim()
-        }
+      name: $("#chronic-treatment").val().trim(),
+      acute: false,
+      dose: {
+        value: $("#chronic-dosage").val().trim()
+      }
     }
     // TODO
     // if function for if the user didn't enter anything for chronic treatment, get last instance of chronic treatment
     if(chronicTreatment.name === null) {
-        $.ajax("/api/treatments/" + userId, {
-          type: "GET"
-        }).then(function(chronicTreatment) {
-          // afsdaf
-        })
+      $.ajax("/api/treatments/" + userId, {
+        type: "GET"
+      }).then(function(chronicTreatment) {
+        // afsdaf
+      });
     }
 
     var acuteTreatment = {
-        name: $("#acute-treatment").val().trim(),
-        acute: true,
-        dose: {
-          value: $("#acute-dosage").val().trim()
-        }
+      name: $("#acute-treatment").val().trim(),
+      acute: true,
+      dose: {
+        value: $("#acute-dosage").val().trim()
+      }
     }
-
-// MY STUFFFF
-
-
-
 
     console.log(migraines);
     $.ajax("/api/migraines/" + userId, {
-        type: "POST",
-        data: migraines
+      type: "POST",
+      data: migraines
 
 
 
@@ -170,74 +162,8 @@ $(document.body).ready(function() {
           })
         })
       });
-
-
-
-
-// ALYSSAS STUFF
-    $("#submit").on("click", function() {
-
-       var dateVal = $("#date-val").val() == undefined ? '' : $("#date-val").val().trim();
-
-              if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
-              var migraine = {
-                  intensity: $("#intensity-val").val() == undefined ? '' : $("#intensity-val").val().trim(),
-                  location: $("#weather-city").text(),
-                  date: dateVal,
-                  trigger: $("#trigger-val").val() == undefined ? '' : $("#trigger-val").val().trim()
-              };
-
-              // TODO: check for case when they use same medication
-              var preventativeName = "";
-              if ($("#q4").val()) { // their preventative has changed
-                  preventativeName = $("#q5").val() == undefined ? '' : $("#q5").val().trim();
-              }
-              var acuteName = "";
-              if ($("#q7").val()) { // their acute has changed
-                  acuteName = $("#q8").val() == undefined ? '' : $("#q8").val().trim();
-              }
-        var preventTreatment = {
-            name: preventativeName,
-            acute: false
-
-        };
-        var acuteTreatment = {
-            name: acuteName,
-            acute: true
-        };
-
-        $.ajax("/api/migraines/" + userId, {
-            type: "POST",
-            data: migraine
-        }).then(function(resultMigraine) {
-            console.log(resultMigraine);
-            var migraineId = resultMigraine.id
-            $.ajax("/api/weather/" + migraineId, {
-                type: "POST",
-                data: currentWeather
-            }).done(function(resultWeather) {
-                console.log(resultWeather);
-            });
-
-            $.ajax("/api/treatments/" + migraineId, {
-                type: "POST",
-                data: preventTreatment
-            }).done(function(resultTreatment) {
-                console.log(resultTreatment);
-            });
-            $.ajax("/api/treatments/" + migraineId, {
-                type: "POST",
-                data: acuteTreatment
-            }).done(function(resultTreatment) {
-                console.log(resultTreatment);
-            });
-        });
-
-
-
-// END OF ALYSSASS stuff
     });
-  });
+  });  
   // END OF SUBMIT
 
   // FUNCTION TO GET MIGRAINE DATA AND SHOW IT
@@ -294,5 +220,8 @@ $(document.body).ready(function() {
         console.log("It has been deleted");
       })
     }
-  })
-})
+  });
+
+
+  // END OF DOC READ HERE maybe???
+});
