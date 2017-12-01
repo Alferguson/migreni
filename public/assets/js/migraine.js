@@ -66,7 +66,8 @@ $(document.body).ready(function() {
   }
 
   // on submit btn click
-  $("#submit-survey").on("click", function() {
+  $("#submit-survey").on("click", function(event) {
+    event.preventDefault();
     var dateVal = $("#date-val").val() == undefined ? '' : $("#date-val").val().trim();
     if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
     // object for migraine data

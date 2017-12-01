@@ -42,6 +42,20 @@ router.post("/api/migraines/:id", function(req, res) {
     date: req.body.date,
     trigger: req.body.trigger,
     UserId: req.params.id
+    include: [
+        {
+          model: db.Weather,
+          temp: req.body.temp,
+          humidity: req.body.humidity,
+          precip: req.body.precip,
+
+        }
+      ]  
+  }).addTreatment({
+    treatment_name: req.body.name,
+    acute: req.body.acute,
+    dose: req.body.dose,
+    dose_unit: req.body.bose_unit  
   }).then(function(dbMigraine) {
     // HOW TO target user ID
     res.json(dbMigraine);
@@ -61,7 +75,8 @@ router.put("/api/migraines/:id", function(req, res) {
           model: db.Treatment,
           include: [db.Dose]
         }
-      ]  
+      ],
+      include:   
   }).then(function(dbMigraine) {
     res.json(dbMigraine);
 
