@@ -24,7 +24,7 @@ router.get("/api/user/:id", function(req, res) {
     // res.sendFile()
     // display on handlebars, may not work
     // res.json(dbUser).render("index", { user: dbUser });
-    res.json(dbUser).sendFile(path.join(__dirname, "../views/test.html"));
+    res.json(dbUser);
 
   }).catch(function(err) {
 

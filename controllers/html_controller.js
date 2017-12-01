@@ -7,6 +7,8 @@ var rootDir = { root: __dirname + '/..' };
 
 // default route for home.html
 router.get('/', function(req, res) {
+  console.log(req.user);
+  console.log(req.isAuthenticated());
     res.sendFile('/views/index.html', rootDir);
 });
 

@@ -13,6 +13,7 @@ var db = require("./models");
 //Authentication 
 var expressValidator = require("express-validator");
 var session = require("express-session");
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var passport = require("passport");
 // var LocalStrategy = require("passport-local").Strategy;
 var bcrypt = require('bcrypt');
@@ -39,8 +40,13 @@ app.use(express.static("public"));
 //Authentication setup
 app.use(session({
   secret: 'ubu9fhv9b33v8hq0e3q', // should be generated with random string generator
+  store: new SequelizeStore({
+    db: db.sequelize,
+    checkExpirationInterval: 15 * 60 * 1000, // The interval at which to cleanup expired sessions in milliseconds.
+  	expiration: 24 * 60 * 60 * 1000  // The maximum age (in milliseconds) of a valid session.
+  }),
   resave: false,
-  saveUninitialized: true,
+  // saveUninitialized: true,
   // cookie: { secure: false }
 }));
 app.use(passport.initialize());

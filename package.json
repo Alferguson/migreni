@@ -12,6 +12,7 @@
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "chart.js": "^2.7.1",
+    "connect-session-sequelize": "^5.0.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
