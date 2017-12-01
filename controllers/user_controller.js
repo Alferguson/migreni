@@ -16,8 +16,7 @@ router.get("/session", authCheck(), function(req, res) {
   res.render("sessionTest", {
     title: "Session Test",
     id: req.user.id,
-    name: req.user.username,
-    uuid: req.user.uuid
+    name: req.user.username
   })
 })
 
@@ -50,8 +49,7 @@ router.post("/api/user", function(req, res) {
       // HOW TO target user ID
       var user = {
         username: dbUser.username,
-        uuid: dbUser.uuid,
-        id: dbUser.id,
+        id: dbUser.id
       }
       req.login(user, function(err) {
         if (err) throw err;

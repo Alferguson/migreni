@@ -11,7 +11,7 @@ $(document.body).ready(function() {
   // Get the user id from the url
   // In localhost:8080/user/id
   var userId = url.split("user/")[1];
-
+  console.log(userId);
   // calendar stuff
   $(".calendar").pignoseCalendar();
   $(".date-visibility").hide();
@@ -70,115 +70,74 @@ $(document.body).ready(function() {
     event.preventDefault();
     var dateVal = $("#date-val").val() == undefined ? '' : $("#date-val").val().trim();
     if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
+
+
+
     // object for migraine data
+
+
     var migraine = {
       intensity: $("#intensity-val").val() == undefined ? '' : $("#intensity-val").val().trim(),
       location: $("#weather-city").text(),
       date: dateVal,
-      trigger: $("#trigger-val").val() == undefined ? '' : $("#trigger-val").val().trim()
+      trigger: $("#trigger-val").val() == undefined ? '' : $("#trigger-val").val().trim(),
+      // currentWeather,
+      chronicTreatment: {
+        treatment_name: $("#chronic-treatment").val() == undefined ? '' : $("#chronic-treatment").val().trim(),
+        acute: false,
+        dose: $("#chronic-dosage").val() == undefined ? '' : $("#chronic-dosage").val().trim(),
+        dose_unit: "mg"
+      },
+      acuteTreatment: {
+        treatment_name: $("#acute-treatment").val() == undefined ? '' : $("#acute-treatment").val().trim(),
+        acute: true,
+        dose: $("#acute-dosage").val() == undefined ? '' : $("#acute-dosage").val().trim(),
+        dose_unit: "mg"
+      }
     };
 
-    // put inside first ajax call
-    var chronicTreatment = {
-      name: $("#chronic-treatment").val().trim(),
-      acute: false,
-      dose: {
-        value: $("#chronic-dosage").val().trim()
-      }
-    }
     // TODO
-    // if function for if the user didn't enter anything for chronic treatment, get last instance of chronic treatment
-    if(chronicTreatment.name === null) {
-      $.ajax("/api/treatments/" + userId, {
-        type: "GET"
-      }).then(function(chronicTreatment) {
-        // afsdaf
-      });
-    }
+    // // if function for if the user didn't enter anything for chronic treatment, get last instance of chronic treatment
+    // if(chronicTreatment.name === null) {
+    //   $.ajax("/api/treatments/" + userId, {
+    //     type: "GET"
+    //   }).then(function(chronicTreatment) {
+    //     // afsdaf
+    //   });
+    // }
 
-    var acuteTreatment = {
-      name: $("#acute-treatment").val().trim(),
-      acute: true,
-      dose: {
-        value: $("#acute-dosage").val().trim()
-      }
-    }
-
-    console.log(migraines);
+    console.log(migraine);
     $.ajax("/api/migraines/" + userId, {
       type: "POST",
-      data: migraines
-
-
-
+      data: migraine
+      // WAY TO ENTER MULITIPLE OBJECTS IN ONE AJAX CALL
     }).then(function(resultMigraine) {
       console.log(resultMigraine);
       var migraineId = resultMigraine.id;
-
-
-
-      // weather call to store weather
-      $.ajax("/api/weather/" + migraineId, {
-        type: "POST",
-        data: currentWeather
-      }).done(function(resultWeather) {
-        console.log(resultWeather);
-
-
-
-        // POST a new chronic treatment and acute treatment
-        $.ajax("/api/treatments/" + userId, {
-          type: "POST",
-          data: chronicTreatment
-        }).then(function(resultChronicTreatment) {
-          console.log(resultChronicTreatment);
-
-
-          // POST chronic dose
-          $.ajax("/api/dose/" + userId, {
-            type: "POST",
-            data: chronicTreatment.dose
-          }).then(function(doseResult) {
-            console.log(doseResult);
-
-
-
-            // POST acute treatment 
-            $.ajax("/api/treatments/" + userId, {
-              type: "POST",
-              data: acuteTreatment
-            }).then(function(resultAcuteTreatment) {
-              console.log(resultAcuteTreatment);
-
-
-
-              // POST acute dose
-              $.ajax("/api/dose/" + userId, {
-                type: "POST",
-                data: acuteTreatment.dose
-              }).then(function(doseResult) {
-                console.log(doseResult);
-              })
-            })
-          })
-        })
-      });
     });
   });  
   // END OF SUBMIT
 
-  // FUNCTION TO GET MIGRAINE DATA AND SHOW IT
-  function getMigraineData(migraineData) {
-    console.log("migraine data", migraineData)
-    var newTr = $("<tr>");
-    newTr.data("author", migraineData);
-    newTr.append("<td>" + migraineData.date + "</td>");
-    newTr.append("<td> " + migraineData.intensity + "</td>");
-    newTr.append("<td>" + migraineData.trigger + "</td>");
-    newTr.append("<td><a href='/cms?author_id=" + migraineData.id + "'>Create a Post</a></td>");
-    newTr.append("<td><a style='cursor:pointer;color:red' class='delete-author'>Delete Migraine</a></td>");
-    return newTr;
-  };
+  // // FUNCTION TO GET MIGRAINE DATA AND SHOW IT
+  // function getMigraineData(migraineData) {
+  //   console.log("migraine data", migraineData)
+  //   var newTr = $("<tr>");
+  //   newTr.data("author", migraineData);
+  //   newTr.append("<td>" + migraineData.date + "</td>");
+  //   newTr.append("<td> " + migraineData.intensity + "</td>");
+  //   newTr.append("<td>" + migraineData.trigger + "</td>");
+  //   newTr.append("<td><a href='/cms?author_id=" + migraineData.id + "'>Create a Post</a></td>");
+  //   newTr.append("<td><a style='cursor:pointer;color:red' class='delete-author'>Delete Migraine</a></td>");
+  //   return newTr;
+  // };
+
+
+
+
+
+
+
+
 
   // show all migraine and assoicated data
   $("#show").on("click", function() {

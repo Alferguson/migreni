@@ -33,6 +33,11 @@ module.exports = function(sequelize, DataTypes) {
 	});
 
 	Migraine.associate = function(models) {
+		Migraine.hasOne(models.Weather, {
+			foreignKey: {
+				allowNull: false
+			}
+		})
 		Migraine.belongsTo(models.User, {
 			foreignKey: {
 				allowNull: false

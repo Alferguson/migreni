@@ -11,7 +11,7 @@ $(document).ready(function() {
 
 	  // to get the url and extract userId from it
 	  var url = window.location.href;
-	  // HOW TO DO UUID?
+	  // HOW TO DO ID?
 	  var userId;
 	  if (url.indexOf("id=") !== -1) {
 	    userId = url.split("=")[1];
