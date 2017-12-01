@@ -23,7 +23,7 @@ module.exports = function(sequelize, Datatypes) {
     Treatment.belongsTo(models.Category, {
       foreignKey: {
         allowNull: false,
-        defaultValue: ""
+        defaultValue: 1
       }
     });
 

@@ -34,3 +34,28 @@ footer {
     max-width: 360px;
     margin: 0 auto;
 }
+
+body {
+    background-image: url("/assets/img/background1.jpg");
+     background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#welcome {
+    text-align: center;
+        color:  #F8F8FF;
+        margin: 25px 0px 25px 0px;
+        background: rgba(128,128,128,.5);
+        
+}
+
+#main {
+    font-size: 100px;
+    font-style: oblique;
+    font-weight: bold;
+}
+.lable {
+    color: #00FF00;
+    font-weight: bold;
+    font-style: italic;
+}

@@ -66,25 +66,25 @@ $(document.body).ready(function() {
 
     $("#submit").on("click", function() {
 
-        var dateVal = $("#date-val").val().trim();
-        if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
-        var migraine = {
-            intensity: $("#intensity-val").val().trim(),
-            location: $("#weather-city").text(),
-            date: dateVal,
-            trigger: $("#trigger-val").val().trim()
-        };
+       var dateVal = $("#date-val").val() == undefined ? '' : $("#date-val").val().trim();
 
-        // TODO: check for case when they use same medication
-        var preventativeName = "";
-        if ($("#q4").val().trim()) { // their preventative has changed
-            preventativeName = $("#q5").val().trim();
-        }
-        var acuteName = "";
-        if ($("#q7").val().trim()) { // their acute has changed
-            acuteName = $("#q8").val().trim();
-        }
+              if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
+              var migraine = {
+                  intensity: $("#intensity-val").val() == undefined ? '' : $("#intensity-val").val().trim(),
+                  location: $("#weather-city").text(),
+                  date: dateVal,
+                  trigger: $("#trigger-val").val() == undefined ? '' : $("#trigger-val").val().trim()
+              };
 
+              // TODO: check for case when they use same medication
+              var preventativeName = "";
+              if ($("#q4").val()) { // their preventative has changed
+                  preventativeName = $("#q5").val() == undefined ? '' : $("#q5").val().trim();
+              }
+              var acuteName = "";
+              if ($("#q7").val()) { // their acute has changed
+                  acuteName = $("#q8").val() == undefined ? '' : $("#q8").val().trim();
+              }
         var preventTreatment = {
             name: preventativeName,
             acute: false
