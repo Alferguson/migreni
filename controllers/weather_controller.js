@@ -24,11 +24,14 @@ router.get("/api/weather/:id", function(req, res) {
 });
 
 // POST route to create new users new account is set up with google OAuth
-router.post("/api/weather", function(req, res) {
+router.post("/api/weather/:id", function(req, res) {
   db.Weather.create({
     temp: req.body.temp,
     humidity: req.body.humidity,
-    precip: req.body.precip
+    precip: req.body.precip,
+    where: {
+      migraineId: req.params.id
+    }
   }).then(function(dbWeather) {
     // HOW TO target user ID
     res.json(dbWeather);
