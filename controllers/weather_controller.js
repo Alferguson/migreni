@@ -5,21 +5,20 @@ var path = require("path");
 
 // GET route to display user name at user's page
 router.get("/api/weather/:id", function(req, res) {
-  db.Weather.findOne({
-  	// display username
-  	temp: temp,
-    humidity: humidity,
-    precip: precip,        
+  db.Weather.findAll({
+    // display username
+    // temp: temp,
+    // humidity: humidity,
+    // precip: precip,        
     // display all data where user id = database id
     where: {
-      uuid: req.params.id
+      MigraineId: req.params.id
     }
   }).then(function(dbWeather) {
-  	// res.sendFile()
+    // res.sendFile()
     // display on handlebars, may not work
     // res.json(dbWeather).render("index", { user: dbWeather });
         res.json(dbWeather).sendFile(path.join(__dirname, "../views/test.html"));
-
   });
 });
 
@@ -29,16 +28,14 @@ router.post("/api/weather/:id", function(req, res) {
     temp: req.body.temp,
     humidity: req.body.humidity,
     precip: req.body.precip,
-    where: {
-      migraineId: req.params.id
-    }
+
+    MigraineId: req.params.id
   }).then(function(dbWeather) {
     // HOW TO target user ID
+    console.log(dbWeather);
+
     res.json(dbWeather);
   });
 });
 
-router.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "../views/test.html"));
-});
 module.exports = router;

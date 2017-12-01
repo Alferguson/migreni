@@ -48,7 +48,5 @@ router.delete("/api/user/:id", function(req, res) {
     res.json(dbUser);
   });
 });
-router.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "../views/test.html"));
-});
+
 module.exports = router;

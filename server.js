@@ -6,6 +6,8 @@ var doseRoutes = require("./controllers/dose_controller");
 var migraineRoutes = require("./controllers/migraine_controller");
 var treatmentRoutes = require("./controllers/treatment_controller");
 var userRoutes = require("./controllers/user_controller");
+var weatherRoutes = require("./controllers/weather_controller");
+var htmlRoutes = require("./controllers/html_controller");
 var db = require("./models");
 
 // Sets up the Express App
@@ -34,6 +36,8 @@ app.use("/", doseRoutes);
 app.use("/", migraineRoutes);
 app.use("/", treatmentRoutes);
 app.use("/", userRoutes);
+app.use("/", weatherRoutes);
+app.use("/", htmlRoutes);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
