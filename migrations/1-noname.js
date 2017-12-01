@@ -20,7 +20,7 @@ var Sequelize = require('sequelize');
 var info = {
     "revision": 1,
     "name": "noname",
-    "created": "2017-11-30T02:11:05.639Z",
+    "created": "2017-11-30T19:45:44.293Z",
     "comment": ""
 };
 
@@ -86,9 +86,14 @@ var migrationCommands = [{
         params: [
             "Users",
             {
+                "id": {
+                    "type": Sequelize.INTEGER,
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "allowNull": false
+                },
                 "uuid": {
                     "type": Sequelize.UUID,
-                    "primaryKey": true,
                     "defaultValue": Sequelize.UUIDV1,
                     "allowNull": false
                 },
@@ -102,7 +107,7 @@ var migrationCommands = [{
                     },
                     "allowNull": false
                 },
-                "password_hash": {
+                "password": {
                     "type": Sequelize.STRING
                 },
                 "email": {
@@ -223,13 +228,13 @@ var migrationCommands = [{
                     "type": Sequelize.DATE,
                     "allowNull": false
                 },
-                "UserUuid": {
-                    "type": Sequelize.UUID,
+                "UserId": {
+                    "type": Sequelize.INTEGER,
                     "onUpdate": "CASCADE",
                     "onDelete": "NO ACTION",
                     "references": {
                         "model": "Users",
-                        "key": "uuid"
+                        "key": "id"
                     },
                     "allowNull": false
                 }
@@ -326,13 +331,13 @@ var migrationCommands = [{
                     },
                     "primaryKey": true
                 },
-                "UserUuid": {
-                    "type": Sequelize.UUID,
+                "UserId": {
+                    "type": Sequelize.INTEGER,
                     "onUpdate": "CASCADE",
                     "onDelete": "CASCADE",
                     "references": {
                         "model": "Users",
-                        "key": "uuid"
+                        "key": "id"
                     },
                     "primaryKey": true
                 }

@@ -1,0 +1,41 @@
+<div class = "container">
+  <h1>Registration</h1>
+  <form id="registerForm" method="post" action="/api/user">
+    <div class="form-group">
+      <label class="col-form-label" for="username">Username</label>
+      <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+    </div>
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+    </div>
+
+    <div class="form-group">
+      <label for="passwordMatch">Re-Enter Password</label>
+      <input type="password" class="form-control" id="passwordMatch" name="passwordMatch" placeholder="Password">
+    </div>
+    <div class="form-group">
+      <label class="col-form-label" for="age">Age</label>
+      <input type="number" class="form-control" id="age" name="age" placeholder="Age">
+    </div>
+    <div class="form-group">
+      <label class="col-form-label" for="gender">Gender</label>
+  		<select class="form-control" id="gender" name="gender">
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="col-form-label" for="location">Location</label>
+      <input type="text" class="form-control" id="location" name="location" placeholder="Location">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<script src="/assets/js/register.js"></script>

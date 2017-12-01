@@ -4,7 +4,6 @@ var express = require('express');
 var router = express.Router();
 var rootDir = { root: __dirname + '/..' };
 
-
 // default route for index
 router.get("/", function(req, res) {
     res.render("index");
