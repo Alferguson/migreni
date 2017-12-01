@@ -11,7 +11,7 @@ router.get("/api/user/:id", function(req, res) {
     // display all data where user id = database id
     where: {
       uuid: req.params.id
-    },
+    }
   }).then(function(dbUser) {
   	// res.sendFile()
     // display on handlebars, may not work
@@ -25,6 +25,8 @@ router.get("/api/user/:id", function(req, res) {
 router.post("/api/user", function(req, res) {
   db.User.create({
     username: req.body.username,
+    password_hash: req.body.password_hash,
+    password: req.body.password,
     email: req.body.email,
     gender: req.body.gender,
     age: req.body.age,
