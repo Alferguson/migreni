@@ -106,6 +106,7 @@ $(document.body).ready(function() {
         }
     }
 
+// MY STUFFFF
 
 
 
@@ -169,6 +170,72 @@ $(document.body).ready(function() {
           })
         })
       });
+
+
+
+
+// ALYSSAS STUFF
+    $("#submit").on("click", function() {
+
+       var dateVal = $("#date-val").val() == undefined ? '' : $("#date-val").val().trim();
+
+              if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
+              var migraine = {
+                  intensity: $("#intensity-val").val() == undefined ? '' : $("#intensity-val").val().trim(),
+                  location: $("#weather-city").text(),
+                  date: dateVal,
+                  trigger: $("#trigger-val").val() == undefined ? '' : $("#trigger-val").val().trim()
+              };
+
+              // TODO: check for case when they use same medication
+              var preventativeName = "";
+              if ($("#q4").val()) { // their preventative has changed
+                  preventativeName = $("#q5").val() == undefined ? '' : $("#q5").val().trim();
+              }
+              var acuteName = "";
+              if ($("#q7").val()) { // their acute has changed
+                  acuteName = $("#q8").val() == undefined ? '' : $("#q8").val().trim();
+              }
+        var preventTreatment = {
+            name: preventativeName,
+            acute: false
+
+        };
+        var acuteTreatment = {
+            name: acuteName,
+            acute: true
+        };
+
+        $.ajax("/api/migraines/" + userId, {
+            type: "POST",
+            data: migraine
+        }).then(function(resultMigraine) {
+            console.log(resultMigraine);
+            var migraineId = resultMigraine.id
+            $.ajax("/api/weather/" + migraineId, {
+                type: "POST",
+                data: currentWeather
+            }).done(function(resultWeather) {
+                console.log(resultWeather);
+            });
+
+            $.ajax("/api/treatments/" + migraineId, {
+                type: "POST",
+                data: preventTreatment
+            }).done(function(resultTreatment) {
+                console.log(resultTreatment);
+            });
+            $.ajax("/api/treatments/" + migraineId, {
+                type: "POST",
+                data: acuteTreatment
+            }).done(function(resultTreatment) {
+                console.log(resultTreatment);
+            });
+        });
+
+
+
+// END OF ALYSSASS stuff
     });
   });
   // END OF SUBMIT

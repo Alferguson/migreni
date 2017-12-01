@@ -1,20 +1,24 @@
 
 $(document.body).ready(function() {
-    $("#login").on("click", function() {
-        var user = {
-            username: "akmac",
-            email: "alyssakeimach@gmail.com",
-            gender: "F",
-            age: 24,
-            location: "Oakland, CA"
+    console.log("something");
+   $("#submit-login").on("click", function(event) {
+        event.preventDefault();
+        var newUser = {
+          username: $("#username").val(),
+          password: $("#password").val(),
+          email: $("#email").val(),
+          age: $("#age").val(),
+          gender: $("#intensity-val").val(),
         };
-        console.log(user);
+        console.log(newUser)
+
         $.ajax("/api/user", {
             type: "POST",
-            data: user
-        }).then(function(result) {
-            console.log("sent " + user);
-        });
+            data: newUser
+        })
+        // .then(function(result) {
+        //     console.log("sent " + newUser);
+        // });
 
     });
 })

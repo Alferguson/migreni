@@ -120,15 +120,15 @@
                     "allowNull": false,
                     "seqType": "Sequelize.DATE"
                 },
-                "UserUuid": {
+                "UserId": {
                     "allowNull": false,
                     "references": {
                         "model": "Users",
-                        "key": "uuid"
+                        "key": "id"
                     },
                     "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
-                    "seqType": "Sequelize.UUID"
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -230,13 +230,18 @@
         "Users": {
             "tableName": "Users",
             "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "seqType": "Sequelize.INTEGER"
+                },
                 "uuid": {
                     "allowNull": false,
                     "defaultValue": {
                         "internal": true,
                         "value": "Sequelize.UUIDV1"
                     },
-                    "primaryKey": true,
                     "seqType": "Sequelize.UUID"
                 },
                 "username": {
@@ -252,7 +257,7 @@
                     },
                     "seqType": "Sequelize.STRING(40)"
                 },
-                "password_hash": {
+                "password": {
                     "seqType": "Sequelize.STRING"
                 },
                 "email": {
@@ -297,15 +302,15 @@
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "UserUuid": {
+                "UserId": {
                     "primaryKey": true,
                     "references": {
                         "model": "Users",
-                        "key": "uuid"
+                        "key": "id"
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "seqType": "Sequelize.UUID"
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []

@@ -41,7 +41,7 @@ router.post("/api/migraines/:id", function(req, res) {
     location: req.body.location,
     date: req.body.date,
     trigger: req.body.trigger,
-    UserUuid: req.params.id
+    UserId: req.params.id
   }).then(function(dbMigraine) {
     // HOW TO target user ID
     res.json(dbMigraine);
