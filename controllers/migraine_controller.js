@@ -5,7 +5,7 @@ var path = require("path");
 
 // GET route to display all migraine data when user clicks "Display previous migraines"
 router.get("/api/migraines/:id", function(req, res) {
-  db.Migraine.findAll({
+  db.MigraineTreatment.findAll({
     // display all migraines for id
     where: {
       UserUuid: req.params.id

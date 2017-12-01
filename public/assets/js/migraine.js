@@ -68,16 +68,16 @@ $(document.body).ready(function() {
 
         var dateVal = $("#date-val").val().trim();
         if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
-        var responses = {
+        var migraines = {
             intensity: $("#intensity-val").val().trim(),
             location: $("#weather-city").text(),
             date: dateVal,
             trigger: $("#trigger-val").val().trim()
         };
-        console.log(responses);
+        console.log(migraines);
         $.ajax("/api/migraines/" + userId, {
             type: "POST",
-            data: responses
+            data: migraines
         }).then(function(resultMigraine) {
             console.log(resultMigraine);
             var migraineId = resultMigraine.id
@@ -88,6 +88,61 @@ $(document.body).ready(function() {
                 console.log(resultWeather);
             });
         });
+
+
+
+// put inside first ajax call
+        var chronicTreatment = {
+            name: $("#chronic-treatment").val().trim(),
+            acute: false,
+            dose: {
+                value: $("#chronic-dosage").val().trim()
+            }
+        }
+        // TODO
+        // if function for if the user didn't enter anything for chronic treatment, get last instance of chronic treatment
+        if(chronicTreatment.name === null) {
+            $.ajax("/api/treatments/" + userId, {
+                type: "GET"
+            }).then(function(chronicTreatment) {
+                // afsdaf
+            })
+        }
+
+        var acuteTreatment = {
+            name: $("#acute-treatment").val().trim(),
+            acute: true,
+            dose: {
+                value: $("#acute-dosage").val().trim()
+            }
+        }
+
+        // POST a new chronic treatment and acute treatment
+        $.ajax("/api/treatments/" + userId, {
+            type: "POST",
+            data: chronicTreatment
+        }).then(function(resultChronicTreatment) {
+            console.log(resultChronicTreatment);
+            $.ajax("/api/dose/" + userId, {
+                type: "POST",
+                data: chronicTreatment.dose
+            }).then(function(doseResult) {
+                console.log(doseResult);
+                // acute treatment call
+                $.ajax("/api/treatments/" + userId, {
+                    type: "POST",
+                    data: acuteTreatment
+                }).then(function(resultAcuteTreatment) {
+                    console.log(resultAcuteTreatment);
+                    // acute treatment call
+                    $.ajax("/api/dose/" + userId, {
+                        type: "POST",
+                        data: acuteTreatment.dose
+                    }).then(function(doseResult) {
+                        console.log(doseResult);
+                    })
+                })
+            })
+        });
     });
 });
-
