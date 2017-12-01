@@ -8,7 +8,7 @@ router.get("/api/migraines/:id", function(req, res) {
   db.MigraineTreatment.findAll({
     // display all migraines for id
     where: {
-      UserUuid: req.params.id
+      MigraineId: req.params.id
     },
     include: [
       {
@@ -55,7 +55,13 @@ router.put("/api/migraines/:id", function(req, res) {
     {    
       where: {
         id: req.params.id
-    }
+      },
+      include: [
+        {
+          model: db.Treatment,
+          include: [db.Dose]
+        }
+      ]  
   }).then(function(dbMigraine) {
     res.json(dbMigraine);
 
