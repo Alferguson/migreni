@@ -81,7 +81,7 @@ $(document.body).ready(function() {
       location: $("#weather-city").text(),
       date: dateVal,
       trigger: $("#trigger-val").val() == undefined ? '' : $("#trigger-val").val().trim(),
-      // currentWeather,
+      currentWeather,
       chronicTreatment: {
         treatment_name: $("#chronic-treatment").val() == undefined ? '' : $("#chronic-treatment").val().trim(),
         acute: false,

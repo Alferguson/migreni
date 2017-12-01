@@ -29,33 +29,28 @@ router.get("/api/migraines/:id", function(req, res) {
 // POST route to create new migraines when user clicks submit
 router.post("/api/migraines/:id", function(req, res) {
   // grab data from 4 questions, WHAT DO ABOUT MEDS AND WEATHER???
-  db.Migraine.create({
+  var newMigraine = db.Migraine.create({
+    UserId: req.params.id,
     intensity: req.body.intensity,
     location: req.body.location,
     date: req.body.date,
     trigger: req.body.trigger
-    // include: [
-    //   {
-    //     model: db.Weather.create({
-    //       temp: req.body.currentWeather.temp,
-    //       humidity: req.body.currentWeather.humidity,
-    //       precip: req.body.currentWeather.precip
-    //     })
-    //   }
-    // ]  
-  }).then(function(dbMigraine) {
-    // HOW TO target user ID
-    res.json(dbMigraine);
-    db.Migraine.addTreatment({
-      treatment_name: req.body.name,
-      acute: req.body.acute,
-      dose: req.body.dose,
-      dose_unit: req.body.bose_unit  
-    }).then(function(dbTreatment) {
-      // HOW TO target user ID
-      res.json(dbTreatment);
-    })
   });
+  db.Weather.create({
+    MigraineId: newMigraine.id,
+    temp: req.body.currentWeather.temp,
+    humidity: req.body.currentWeather.humidity,
+    precip: req.body.currentWeather.precip
+  });
+  newMigraine.addTreatment({
+    treatment_name: req.body.name,
+    acute: req.body.acute,
+    dose: req.body.dose,
+    dose_unit: req.body.bose_unit  
+  }).then(function(dbTreatment) {
+    // HOW TO target user ID
+    res.json(dbTreatment);
+  })
 });  
 
 // // PUT route to update previous migraines
