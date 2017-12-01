@@ -19,6 +19,14 @@
   </div>
 </div>
   <div class="container-fluid">
+
+    {{#if errors}}
+      {{#each errors}}
+        <div class="alert alert-danger" role="alert">
+          {{errors.msg}}
+        </div>
+      {{/each}}
+    {{/if}}
     <div class="col-md-6">
       <h1>Sign Up</h1>
       <!--  <p>It's Free</p> -->
@@ -47,6 +55,7 @@
             <label class="lable">Confirm Password</label>
             <br>
             <input id="confirmpass" type="password" name="passwordMatch" class="form-control" placeholder="Re-enter Password" required>
+            <small id="passwordMismatch" class="error form-text text-danger" >Passwords must match</small>
           </div>
         </div>
         <br>
