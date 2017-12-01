@@ -7,9 +7,14 @@ const expressValidator = require("express-validator");
 const passport = require("passport");
 const saltRounds = 10;
 
+router.get("/register", function(req, res) {
+  res.render("register", {title: "Registration"});
+})
 
 // GET route to display user name at user's page
 router.get("/api/user/:id", function(req, res) {
+  console.log(req.user);
+  console.log(req.isAuthenticated());
   db.User.findOne({
     // display all data where user id = database id
     where: {
@@ -21,6 +26,8 @@ router.get("/api/user/:id", function(req, res) {
     // res.json(dbUser).render("index", { user: dbUser });
     res.json(dbUser).sendFile(path.join(__dirname, "../views/test.html"));
 
+  }).catch(function(err) {
+
   });
 });
 
@@ -31,11 +38,10 @@ router.post("/api/user", function(req, res) {
     req.body.password = hash;
     db.User.create(req.body).then(function(dbUser) {
       // HOW TO target user ID
-      var user_id = dbUser.id;
       req.login(dbUser, function(err) {
         if (err) throw err;
-        console.log("logged in " + user_id);
-        console.log(req.user);
+        console.log("logged in " + req.user.id);
+        console.log("req.user name " + req.user.username);
         return res.redirect("/api/user/" + dbUser.id);
       });
     }).catch(function(err) {
