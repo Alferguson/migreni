@@ -68,16 +68,36 @@ $(document.body).ready(function() {
 
         var dateVal = $("#date-val").val().trim();
         if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
-        var responses = {
+        var migraine = {
             intensity: $("#intensity-val").val().trim(),
             location: $("#weather-city").text(),
             date: dateVal,
             trigger: $("#trigger-val").val().trim()
         };
-        console.log(responses);
+
+        // TODO: check for case when they use same medication
+        var preventativeName = "";
+        if ($("#q4").val().trim()) { // their preventative has changed
+            preventativeName = $("#q5").val().trim();
+        }
+        var acuteName = "";
+        if ($("#q7").val().trim()) { // their acute has changed
+            acuteName = $("#q8").val().trim();
+        }
+
+        var preventTreatment = {
+            name: preventativeName,
+            acute: false
+
+        };
+        var acuteTreatment = {
+            name: acuteName,
+            acute: true
+        };
+
         $.ajax("/api/migraines/" + userId, {
             type: "POST",
-            data: responses
+            data: migraine
         }).then(function(resultMigraine) {
             console.log(resultMigraine);
             var migraineId = resultMigraine.id
@@ -86,6 +106,19 @@ $(document.body).ready(function() {
                 data: currentWeather
             }).done(function(resultWeather) {
                 console.log(resultWeather);
+            });
+
+            $.ajax("/api/treatments/" + migraineId, {
+                type: "POST",
+                data: preventTreatment
+            }).done(function(resultTreatment) {
+                console.log(resultTreatment);
+            });
+            $.ajax("/api/treatments/" + migraineId, {
+                type: "POST",
+                data: acuteTreatment
+            }).done(function(resultTreatment) {
+                console.log(resultTreatment);
             });
         });
     });
