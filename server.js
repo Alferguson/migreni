@@ -15,7 +15,7 @@ var expressValidator = require("express-validator");
 var session = require("express-session");
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var passport = require("passport");
-// var LocalStrategy = require("passport-local").Strategy;
+var LocalStrategy = require("passport-local").Strategy;
 var bcrypt = require('bcrypt');
 
 // Sets up the Express App
@@ -43,39 +43,42 @@ app.use(session({
   store: new SequelizeStore({
     db: db.sequelize,
     checkExpirationInterval: 15 * 60 * 1000, // The interval at which to cleanup expired sessions in milliseconds.
-  	expiration: 24 * 60 * 60 * 1000  // The maximum age (in milliseconds) of a valid session.
+    expiration: 24 * 60 * 60 * 1000 // The maximum age (in milliseconds) of a valid session.
   }),
   resave: false,
-  // saveUninitialized: true,
+  saveUninitialized: false,
   // cookie: { secure: false }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// passport.use(new LocalStrategy((username, password, done) => {
+passport.use(new LocalStrategy(
+  function(username, password, done) {
 
-//   db.User.findAll({
-//   	attributes: [id, password],
-//   	where: 
-//   		{username: username}
-//   },
-//    (results) => {
+    db.User.findAll({
+      attributes: ["id", "password", "username", "uuid"],
+      where: { username: username }
+    }).then(function(results) {
 
-//     if (results.length === 0) {
-//       return done(null, false);
-//     } else {
-//       const hash = results[0].password.toString();
+      if (results.length === 0) {
+        return done(null, false);
+      } else {
+        const hash = results[0].password.toString();
 
-//       bcrypt.compare(password, hash, (err, response) => {
-//         if (response === true) {
-//           return done(null, { user_id: results[0].id });
-//         } else {
-//           return done(null, false);
-//         }
-//       });
-//     }
-//   });
-// }));
+        bcrypt.compare(password, hash, function(err, response){
+          if (response === true) {
+            return done(null, { 
+            	id: results[0].id,
+            	username: results[0].username,
+            	uuid: results[0].uuid 
+            });
+          } else {
+            return done(null, false);
+          }
+        });
+      }
+    });
+  }));
 
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));

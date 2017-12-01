@@ -5,20 +5,30 @@ var path = require("path");
 var bcrypt = require('bcrypt');
 const expressValidator = require("express-validator");
 const passport = require("passport");
+var authCheck = require("../authCheck.js");
 const saltRounds = 10;
 
 router.get("/register", function(req, res) {
   res.render("register", {title: "Registration"});
+});
+
+router.get("/session", authCheck(), function(req, res) {
+  res.render("sessionTest", {
+    title: "Session Test",
+    id: req.user.id,
+    name: req.user.username,
+    uuid: req.user.uuid
+  })
 })
 
 // GET route to display user name at user's page
-router.get("/api/user/:id", function(req, res) {
+router.get("/api/user", authCheck(), function(req, res) {
   console.log(req.user);
   console.log(req.isAuthenticated());
   db.User.findOne({
     // display all data where user id = database id
     where: {
-      id: req.params.id
+      id: req.user.id
     },
   }).then(function(dbUser) {
     // res.sendFile()
@@ -38,11 +48,16 @@ router.post("/api/user", function(req, res) {
     req.body.password = hash;
     db.User.create(req.body).then(function(dbUser) {
       // HOW TO target user ID
-      req.login(dbUser, function(err) {
+      var user = {
+        username: dbUser.username,
+        uuid: dbUser.uuid,
+        id: dbUser.id,
+      }
+      req.login(user, function(err) {
         if (err) throw err;
         console.log("logged in " + req.user.id);
         console.log("req.user name " + req.user.username);
-        return res.redirect("/api/user/" + dbUser.id);
+        return res.redirect("/session");
       });
     }).catch(function(err) {
 
@@ -50,6 +65,22 @@ router.post("/api/user", function(req, res) {
   });
 });
 
+router.get("/login", function(req,res) {
+  res.render("loginPage", {title: "Login"})
+});
+
+router.post("/login", 
+  passport.authenticate('local', {
+    successRedirect: '/session',
+    failureRedirect: '/login'
+  }
+));
+
+router.get("/logout", function(req,res) {
+  req.logout();
+  req.session.destroy();
+  res.redirect("/");
+});
 
 passport.serializeUser((user_id, done) => {
   done(null, user_id);
