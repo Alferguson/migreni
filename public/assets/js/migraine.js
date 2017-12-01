@@ -6,8 +6,6 @@ function toFahrenheit(kelvin) {
 
 
 $(document.body).ready(function() {
-
-
     var url = window.location.href;
     // Get the user id from the url
     // In localhost:8080/user/id
@@ -145,4 +143,27 @@ $(document.body).ready(function() {
             })
         });
     });
+    // END OF SUBMIT
+
+  // FUNCTION TO GET MIGRAINE DATA AND SHOW IT
+  function createMigraineData(migraineData) {
+    console.log("author data", migraineData)
+    var newTr = $("<tr>");
+    newTr.data("author", migraineData);
+    newTr.append("<td>" + migraineData.date + "</td>");
+    newTr.append("<td> " + migraineData.intensity + "</td>");
+    newTr.append("<td>" + migraineData.trigger + "</td>");
+    newTr.append("<td><a href='/cms?author_id=" + migraineData.id + "'>Create a Post</a></td>");
+    newTr.append("<td><a style='cursor:pointer;color:red' class='delete-author'>Delete Migraine</a></td>");
+    return newTr;
+  }  
+
+    // show all migraine and assoicated data
+    $("#show").on("click", function() {
+        $.get("/api/migraines/:id" + userId, function(data) {
+            var migraineData = [];
+            migraineData.push(createMigraineData(migraineData));
+        })
+    }    
+
 });
