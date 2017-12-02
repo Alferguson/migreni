@@ -3,13 +3,14 @@ var db = require("../models");
 var router = express.Router();
 var path = require("path");
 var bcrypt = require('bcrypt');
-const expressValidator = require("express-validator");
 const passport = require("passport");
 var authCheck = require("../authCheck.js");
+const check = require('express-validator/check').check;
+const validationResult = require('express-validator/check').validationResult;
 const saltRounds = 10;
 
 router.get("/register", function(req, res) {
-  res.render("register", {title: "Registration"});
+  res.render("register", { title: "Registration" });
 });
 
 router.get("/session", authCheck(), function(req, res) {
@@ -41,42 +42,92 @@ router.get("/api/user", authCheck(), function(req, res) {
   });
 });
 
-// POST route to create new users new account is set up with google OAuth
-router.post("/api/user", function(req, res) {
-  bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
-    // Store hash in your password DB.
-    req.body.password = hash;
-    db.User.create(req.body).then(function(dbUser) {
-      // HOW TO target user ID
-      var user = {
-        username: dbUser.username,
-        uuid: dbUser.uuid,
-        id: dbUser.id,
-      }
-      req.login(user, function(err) {
-        if (err) throw err;
-        console.log("logged in " + req.user.id);
-        console.log("req.user name " + req.user.username);
-        return res.redirect("/session");
-      });
-    }).catch(function(err) {
-
-    });
+function isEntryUnique(set) {
+  return db.User.count({
+    where: set,
+  }).then(function(count) {
+    console.log("found " + count + " of " + set)
+    if (count !== 0) {
+      return false;
+    }
+    return true;
   });
-});
+}
 
-router.get("/login", function(req,res) {
-  res.render("loginPage", {title: "Login"})
-});
+// POST route to create new users new account is set up with google OAuth
+router.post("/register", [
+  check('username')
+  .exists().withMessage('Username is required.')
+  .isLength({ min: 4, max: 15 }).withMessage('Usernames must be between 4 and 15 characters.')
+  .custom((value) =>
+    isEntryUnique({ username: value })
+  ).withMessage('Username is taken')
+  .trim(),
+  check('password')
+  .exists().withMessage('Password is required.')
+  .isLength({ min: 8 }).withMessage('Passwords must be at least 8 characters')
+  .trim(),
+  check('email')
+  .isEmail().withMessage('Email requires valid format.')
+  .trim()
+  .normalizeEmail()
+  .custom((value) => {
+    if (value) {
+      isEntryUnique({ email: value })
+    }
+    return true;
+  }).withMessage('Email is already in use'),
+  check('age')
+  .isNumeric().withMessage('Age must be a number')
+  .toInt()
+  .custom((value) =>
+    value > 0
+  ).withMessage('Age must be positive'),
+], function(req, res) {
 
-router.post("/login", 
-  passport.authenticate('local', {
-    successRedirect: '/session',
-    failureRedirect: '/login'
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    res.render('index', { errors: errors.array(), loggedIn: req.isAuthenticated() });
+  } else {
+    bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+      // Store hash in your password DB.
+      req.body.password = hash;
+      db.User.create(req.body).then(function(dbUser) {
+        // HOW TO target user ID
+        var user = {
+          username: dbUser.username,
+          uuid: dbUser.uuid,
+          id: dbUser.id,
+        }
+        req.login(user, function(err) {
+          if (err) throw err;
+          console.log("logged in " + req.user.id);
+          console.log("req.user name " + req.user.username);
+          return res.redirect("/user/" + req.user.id);
+        });
+      }).catch(function(err) {
+
+      });
+    });
   }
-));
+});
 
-router.get("/logout", function(req,res) {
+router.get("/login", function(req, res) {
+  res.render("loginPage", { title: "Login" })
+});
+
+router.get("/loginSuccess", function(req, res) {
+  res.redirect("/user/" + req.user.id);
+});
+
+router.post("/login",
+  passport.authenticate('local', {
+    successRedirect: '/loginSuccess',
+    failureRedirect: '/login'
+  }));
+
+router.get("/logout", function(req, res) {
   req.logout();
   req.session.destroy();
   res.redirect("/");
