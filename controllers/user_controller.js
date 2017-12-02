@@ -96,7 +96,6 @@ router.post("/register", [
         // HOW TO target user ID
         var user = {
           username: dbUser.username,
-          uuid: dbUser.uuid,
           id: dbUser.id,
         }
         req.login(user, function(err) {

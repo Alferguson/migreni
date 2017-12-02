@@ -68,8 +68,7 @@ passport.use(new LocalStrategy(
           if (response === true) {
             return done(null, { 
             	id: results[0].id,
-            	username: results[0].username,
-            	id: results[0].id 
+            	username: results[0].username
             });
           } else {
             return done(null, false);

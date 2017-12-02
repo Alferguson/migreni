@@ -159,35 +159,6 @@
             },
             "indexes": []
         },
-        "texts": {
-            "tableName": "texts",
-            "schema": {
-                "id": {
-                    "allowNull": false,
-                    "primaryKey": true,
-                    "autoIncrement": true,
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "name": {
-                    "seqType": "Sequelize.STRING"
-                },
-                "text": {
-                    "seqType": "Sequelize.TEXT"
-                },
-                "value": {
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "seqType": "Sequelize.DATE"
-                }
-            },
-            "indexes": []
-        },
         "Treatments": {
             "tableName": "Treatments",
             "schema": {
@@ -222,6 +193,9 @@
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
+                    "defaultValue": {
+                        "value": 1
+                    },
                     "seqType": "Sequelize.INTEGER"
                 }
             },
@@ -246,6 +220,7 @@
                 },
                 "username": {
                     "allowNull": false,
+                    "unique": true,
                     "validate": {
                         "len": {
                             "args": [
@@ -348,6 +323,14 @@
                 "precip": {
                     "seqType": "Sequelize.DECIMAL"
                 },
+                "createdAt": {
+                    "allowNull": false,
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "seqType": "Sequelize.DATE"
+                },
                 "MigraineId": {
                     "allowNull": false,
                     "references": {
@@ -362,5 +345,5 @@
             "indexes": []
         }
     },
-    "revision": 1
+    "revision": 2
 }
