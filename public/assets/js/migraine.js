@@ -108,6 +108,17 @@ $(document.body).ready(function() {
       data: migraine
     }).then(function(resultMigraine) {
       $("#migraine-success").modal("toggle");
+      $("#q1").val("");
+      $("#q4").val("");
+      $("#q7").val("");
+      $("#date-val").val("");
+      $("#intensity-val").val("");
+      $("#chronic-treatment").val("");
+      $("#chronic-dosage").val("");
+      $("#acute-treatment").val("");
+      $("#acute-dosage").val("");
+      $("#trigger-val").val("");
+
       console.log(resultMigraine);
     });
   });  

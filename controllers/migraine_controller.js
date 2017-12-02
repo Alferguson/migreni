@@ -41,13 +41,13 @@ router.post("/api/migraines/:id", function(req, res) {
       temp: req.body.currentWeather.temp,
       humidity: req.body.currentWeather.humidity,
       precip: req.body.currentWeather.precip
-    }).then(function(dbWeather) {
+    // }).then(function(dbWeather) {
       // res.json(dbWeather);
     });  
     // if function to not POST chronic treatment data if chronic treatment is not entered
-    if (req.body.chronicTreatment.treatment_name === "" && req.body.acuteTreatment.treatment_name === "") {
-      return;
-    } else {
+    // if (req.body.chronicTreatment.treatment_name === "" && req.body.acuteTreatment.treatment_name === "") {
+    //   return;
+    // } else {
       // to ADD chronic treatment
       db.Treatment.create({
         treatment_name: req.body.chronicTreatment.treatment_name,
@@ -59,7 +59,7 @@ router.post("/api/migraines/:id", function(req, res) {
         db.MigraineTreatment.create({
           TreatmentId: dbChronicTreatment.id,
           MigraineId: dbMigraine.id
-        })
+        });
       });
       // to ADD acute treatment
       db.Treatment.create({
@@ -72,11 +72,11 @@ router.post("/api/migraines/:id", function(req, res) {
         db.MigraineTreatment.create({
           TreatmentId: dbAcuteTreatment.id,
           MigraineId: dbMigraine.id
-        })
+        });
       });
-    }
-    res.end();   
-  })
+    // });
+    res.json(dbMigraine);   
+  });
 });   
 
 // // PUT route to update previous migraines
