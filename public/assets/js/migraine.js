@@ -66,17 +66,13 @@ $(document.body).ready(function() {
     });
   }
 
-  // // function to get last chronic treatment value for user
-  // $.get("/api/migraines/" + userId, function(chronicTreatment) {
-  //   ctn = chronicTreatment.treatment_name;
-  //   ctd = chronicTreatment.dose;
-  // });
-
-    $.get("/api/migraines/" + userId, function(data) {
-      var migraineData = [];
-      console.log(data);
-      // migraineData.push(getMigraineData(migraineData));
-    })
+  // function to get last chronic treatment value for user
+  $.get("/api/migraines1/" + userId, function(chronicTreatment) {
+    ctn = chronicTreatment.Treatments[0].treatment_name;
+    ctd = chronicTreatment.Treatments[0].dose;
+    console.log(ctn);
+    console.log(ctd);
+  });
 
   // on submit btn click
   $("#submit-survey").on("click", function(event) {

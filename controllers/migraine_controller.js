@@ -25,26 +25,28 @@ router.get("/api/migraines/:id", function(req, res) {
   });
 });
 
-// // GET route to get data on treatment name and dose for chronic
-// router.get("/api/migraines/:id", function(req, res) {
-//   db.Migraine.findAll({
-//     // display all migraines for id
-//     where: {
-//       UserId: req.params.id
-//     },
-//     order: [
-//       ["createdAt", "DESC"]
-//     ]
-//   }).then(function(dbMigraine) {
-//     dbMigraine.getTreatment({
-//       where: {
-//         acute: false
-//       }
-//     }).then(function(dbChronicTreatment) {
-//       res.json(dbChronicTreatment);
-//     })
-//   });
-// });
+// GET route to get data on treatment name and dose for chronic if null
+router.get("/api/migraines1/:id", function(req, res) {
+  db.Migraine.findOne({
+    // display all migraines for id
+    where: {
+      UserId: req.params.id
+    },
+    include: [
+      {
+        model: db.Treatment,
+        where: {
+          acute: false
+        }
+      }
+    ],
+    order: [
+      ["createdAt", "DESC"]
+    ]
+  }).then(function(dbMigraine) {
+    res.json(dbMigraine);
+  });
+});
 
 
 // POST route to create new migraines when user clicks submit
