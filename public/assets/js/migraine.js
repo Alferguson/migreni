@@ -6,6 +6,8 @@ function toFahrenheit(kelvin) {
 
 
 $(document.body).ready(function() {
+  var ctn;
+  var ctd;
   var updating = false;
   var url = window.location.href;
   // Get the user id from the url
@@ -64,6 +66,18 @@ $(document.body).ready(function() {
     });
   }
 
+  // // function to get last chronic treatment value for user
+  // $.get("/api/migraines/" + userId, function(chronicTreatment) {
+  //   ctn = chronicTreatment.treatment_name;
+  //   ctd = chronicTreatment.dose;
+  // });
+
+    $.get("/api/migraines/" + userId, function(data) {
+      var migraineData = [];
+      console.log(data);
+      // migraineData.push(getMigraineData(migraineData));
+    })
+
   // on submit btn click
   $("#submit-survey").on("click", function(event) {
     event.preventDefault();
@@ -79,9 +93,9 @@ $(document.body).ready(function() {
       trigger: $("#trigger-val").val() == undefined ? '' : $("#trigger-val").val().trim(),
       currentWeather,
       chronicTreatment: {
-        treatment_name: $("#chronic-treatment").val() == undefined ? '' : $("#chronic-treatment").val().trim(),
+        treatment_name: $("#chronic-treatment").val() == undefined ? ctn : $("#chronic-treatment").val().trim(),
         acute: false,
-        dose: $("#chronic-dosage").val() == undefined ? '' : $("#chronic-dosage").val().trim(),
+        dose: $("#chronic-dosage").val() == undefined ? ctd : $("#chronic-dosage").val().trim(),
         dose_unit: "mg"
       },
       acuteTreatment: {
@@ -92,20 +106,13 @@ $(document.body).ready(function() {
       }
     };
 
-    if (migraine.chronicTreatment.treatment_name === "") {
-      $.ajax("/migraines/" + userId, {
-        type: "GET"
-      }).then(function(chronicTreatment) {
-        migraine.chronicTreatment.treatment_name = chronicTreatment.treatment_name;
-        migraine.chronicTreatment.dose = chronicTreatment.dose;
-      });
-    };
 
+    // POST new migraine and assoicated data
     $.ajax("/api/migraines/" + userId, {
       type: "POST",
       data: migraine
     }).then(function(resultMigraine) {
-      console.log("dsgsdfg");
+      console.log("Migraine data has been logged");
     });
   });  
   // END OF SUBMIT
@@ -133,9 +140,10 @@ $(document.body).ready(function() {
 
   // show all migraine and assoicated data
   $("#show").on("click", function() {
-    $.get("/api/migraines/:id" + userId, function(data) {
+    $.get("/api/migraines/" + userId, function(data) {
       var migraineData = [];
-      migraineData.push(getMigraineData(migraineData));
+      console.log(data);
+      // migraineData.push(getMigraineData(migraineData));
     })
   });    
 
