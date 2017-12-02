@@ -1,5 +1,75 @@
 {
     "tables": {
+        "Categories": {
+            "tableName": "Categories",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "name": {
+                    "allowNull": false,
+                    "validate": {
+                        "len": {
+                            "args": [
+                                1
+                            ],
+                            "msg": "Category name must be at least 1 character"
+                        }
+                    },
+                    "seqType": "Sequelize.STRING(40)"
+                }
+            },
+            "indexes": []
+        },
+        "Doses": {
+            "tableName": "Doses",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "value": {
+                    "allowNull": false,
+                    "validate": {
+                        "len": {
+                            "args": [
+                                1
+                            ],
+                            "msg": "Dose value cannot be empty."
+                        }
+                    },
+                    "seqType": "Sequelize.DECIMAL"
+                },
+                "unit": {
+                    "allowNull": false,
+                    "validate": {
+                        "len": {
+                            "args": [
+                                1
+                            ],
+                            "msg": "Dose unit cannot be empty."
+                        }
+                    },
+                    "seqType": "Sequelize.STRING(20)"
+                },
+                "TreatmentId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "Treatments",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
         "Migraines": {
             "tableName": "Migraines",
             "schema": {
@@ -23,6 +93,9 @@
                     },
                     "seqType": "Sequelize.INTEGER"
                 },
+                "comment": {
+                    "seqType": "Sequelize.TEXT"
+                },
                 "location": {
                     "seqType": "Sequelize.STRING"
                 },
@@ -32,6 +105,9 @@
                         "value": "Sequelize.NOW"
                     },
                     "seqType": "Sequelize.DATE"
+                },
+                "length": {
+                    "seqType": "Sequelize.INTEGER"
                 },
                 "trigger": {
                     "seqType": "Sequelize.STRING"
@@ -92,7 +168,7 @@
                     "autoIncrement": true,
                     "seqType": "Sequelize.INTEGER"
                 },
-                "treatment_name": {
+                "name": {
                     "allowNull": false,
                     "validate": {
                         "len": {
@@ -109,29 +185,18 @@
                     "allowNull": false,
                     "seqType": "Sequelize.BOOLEAN"
                 },
-                "dose": {
+                "CategoryId": {
                     "allowNull": true,
-                    "validate": {
-                        "len": {
-                            "args": [
-                                1
-                            ],
-                            "msg": "Dose value cannot be empty."
-                        }
+                    "references": {
+                        "model": "Categories",
+                        "key": "id"
                     },
-                    "seqType": "Sequelize.DECIMAL"
-                },
-                "dose_unit": {
-                    "allowNull": true,
-                    "validate": {
-                        "len": {
-                            "args": [
-                                1
-                            ],
-                            "msg": "Dose unit cannot be empty."
-                        }
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "defaultValue": {
+                        "value": 1
                     },
-                    "seqType": "Sequelize.STRING(20)"
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -144,6 +209,14 @@
                     "primaryKey": true,
                     "autoIncrement": true,
                     "seqType": "Sequelize.INTEGER"
+                },
+                "uuid": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV1"
+                    },
+                    "seqType": "Sequelize.UUID"
                 },
                 "username": {
                     "allowNull": false,
@@ -264,7 +337,7 @@
                         "model": "Migraines",
                         "key": "id"
                     },
-                    "onDelete": "CASCADE",
+                    "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
                 }
@@ -272,5 +345,5 @@
             "indexes": []
         }
     },
-    "revision": 3
+    "revision": 2
 }

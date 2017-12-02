@@ -3,15 +3,15 @@ var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var methodOverride = require('method-override');
 var exphbs = require("express-handlebars");
-var doseRoutes = require("./controllers/dose_controller");
+// var doseRoutes = require("./controllers/dose_controller");
 var migraineRoutes = require("./controllers/migraine_controller");
-var treatmentRoutes = require("./controllers/treatment_controller");
+// var treatmentRoutes = require("./controllers/treatment_controller");
 var userRoutes = require("./controllers/user_controller");
-var weatherRoutes = require("./controllers/weather_controller");
+// var weatherRoutes = require("./controllers/weather_controller");
 var htmlRoutes = require("./controllers/html_controller");
 var db = require("./models");
 //Authentication 
-var expressValidator = require("express-validator");
+var validator = require('express-validator');
 var session = require("express-session");
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var passport = require("passport");
@@ -27,11 +27,10 @@ var PORT = process.env.PORT || 8080;
 var db = require("./models");
 
 // Sets up the Express app to handle data parsing
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
-app.use(expressValidator());
+app.use(bodyParser.text());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(validator());
 app.use(cookieParser());
 
 // Static directory
@@ -46,7 +45,7 @@ app.use(session({
     expiration: 24 * 60 * 60 * 1000 // The maximum age (in milliseconds) of a valid session.
   }),
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   // cookie: { secure: false }
 }));
 app.use(passport.initialize());
@@ -56,7 +55,7 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
 
     db.User.findAll({
-      attributes: ["id", "password", "username", "uuid"],
+      attributes: ["id", "password", "username", "id"],
       where: { username: username }
     }).then(function(results) {
 
@@ -69,8 +68,7 @@ passport.use(new LocalStrategy(
           if (response === true) {
             return done(null, { 
             	id: results[0].id,
-            	username: results[0].username,
-            	uuid: results[0].uuid 
+            	username: results[0].username
             });
           } else {
             return done(null, false);
@@ -84,11 +82,11 @@ passport.use(new LocalStrategy(
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-app.use("/", doseRoutes);
+// app.use("/", doseRoutes);
 app.use("/", migraineRoutes);
-app.use("/", treatmentRoutes);
+// app.use("/", treatmentRoutes);
 app.use("/", userRoutes);
-app.use("/", weatherRoutes);
+// app.use("/", weatherRoutes);
 app.use("/", htmlRoutes);
 
 

@@ -1,4 +1,5 @@
 $(document.body).ready(function() {
+
   $(".error").hide();
   $("#signup").on("submit",
     function validateRegistration() {
@@ -43,6 +44,5 @@ $(document.body).ready(function() {
           $("#noLocation").show();
           //return false;
       }
-    }
-  );
-})
+    });
+});

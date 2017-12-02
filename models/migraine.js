@@ -14,9 +14,6 @@ module.exports = function(sequelize, DataTypes) {
 				}
 			}
 		},
-		comment: {
-			type: DataTypes.TEXT,
-		},
 		location: {
 			type: DataTypes.STRING,
 		},
@@ -24,15 +21,18 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.DATE,
 			defaultValue: DataTypes.NOW
 		},
-		length: {
-			type: DataTypes.INTEGER,
-		},
+
 		trigger: {
 			type: DataTypes.STRING,
 		}
 	});
 
 	Migraine.associate = function(models) {
+		Migraine.hasOne(models.Weather, {
+			foreignKey: {
+				allowNull: false
+			}
+		})
 		Migraine.belongsTo(models.User, {
 			foreignKey: {
 				allowNull: false

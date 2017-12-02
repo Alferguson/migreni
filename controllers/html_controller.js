@@ -6,7 +6,7 @@ var rootDir = { root: __dirname + '/..' };
 
 // default route for index
 router.get("/", function(req, res) {
-    res.render("index");
+    res.render("index", {loggedIn: req.isAuthenticated() });
 });
 
 // GET route to display the survey page
