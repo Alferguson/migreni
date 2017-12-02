@@ -11,7 +11,7 @@ var userRoutes = require("./controllers/user_controller");
 var htmlRoutes = require("./controllers/html_controller");
 var db = require("./models");
 //Authentication 
-var expressValidator = require("express-validator");
+var validator = require('express-validator');
 var session = require("express-session");
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var passport = require("passport");
@@ -27,11 +27,10 @@ var PORT = process.env.PORT || 8080;
 var db = require("./models");
 
 // Sets up the Express app to handle data parsing
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
-app.use(expressValidator());
+app.use(bodyParser.text());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(validator());
 app.use(cookieParser());
 
 // Static directory
@@ -46,7 +45,7 @@ app.use(session({
     expiration: 24 * 60 * 60 * 1000 // The maximum age (in milliseconds) of a valid session.
   }),
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   // cookie: { secure: false }
 }));
 app.use(passport.initialize());

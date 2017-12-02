@@ -1,81 +1,97 @@
 
 <nav class="navbar navbar-dark bg-dark">
-   <div class="col-md-7">
-   </div>
-   <div class="col-md-5">
-    <form class="form-inline" id="login">
+  <div class="col-md-7"></div>
+  <div align="right" class="col-md-5">
+    {{#unless loggedIn}}
+    <form class="form-inline" id="login" method="post" action="/login">
       <div class="input-group">
         <!-- <span class="input-group-addon" id="basic-addon1">Log in</span> -->
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-        <input type="text" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
-        <button type="button" class="btn btn-primary" id="login-button">Log in</button>
-    </div>
+        <input type="text" class="form-control" name="username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
+        <input type="password" class="form-control" name="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required>
+        <button type="submit" class="btn btn-primary" id="login-button">Log in</button>
       </div>
     </form>
-  </nav>
-    <div class="fluid-container" id="welcome">
-      <div class="col-md-12">
-        <h1 id="main">Welcome To Mígreni</h1>
-        <p>Migreni is an app to Help people with Migrines</p>
-      </div>
-    </div>
-    <div class="container-fluid">
-      <div class="col-md-6 sidebar">
-        <h1>Sign Up</h1>
+    {{/unless}}
+    {{#if loggedIn}}
+      <a href="/logout"><button class="btn btn-primary">Logout</button></a>
+    {{/if}}
+  </div>
+</nav>
+<div class="fluid-container" id="welcome">
+  <div class="col-md-12">
+    <h1 id="main">Welcome To Mígreni</h1>
+    <p>Migreni is an app to Help people with Migrines</p>
+  </div>
+</div>
+  <div class="container-fluid">
+
+    
+    <div class="col-md-6">
+      <h1>Sign Up</h1>
       <!--  <p>It's Free</p> -->
-
-        <form class="container" id="signup" novalidate>
-          <div class="form-row">
-            <div class="col-md-6">
-               <label class="lable">Username</label>
-               <br>
-              <input id="username" type="text" class="form-control" placeholder="UserName" required>
-            </div>
-            <div class="col-md-6">
-               <label class="lable">Password</label>
-               <br>
-              <input id="password" type="text" class="form-control" placeholder="Password" required>
-            </div>        
-          </div>
-          <div class="form-row">
-            <div class="col-md-6">
-              <label class="lable">Confirm Password</label>
-              <br>
-              <input id="confirmpass" type="text" class="form-control" placeholder="Re-enter Password">
-            </div>
-            <div class="col-md-6">
-              <label class="lable">Age</label>
-              <br>
-              <input id="age" type="text" class="form-control" placeholder="Age">
-            </div>
-            
-          </div>
-          <div class="form-row">
-            <div class="col-md-6">
-               <label class="lable">Email</label>
-               <br>
-                 <input id="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-
-            </div>
-            <div class="col-md-6">
-              <label class="lable">Gender</label>
-              <br>
-              <select class="form-control response" id="intensity-val">
-                                   
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                   </select>
-            </div>
-
+      {{#if errors}}
+      {{#each errors}}
+        <div class="alert alert-danger" role="alert">
+          {{this.msg}}
         </div>
-            <div class="form-row">
-            <div class="col"><br>
-              <button type="button" class="btn btn-primary" id="submit-login">Submit</button>
+      {{/each}}
+    {{/if}}
+
+      <form class="container" method="post" action="/register" id="signup" novalidate>
+        <div class="form-row">
+          <div class="col-md-6">
+            <label class="lable">Username</label>
+            <br>
+            <input id="username" type="text" name="username" class="form-control" placeholder="UserName" required>
+          </div>
+          <div class="col-md-6">
+            <label class="lable">Email</label>
+            <br>
+            <input id="email" type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          </div>        
+        </div>
+        <br>
+        <div class="form-row">
+          <div class="col-md-6">
+            <label class="lable">Password</label>
+            <br>
+            <input id="password" type="password" name="password" class="form-control" placeholder="Password" required>
+          </div>
+          <div class="col-md-6">
+            <label class="lable">Confirm Password</label>
+            <br>
+            <input id="confirmpass" type="password" name="passwordMatch" class="form-control" placeholder="Re-enter Password" required>
+            <small id="passwordMismatch" class="error form-text text-danger" >Passwords must match</small>
           </div>
         </div>
+        <br>
+        <div class="form-row">
+          <div class="col-md-2">
+            <label class="lable">Age</label>
+            <br>
+            <input id="age" type="number" name="age" class="form-control" placeholder="Age" required>
           </div>
-        </form>
-      </div>
+          <div class="col-md-4">
+            <label class="lable">Gender</label>
+            <br>
+            <select class="form-control response" name="gender" id="intensity-val" required>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+            <div class="col-md-6">
+            <label class="lable">Location</label>
+            <br>
+            <input id="age" type="text" name="location" class="form-control" placeholder="Location" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col"><br>
+            <button type="submit" class="btn btn-primary" id="submit-login">Submit</button>
+          </div>
+        </div>
+      </form>
     </div>
-  
+  </div>
+</div>
