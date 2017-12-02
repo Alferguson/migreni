@@ -4,31 +4,53 @@ var router = express.Router();
 
 // GET route to display all migraine data when user clicks "Display previous migraines"
 router.get("/api/migraines/:id", function(req, res) {
-  db.MigraineTreatment.findAll({
+  db.Migraine.findAll({
     // display all migraines for id
     where: {
-      MigraineId: req.params.id
+      UserId: req.params.id
     },
     include: [
       {
-        model: db.Treatment,
-        include: [db.Dose]
+        model: db.Treatment
       },
       db.Weather
     ],
     // display by when they were created via descend
     order: [
-      ["date", "DESC"]
+      ["createdAt", "DESC"]
     ]
   }).then(function(dbMigraine) {
     // display on handlebars, may not work
-    res.render("index", { migraine: dbMigraine });
+    res.json(dbMigraine);
   });
 });
 
+// GET route to get data on treatment name and dose for chronic if null
+router.get("/api/migraines1/:id", function(req, res) {
+  db.Migraine.findOne({
+    // display all migraines for id
+    where: {
+      UserId: req.params.id
+    },
+    include: [
+      {
+        model: db.Treatment,
+        where: {
+          acute: false
+        }
+      }
+    ],
+    order: [
+      ["createdAt", "DESC"]
+    ]
+  }).then(function(dbMigraine) {
+    res.json(dbMigraine);
+  });
+});
+
+
 // POST route to create new migraines when user clicks submit
 router.post("/api/migraines/:id", function(req, res) {
-  // grab data from 4 questions, WHAT DO ABOUT MEDS AND WEATHER???
   db.Migraine.create({
     UserId: req.params.id,
     intensity: req.body.intensity,
@@ -44,10 +66,7 @@ router.post("/api/migraines/:id", function(req, res) {
     // }).then(function(dbWeather) {
       // res.json(dbWeather);
     });  
-    // if function to not POST chronic treatment data if chronic treatment is not entered
-    // if (req.body.chronicTreatment.treatment_name === "" && req.body.acuteTreatment.treatment_name === "") {
-    //   return;
-    // } else {
+
       // to ADD chronic treatment
       db.Treatment.create({
         treatment_name: req.body.chronicTreatment.treatment_name,

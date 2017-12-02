@@ -22,6 +22,8 @@ function clearSurveyForm() {
 
 
 $(document.body).ready(function() {
+  var ctn;
+  var ctd;
   var updating = false;
   var url = window.location.href;
   // Get the user id from the url
@@ -101,6 +103,12 @@ $(document.body).ready(function() {
   }
 
 
+  // function to get last chronic treatment value for user
+  $.get("/api/migraines1/" + userId, function(chronicTreatment) {
+    ctn = chronicTreatment.Treatments[0].treatment_name;
+    ctd = chronicTreatment.Treatments[0].dose;
+  });
+
   // on submit btn click
   $("#submit-survey").on("click", function(event) {
     event.preventDefault();
@@ -113,43 +121,35 @@ $(document.body).ready(function() {
       intensity: $("#intensity-val").val() == undefined ? '' : $("#intensity-val").val().trim(),
       location: $("#weather-city").text(),
       date: dateVal,
-      trigger: $("#trigger-val").val() == undefined ? '' : $("#trigger-val").val().trim(),
+      trigger: $("#trigger-val").val() == "" ? '' : $("#trigger-val").val().trim(),
       currentWeather,
       chronicTreatment: {
-        treatment_name: $("#chronic-treatment").val() == undefined ? '' : $("#chronic-treatment").val().trim(),
+        treatment_name: $("#chronic-treatment").val() == "" ? ctn : $("#chronic-treatment").val().trim(),
         acute: false,
-        dose: $("#chronic-dosage").val() == undefined ? '' : $("#chronic-dosage").val().trim(),
+        dose: $("#chronic-dosage").val() == "" ? ctd : $("#chronic-dosage").val().trim(),
         dose_unit: "mg"
       },
       acuteTreatment: {
-        treatment_name: $("#acute-treatment").val() == undefined ? '' : $("#acute-treatment").val().trim(),
+        treatment_name: $("#acute-treatment").val() == "" ? 'N/A' : $("#acute-treatment").val().trim(),
         acute: true,
-        dose: $("#acute-dosage").val() == undefined ? '' : $("#acute-dosage").val().trim(),
+        dose: $("#acute-dosage").val() == "" ? 0 : $("#acute-dosage").val().trim(),
         dose_unit: "mg"
       }
     };
 
-    // TODO
-    // // if function for if the user didn't enter anything for chronic treatment, get last instance of chronic treatment
-    // if(chronicTreatment.name === null) {
-    //   $.ajax("/api/treatments/" + userId, {
-    //     type: "GET"
-    //   }).then(function(chronicTreatment) {
-    //     // afsdaf
-    //   });
-    // }
 
-    // console.log(migraine.chronicTreatment.treatment_name);
+    // POST new migraine and assoicated data
     $.ajax("/api/migraines/" + userId, {
       type: "POST",
       data: migraine
     }).then(function(resultMigraine) {
       $("#migraine-success").modal("toggle");
       clearSurveyForm();
-      console.log(resultMigraine);
+      console.log("Migraine data has been logged");
     });
+  // END OF SUBMIT  
   });  
-  // END OF SUBMIT
+ 
 
   // // FUNCTION TO GET MIGRAINE DATA AND SHOW IT
   // function getMigraineData(migraineData) {
@@ -174,9 +174,10 @@ $(document.body).ready(function() {
 
   // show all migraine and assoicated data
   $("#show").on("click", function() {
-    $.get("/api/migraines/:id" + userId, function(data) {
+    $.get("/api/migraines/" + userId, function(data) {
       var migraineData = [];
-      migraineData.push(getMigraineData(migraineData));
+      console.log(data);
+      // migraineData.push(getMigraineData(migraineData));
     })
   });    
 
