@@ -1,6 +1,5 @@
 
 $(document.body).ready(function() {
-    console.log("something");
    $("#submit-login").on("click", function(event) {
         event.preventDefault();
         var newUser = {

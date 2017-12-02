@@ -1,6 +1,6 @@
 module.exports = function(sequelize, Datatypes) {
   var Treatment = sequelize.define("Treatment", {
-    name: {
+    treatment_name: {
       type: Datatypes.STRING,
       allowNull: false,
       validate: {
@@ -13,6 +13,26 @@ module.exports = function(sequelize, Datatypes) {
     acute: {
       type: Datatypes.BOOLEAN,
       allowNull: false
+    },
+    dose: {
+      type: Datatypes.DECIMAL,
+      allowNull: true,
+      validate: {
+        len: {
+          args: [1],
+          msg: "Dose value cannot be empty."
+        }
+      }
+    },
+    dose_unit: {
+      type: Datatypes.STRING(20),
+      allowNull: true,
+      validate: {
+        len: {
+          args: [1],
+          msg: "Dose unit cannot be empty."
+        }
+      }
     }
   }, {
     timestamps: false
@@ -26,11 +46,6 @@ module.exports = function(sequelize, Datatypes) {
         defaultValue: 1
       }
     });
-
-  	Treatment.hasMany(models.Dose, {
-  		onDelete: 'CASCADE',
-  		as: 'Doses'
-  	});
 
     Treatment.belongsToMany(models.Migraine, {
       through: {model: models.MigraineTreatment}
