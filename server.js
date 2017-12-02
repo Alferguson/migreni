@@ -3,11 +3,11 @@ var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var methodOverride = require('method-override');
 var exphbs = require("express-handlebars");
-var doseRoutes = require("./controllers/dose_controller");
+// var doseRoutes = require("./controllers/dose_controller");
 var migraineRoutes = require("./controllers/migraine_controller");
-var treatmentRoutes = require("./controllers/treatment_controller");
+// var treatmentRoutes = require("./controllers/treatment_controller");
 var userRoutes = require("./controllers/user_controller");
-var weatherRoutes = require("./controllers/weather_controller");
+// var weatherRoutes = require("./controllers/weather_controller");
 var htmlRoutes = require("./controllers/html_controller");
 var db = require("./models");
 //Authentication 
@@ -55,7 +55,7 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
 
     db.User.findAll({
-      attributes: ["id", "password", "username", "uuid"],
+      attributes: ["id", "password", "username", "id"],
       where: { username: username }
     }).then(function(results) {
 
@@ -69,7 +69,7 @@ passport.use(new LocalStrategy(
             return done(null, { 
             	id: results[0].id,
             	username: results[0].username,
-            	uuid: results[0].uuid 
+            	id: results[0].id 
             });
           } else {
             return done(null, false);
@@ -83,11 +83,11 @@ passport.use(new LocalStrategy(
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-app.use("/", doseRoutes);
+// app.use("/", doseRoutes);
 app.use("/", migraineRoutes);
-app.use("/", treatmentRoutes);
+// app.use("/", treatmentRoutes);
 app.use("/", userRoutes);
-app.use("/", weatherRoutes);
+// app.use("/", weatherRoutes);
 app.use("/", htmlRoutes);
 
 

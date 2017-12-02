@@ -17,8 +17,7 @@ router.get("/session", authCheck(), function(req, res) {
   res.render("sessionTest", {
     title: "Session Test",
     id: req.user.id,
-    name: req.user.username,
-    uuid: req.user.uuid
+    name: req.user.username
   })
 })
 
