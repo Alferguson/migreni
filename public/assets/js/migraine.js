@@ -92,23 +92,20 @@ $(document.body).ready(function() {
       }
     };
 
-    // TODO
-    // // if function for if the user didn't enter anything for chronic treatment, get last instance of chronic treatment
-    // if(chronicTreatment.name === null) {
-    //   $.ajax("/api/treatments/" + userId, {
-    //     type: "GET"
-    //   }).then(function(chronicTreatment) {
-    //     // afsdaf
-    //   });
-    // }
+    if (migraine.chronicTreatment.treatment_name === "") {
+      $.ajax("/migraines/" + userId, {
+        type: "GET"
+      }).then(function(chronicTreatment) {
+        migraine.chronicTreatment.treatment_name = chronicTreatment.treatment_name;
+        migraine.chronicTreatment.dose = chronicTreatment.dose;
+      });
+    };
 
-console.log(migraine.chronicTreatment.treatment_name);
     $.ajax("/api/migraines/" + userId, {
       type: "POST",
       data: migraine
     }).then(function(resultMigraine) {
-      console.log(resultMigraine);
-      var migraineId = resultMigraine.id;
+      console.log("dsgsdfg");
     });
   });  
   // END OF SUBMIT

@@ -3,32 +3,53 @@ var db = require("../models");
 var router = express.Router();
 
 // GET route to display all migraine data when user clicks "Display previous migraines"
-router.get("/api/migraines/:id", function(req, res) {
-  db.MigraineTreatment.findAll({
+// router.get("/api/migraines/:id", function(req, res) {
+//   db.MigraineTreatment.findAll({
+//     // display all migraines for id
+//     where: {
+//       MigraineId: req.params.id
+//     },
+//     include: [
+//       {
+//         model: db.Treatment,
+//         include: [db.Dose]
+//       },
+//       db.Weather
+//     ],
+//     // display by when they were created via descend
+//     order: [
+//       ["date", "DESC"]
+//     ]
+//   }).then(function(dbMigraine) {
+//     // display on handlebars, may not work
+//     res.render("index", { migraine: dbMigraine });
+//   });
+// });
+
+// GET route to get data on treatment name and dose for chronic
+router.get("/migraines/:id", function(req, res) {
+  db.Migraine.findOne({
     // display all migraines for id
     where: {
-      MigraineId: req.params.id
+      UserId: req.params.id
     },
-    include: [
-      {
-        model: db.Treatment,
-        include: [db.Dose]
-      },
-      db.Weather
-    ],
-    // display by when they were created via descend
     order: [
-      ["date", "DESC"]
+      [["createdAt", "DESC"]]
     ]
-  }).then(function(dbMigraine) {
-    // display on handlebars, may not work
-    res.render("index", { migraine: dbMigraine });
+  }).success(function(dbMigraine) {
+    dbMigraine.getTreatment({
+      where: {
+        acute: false
+      }
+    }).then(function(dbChronicTreatment) {
+      res.json(dbChronicTreatment);
+    })
   });
 });
 
+
 // POST route to create new migraines when user clicks submit
 router.post("/api/migraines/:id", function(req, res) {
-  // grab data from 4 questions, WHAT DO ABOUT MEDS AND WEATHER???
   db.Migraine.create({
     UserId: req.params.id,
     intensity: req.body.intensity,
