@@ -1,24 +1,18 @@
-
 $(document.body).ready(function() {
-    console.log("something");
-   $("#submit-login").on("click", function(event) {
-        event.preventDefault();
-        var newUser = {
-          username: $("#username").val(),
-          password: $("#password").val(),
-          email: $("#email").val(),
-          age: $("#age").val(),
-          gender: $("#intensity-val").val(),
-        };
-        console.log(newUser)
+  $(".error").hide();
+  $("#signup").on("submit",
+    function validateRegistration() {
+      var username = document.forms["signup"]["username"].value;
+      var password = document.forms["signup"]["password"].value;
+      var password2 = document.forms["signup"]["passwordMatch"].value;
+      var email = document.forms["signup"]["email"].value;
+      var age = document.forms["signup"]["email"].value;
+      var gender = document.forms["signup"]["gender"].value;
+      var location = document.forms["signup"]["location"].value;
 
-        $.ajax("/api/user", {
-            type: "POST",
-            data: newUser
-        })
-        // .then(function(result) {
-        //     console.log("sent " + newUser);
-        // });
-
+      if (password !== password2) {
+        $("#passwordMismatch").show();
+        return false;
+      }
     });
 })

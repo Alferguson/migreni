@@ -8,6 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     username: {
       type: DataTypes.STRING(40),
       allowNull: false,
+      unique: true,
       validate: {
         len: {
           args: [3, 40],
