@@ -1,130 +1,143 @@
 
 <div class="container-fluid">
-    <header class="row">
-        <h1>Mígreni</h1>
-    </header>
-    <div class="row">
-        <!-- sidebar -->
-        <div class="col-md-3 sidebar">
-            <br>
-            <!-- calendar -->
-            <div class="calendar"></div>
-            <br>
-            <!-- weather -->
-            <div class="weather card bg-light">
-                <div class="card-header">Current Weather</div>
-                <div class="card-body">
-                    <h4 class="card-title" id="weather-city">Loading...</h4>
-                    <p class="card-text" id="weather-temp"></p>
-                </div>
-            </div>
-            <br>
+  <header class="row">
+    <h1>Mígreni</h1>
+  </header>
+  <div class="row">
+    <!-- sidebar -->
+    <div class="col-md-3 sidebar">
+      <br>
+      <!-- calendar -->
+      <div class="calendar"></div>
+      <br>
+      <!-- weather -->
+      <div class="weather card bg-light">
+        <div class="card-header">Current Weather</div>
+        <div class="card-body">
+          <h4 class="card-title" id="weather-city">Loading...</h4>
+          <p class="card-text temperature" id="weather-temp"></p>
         </div>
-        <!-- survey -->
-        <div class="col-md-5 survey">
-            <br>
-            <h2>Migraine questions</h2>
-            <form>
-                <br>
-                <div class="form-group">
-                    <label for="q1">Was your migraine today?</label>
-                    <select class="form-control response" id="q1">
-                        <option value=""></option>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
-                </div>
-                <div class="date-visibility">
-                    <div class="form-group">
-                        <label for="date-val">Which day was your migraine?</label>
-                        <input class="response" type="date" id="date-val">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="intensity-val">How intense was your migraine (1: no intensity, 10: extreme intensity)?</label>
-                    <select class="form-control response" id="intensity-val">
-                        <option value=""></option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="q4">Has your preventative drug therapy changed since the last time you entered a migraine?</label>
-                    <select class="form-control response" id="q4">
-                        <option value=""></option>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
-                </div>
-                <div class="meds-1-visibility">
-                    <div class="form-group">
-                        <label for="chronic-treatment">What is your current drug therapy for preventing migraines?</label>
-                        <br>
-                        <input class="response" type="text" id="chronic-treatment">
-                    </div>
-                    <div class="form-group">
-                        <label for="chronic-dosage">What is the dosage for that medication?</label>
-                        <br>
-                        <input class="response" type="text" id="chronic-dosage">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="q7">Have you taken any additional medications or drugs today to help relieve your migraine?</label>
-                    <select class="form-control response" id="q7">
-                        <option value=""></option>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
-                </div>
-                <div class="meds-2-visibility">
-                    <div class="form-group">
-                        <label for="acute-treatment">Which medication?</label>
-                        <br>
-                        <input class="response" type="text" id="acute-treatment">
-                    </div>
-                    <div class="form-group">
-                        <label for="acute-dosage">What is the dosage for that medication?</label>
-                        <br>
-                        <input class="response" type="text" id="acute-dosage">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="trigger-val">If you know the trigger for your migraine, please enter it here.</label>
-                    <br>
-                    <input class="response" type="text" id="trigger-val">
-                </div>
-                <br>
-
-                <!-- Submit Button -->
-                <button type="button" class="btn btn-dark btn-lg" id="submit-survey">Submit</button>
-                <a href="/">
-                    <button type="button" class="btn btn-dark btn-lg">Cancel</button>
-                </a>
-            </form>
-        </div>
-        <!-- charts aside -->
-        <div class="col-md-4 sidebar">
-            <br>
-
-            <canvas id="bar-chart-container" width="400" height="400"></canvas>
-
-            <img class="img-fluid" src="https://www.theatlas.com/i/atlas_H13grQLQ@2x.png" alt="Placeholder 1">
-            <br><br>
-            <img class="img-fluid" src="https://i.stack.imgur.com/qNiO7.png" alt="Placeholder 2">
-        </div>
+      </div>
+      <br>
     </div>
-    <footer class="row">
-        <h1>Timeline</h1>
-    </footer>
+    <!-- survey -->
+    <div class="col-md-5 survey">
+      <br>
+      <h2>Migraine questions</h2>
+      <form>
+        <br>
+        <div class="form-group">
+          <label for="q1">Was your migraine today?</label>
+          <select class="form-control response" id="q1">
+            <option value=""></option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <div class="date-visibility">
+          <div class="form-group">
+            <label for="date-val">Which day was your migraine?</label>
+            <input class="response" type="date" id="date-val">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="intensity-val">How intense was your migraine (1: no intensity, 10: extreme intensity)?</label>
+          <select class="form-control response" id="intensity-val">
+            <option value=""></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="q4">Has your preventative drug therapy changed since the last time you entered a migraine?</label>
+          <select class="form-control response" id="q4">
+            <option value=""></option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <div class="meds-1-visibility">
+          <div class="form-group">
+            <label for="chronic-treatment">What is your current drug therapy for preventing migraines?</label>
+            <br>
+            <input class="response" type="text" id="chronic-treatment">
+          </div>
+          <div class="form-group">
+            <label for="chronic-dosage">What is the dosage for that medication?</label>
+            <br>
+            <input class="response" type="text" id="chronic-dosage">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="q7">Have you taken any additional medications or drugs today to help relieve your migraine?</label>
+          <select class="form-control response" id="q7">
+            <option value=""></option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <div class="meds-2-visibility">
+          <div class="form-group">
+            <label for="acute-treatment">Which medication?</label>
+            <br>
+            <input class="response" type="text" id="acute-treatment">
+          </div>
+          <div class="form-group">
+            <label for="acute-dosage">What is the dosage for that medication?</label>
+            <br>
+            <input class="response" type="text" id="acute-dosage">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="trigger-val">If you know the trigger for your migraine, please enter it here.</label>
+          <br>
+          <input class="response" type="text" id="trigger-val">
+        </div>
+        <br>
+        <!-- Submit Button -->
+        <button type="button" class="btn btn-dark btn-lg" id="submit-survey">Submit</button>
+        <a href="/">
+          <button type="button" class="btn btn-dark btn-lg">Cancel</button>
+        </a>
+      </form>
+    </div>
+    <!-- charts aside -->
+    <div class="col-md-4 sidebar">
+      <br>
+      <canvas id="bar-chart-container" width="400" height="400"></canvas>
+      <img class="img-fluid" src="https://www.theatlas.com/i/atlas_H13grQLQ@2x.png" alt="Placeholder 1">
+      <br><br>
+      <img class="img-fluid" src="https://i.stack.imgur.com/qNiO7.png" alt="Placeholder 2">
+    </div>
+  </div>
+  <footer class="row">
+    <h1>Timeline</h1>
+  </footer>
 </div>
 
+<div class="modal fade" id="migraine-success" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="title"><strong>Success!</strong></h2>
+        <button type="button" class="close close-clear" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h6>Your migraine was successfully logged.</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-clear" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 

@@ -102,13 +102,13 @@ $(document.body).ready(function() {
     //   });
     // }
 
-console.log(migraine.chronicTreatment.treatment_name);
+    // console.log(migraine.chronicTreatment.treatment_name);
     $.ajax("/api/migraines/" + userId, {
       type: "POST",
       data: migraine
     }).then(function(resultMigraine) {
+      $("#migraine-success").modal("toggle");
       console.log(resultMigraine);
-      var migraineId = resultMigraine.id;
     });
   });  
   // END OF SUBMIT
