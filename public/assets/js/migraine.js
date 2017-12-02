@@ -105,6 +105,7 @@ $(document.body).ready(function() {
 
   // function to get last chronic treatment value for user
   $.get("/api/migraines1/" + userId, function(chronicTreatment) {
+    // This will throw error until registration fully implemented
     ctn = chronicTreatment.Treatments[0].treatment_name;
     ctd = chronicTreatment.Treatments[0].dose;
   });
@@ -145,6 +146,9 @@ $(document.body).ready(function() {
     }).then(function(resultMigraine) {
       $("#migraine-success").modal("toggle");
       clearSurveyForm();
+      $(".history").hide();
+      $(".survey").hide();
+      $(".option-buttons").show();
       console.log("Migraine data has been logged");
     });
   // END OF SUBMIT  
