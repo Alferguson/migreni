@@ -4,6 +4,22 @@ function toFahrenheit(kelvin) {
     return ((9 / 5) * (kelvin - 273)  + 32);
 }
 
+function clearSurveyForm() {
+  $("#q1").val("");
+  $("#q4").val("");
+  $("#q7").val("");
+  $("#date-val").val("");
+  $("#intensity-val").val("");
+  $("#chronic-treatment").val("");
+  $("#chronic-dosage").val("");
+  $("#acute-treatment").val("");
+  $("#acute-dosage").val("");
+  $("#trigger-val").val("");
+  $(".date-visibility").hide();
+  $(".meds-1-visibility").hide();
+  $(".meds-2-visibility").hide();
+}
+
 
 $(document.body).ready(function() {
   var updating = false;
@@ -13,9 +29,29 @@ $(document.body).ready(function() {
   var userId = url.split("user/")[1];
   // calendar stuff
   $(".calendar").pignoseCalendar();
-  $(".date-visibility").hide();
-  $(".meds-1-visibility").hide();
-  $(".meds-2-visibility").hide();
+  $(".history").hide();
+  $(".survey").hide();
+  $(".option-buttons").show();
+
+  $("#show-history").on("click", function() {
+    $(".option-buttons").hide();
+    $(".history").show();
+  });
+
+  $("#show-survey").on("click", function() {
+    $(".option-buttons").hide();
+    $(".survey").show();
+    $(".date-visibility").hide();
+    $(".meds-1-visibility").hide();
+    $(".meds-2-visibility").hide();
+  });
+
+  $(".cancel").on("click", function(event) {
+    clearSurveyForm();
+    $(".history").hide();
+    $(".survey").hide();
+    $(".option-buttons").show();
+  });
 
   $("#q1").change(function(event) {
     var answer = $("#q1 option:selected").text();
@@ -64,6 +100,7 @@ $(document.body).ready(function() {
     });
   }
 
+
   // on submit btn click
   $("#submit-survey").on("click", function(event) {
     event.preventDefault();
@@ -108,17 +145,7 @@ $(document.body).ready(function() {
       data: migraine
     }).then(function(resultMigraine) {
       $("#migraine-success").modal("toggle");
-      $("#q1").val("");
-      $("#q4").val("");
-      $("#q7").val("");
-      $("#date-val").val("");
-      $("#intensity-val").val("");
-      $("#chronic-treatment").val("");
-      $("#chronic-dosage").val("");
-      $("#acute-treatment").val("");
-      $("#acute-dosage").val("");
-      $("#trigger-val").val("");
-
+      clearSurveyForm();
       console.log(resultMigraine);
     });
   });  

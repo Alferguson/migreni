@@ -75,7 +75,7 @@ router.post("/api/migraines/:id", function(req, res) {
         });
       });
     // });
-    res.json(dbMigraine);   
+    res.json(dbMigraine);
   });
 });   
 
