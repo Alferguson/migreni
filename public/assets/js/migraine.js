@@ -11,7 +11,6 @@ $(document.body).ready(function() {
   // Get the user id from the url
   // In localhost:8080/user/id
   var userId = url.split("user/")[1];
-  console.log(userId);
   // calendar stuff
   $(".calendar").pignoseCalendar();
   $(".date-visibility").hide();
@@ -72,10 +71,9 @@ $(document.body).ready(function() {
     if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
 
 
-
+console.log($("#intensity-val").val().trim());
     // object for migraine data
-
-
+console.log($("#chronic-treatment").val());
     var migraine = {
       intensity: $("#intensity-val").val() == undefined ? '' : $("#intensity-val").val().trim(),
       location: $("#weather-city").text(),
@@ -106,11 +104,10 @@ $(document.body).ready(function() {
     //   });
     // }
 
-    console.log(migraine);
+console.log(migraine);
     $.ajax("/api/migraines/" + userId, {
       type: "POST",
       data: migraine
-      // WAY TO ENTER MULITIPLE OBJECTS IN ONE AJAX CALL
     }).then(function(resultMigraine) {
       console.log(resultMigraine);
       var migraineId = resultMigraine.id;

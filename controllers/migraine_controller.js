@@ -42,24 +42,30 @@ router.post("/api/migraines/:id", function(req, res) {
       humidity: req.body.currentWeather.humidity,
       precip: req.body.currentWeather.precip
     }).then(function(dbTreatment) {
-      // HOW TO target user ID
       res.json(dbTreatment);
-      db.Migraine.addTreatment({
-        treatment_name: req.body.chronicTreatment.name,
-        acute: false,
-        dose: req.body.chronicTreatment.dose,
-        dose_unit: req.body.chronicTreatment.bose_unit  
-      }).then(function(dbTreatment) {
-        res.json(dbTreatment);
+      console.log("dbtreatment is====" + dbTreatment.temp);
+      console.log("dbmigraine IS ================================" + req.body.chronicTreatment.name);
+      // if function to not POST chronic treatment data if chronic treatment is not entered
+      if (req.body.chronicTreatment.treatment_name === "" && req.body.acuteTreatment.treatment_name === "") {
+        return;
+      } else {
         db.Migraine.addTreatment({
-          treatment_name: req.body.acuteTreatment.name,
-          acute: true,
-          dose: req.body.acuteTreatment.dose,
-          dose_unit: req.body.acuteTreatment.bose_unit  
+          treatment_name: req.body.chronicTreatment.name,
+          acute: false,
+          dose: req.body.chronicTreatment.dose,
+          dose_unit: req.body.chronicTreatment.bose_unit   
         }).then(function(dbTreatment) {
           res.json(dbTreatment);
+          db.Migraine.addTreatment({
+            treatment_name: req.body.acuteTreatment.name,
+            acute: true,
+            dose: req.body.acuteTreatment.dose,
+            dose_unit: req.body.acuteTreatment.bose_unit  
+          }).then(function(dbTreatment) {
+            res.json(dbTreatment);
+          })
         })
-      })
+      };  
     })
   })
 });  
