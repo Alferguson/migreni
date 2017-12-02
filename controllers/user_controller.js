@@ -103,7 +103,7 @@ router.post("/register", [
           if (err) throw err;
           console.log("logged in " + req.user.id);
           console.log("req.user name " + req.user.username);
-          return res.redirect("/user/" + req.user.id);
+          res.redirect("/loginSuccess");
         });
       }).catch(function(err) {
 
@@ -117,7 +117,9 @@ router.get("/login", function(req, res) {
 });
 
 router.get("/loginSuccess", function(req, res) {
-  res.redirect("/user/" + req.user.id);
+  req.session.save(function() {
+    res.redirect("/user/" + req.user.id);
+  });
 });
 
 router.post("/login",
@@ -128,8 +130,9 @@ router.post("/login",
 
 router.get("/logout", function(req, res) {
   req.logout();
-  req.session.destroy();
-  res.redirect("/");
+  req.session.destroy(function() {
+    res.redirect("/");
+  });
 });
 
 passport.serializeUser((user_id, done) => {

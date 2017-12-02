@@ -7,7 +7,7 @@ $(document.body).ready(function() {
       var password = document.forms["signup"]["password"].value;
       var password2 = document.forms["signup"]["passwordMatch"].value;
       var email = document.forms["signup"]["email"].value;
-      var age = document.forms["signup"]["email"].value;
+      var age = document.forms["signup"]["age"].value;
       var gender = document.forms["signup"]["gender"].value;
       var location = document.forms["signup"]["location"].value;
 
@@ -16,4 +16,4 @@ $(document.body).ready(function() {
         return false;
       }
     });
-})
+});
