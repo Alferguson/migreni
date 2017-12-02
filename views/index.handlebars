@@ -43,11 +43,13 @@
             <label class="lable">Username</label>
             <br>
             <input id="username" type="text" name="username" class="form-control" placeholder="UserName" required>
+            <small id="usernameNull" class="error form-text text-danger" > Please enter a username</small>
           </div>
           <div class="col-md-6">
             <label class="lable">Email</label>
             <br>
             <input id="email" type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <small id="wrongEmail" class="error form-text text-danger" > Please enter correct Email address</small>
           </div>        
         </div>
         <br>
@@ -56,6 +58,7 @@
             <label class="lable">Password</label>
             <br>
             <input id="password" type="password" name="password" class="form-control" placeholder="Password" required>
+            <small id="noPassword" class="error form-text text-danger" > Please enter a Password</small>
           </div>
           <div class="col-md-6">
             <label class="lable">Confirm Password</label>
@@ -66,12 +69,13 @@
         </div>
         <br>
         <div class="form-row">
-          <div class="col-md-2">
+          <div class="col-md-3">
             <label class="lable">Age</label>
             <br>
             <input id="age" type="number" name="age" class="form-control" placeholder="Age" required>
+            <small id="wrongAge" class="error form-text text-danger" > Age must be between 1 - 100</small>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             <label class="lable">Gender</label>
             <br>
             <select class="form-control response" name="gender" id="intensity-val" required>
@@ -83,7 +87,8 @@
             <div class="col-md-6">
             <label class="lable">Location</label>
             <br>
-            <input id="age" type="text" name="location" class="form-control" placeholder="Location" required>
+            <input id="location" type="text" name="location" class="form-control" placeholder="Location" required>
+            <small id="noLocation" class="error form-text text-danger" > Please enter a Location</small>
           </div>
         </div>
         <div class="form-row">
