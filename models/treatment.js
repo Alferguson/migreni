@@ -40,13 +40,6 @@ module.exports = function(sequelize, Datatypes) {
 
   Treatment.associate = function(models) {
 
-    Treatment.belongsTo(models.Category, {
-      foreignKey: {
-        allowNull: false,
-        defaultValue: 1
-      }
-    });
-
     Treatment.belongsToMany(models.Migraine, {
       through: {model: models.MigraineTreatment}
     });

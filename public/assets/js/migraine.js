@@ -71,9 +71,7 @@ $(document.body).ready(function() {
     if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
 
 
-console.log($("#intensity-val").val().trim());
     // object for migraine data
-console.log($("#chronic-treatment").val());
     var migraine = {
       intensity: $("#intensity-val").val() == undefined ? '' : $("#intensity-val").val().trim(),
       location: $("#weather-city").text(),
@@ -104,7 +102,7 @@ console.log($("#chronic-treatment").val());
     //   });
     // }
 
-console.log(migraine);
+console.log(migraine.chronicTreatment.treatment_name);
     $.ajax("/api/migraines/" + userId, {
       type: "POST",
       data: migraine
