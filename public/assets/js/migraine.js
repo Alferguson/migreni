@@ -96,12 +96,16 @@ $(document.body).ready(function() {
           pressure: response.main.pressure,
           sea_level: 0,
           grnd_level: 0,
-          precip: rain
+          precip: response.main.precip
         };
       });
     });
   }
 
+  // conditional if precip is blank
+  if (currentWeather.precip === "") {
+    currentWeather.precip = 0;
+  }
 
   // function to get last chronic treatment value for user
   $.get("/api/migraines1/" + userId, function(chronicTreatment) {
@@ -154,28 +158,6 @@ $(document.body).ready(function() {
   // END OF SUBMIT  
   });  
  
-
-  // // FUNCTION TO GET MIGRAINE DATA AND SHOW IT
-  // function getMigraineData(migraineData) {
-  //   console.log("migraine data", migraineData)
-  //   var newTr = $("<tr>");
-  //   newTr.data("author", migraineData);
-  //   newTr.append("<td>" + migraineData.date + "</td>");
-  //   newTr.append("<td> " + migraineData.intensity + "</td>");
-  //   newTr.append("<td>" + migraineData.trigger + "</td>");
-  //   newTr.append("<td><a href='/cms?author_id=" + migraineData.id + "'>Create a Post</a></td>");
-  //   newTr.append("<td><a style='cursor:pointer;color:red' class='delete-author'>Delete Migraine</a></td>");
-  //   return newTr;
-  // };
-
-
-
-
-
-
-
-
-
   // show all migraine and assoicated data
   $("#show").on("click", function() {
     $.get("/api/migraines/" + userId, function(data) {
@@ -188,16 +170,26 @@ $(document.body).ready(function() {
 
 
   // if UPDATE button is clicked 
-  $("#update").on("click", function() {
+  $("#update-finish-migraine").on("click", function() {
+    var upMigraine = {
+      id: $(this).find("#id").attr.val().trim(),
+      intensity: $(this).find("#intensity").val().trim(),
+      trigger: $(this).find("#trigger").val().trim(),
+      ctn: $(this).find("#ctn").val().trim(),
+      ctd: $(this).find("#ctd").val().trim(),
+      atn: $(this).find("#atn").val().trim(),
+      atd: $(this).find("#atd").val().trim()
+    }
     updating = true;
     // TODO, change update button to don't update
     // function to update previous migraines
     if (updating === true) {
-      function updateMigraine(migraine) {
+      function updateMigraine() {
+
         $.ajax({
           method: "PUT",
-          url: "/api/migraines/" + userId,
-          data: migraine
+          url: "/api/migraines",
+          data: upMigraine
         }).done(function() {
           // set updating to false
           updating = false
@@ -208,18 +200,17 @@ $(document.body).ready(function() {
 
 
   // if DELETE button is clicked 
-  $("#delete").on("click", function() {
-    function deleteMigraine(migraine) {
+  $("#delete-migraine").on("click", function() {
+    var migraineRowId = $("#migraine-row-id").val().trim();
+    function deleteMigraine() {
       $.ajax({
         method: "DELETE",
-        url: "/api/migraines/" + userId,
-        data: migraine
+        url: "/api/migraines",
+        data: migraineRowId
       }).done(function() {
         console.log("It has been deleted");
       })
     }
   });
-
-
-  // END OF DOC READ HERE maybe???
+  // END OF DOC READ HERE 
 });
