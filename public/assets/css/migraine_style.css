@@ -23,7 +23,12 @@ h1, p {
   color: #f0f0eb;
 }
 
-.survey {
+.temperature {
+  color: #222529;
+}
+
+
+.content-main {
   background: #f0f0eb;
   padding-bottom: 80px;
 }
