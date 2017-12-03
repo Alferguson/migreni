@@ -60,9 +60,12 @@ $(document.body).ready(function() {
   };
 
   $.get("/api/intensity", function(data) {
+  	var size = data.length;
+  	$("#startDate").val(moment(data[0].date).format("YYYY-MM-DD"));
+  	$("#endDate").val(moment(data[size-1].date).format("YYYY-MM-DD"));
     var dates = [];
     var intensities = [];
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < size; i++) {
       dates.push(moment(data[i].date).format("M-D-YYYY"));
       intensities.push(data[i].intensity);
     }
@@ -77,4 +80,8 @@ $(document.body).ready(function() {
     }
     var myLineChart = new Chart(ctx, graphdata);
   });
+
+  function setChartData(data) {
+  	
+  }
 });
