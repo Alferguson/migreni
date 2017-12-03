@@ -23,8 +23,8 @@ router.get("/api/migraines/:id", function(req, res) {
     // display on handlebars, may not work
 
     // console.log(dbMigraine);
-    // var hbsObject = { migraines: [] };
-    var migraines = [];
+    var hbsObject = { migraines: [] };
+
     for (var i = 0; i < dbMigraine.length; i++) {
       var oneMigraine = {
         id: dbMigraine[i].id,
@@ -39,11 +39,11 @@ router.get("/api/migraines/:id", function(req, res) {
         humidity: dbMigraine[i].Weather.humidity
       };
       console.log(oneMigraine);
-      migraines.push(oneMigraine);
+      hbsObject.migraines.push(oneMigraine);
     }
     console.log("====");
-    // console.log(hbsObject);
-    res.render("survey", { migraines });
+    console.log(hbsObject);
+    res.render("survey", hbsObject);
   });
 });
 
