@@ -106,8 +106,8 @@ $(document.body).ready(function() {
   // function to get last chronic treatment value for user
   $.get("/api/migraines1/" + userId, function(chronicTreatment) {
     // This will throw error until registration fully implemented
-    ctn = chronicTreatment.Treatments[0].treatment_name;
-    ctd = chronicTreatment.Treatments[0].dose;
+    // ctn = chronicTreatment.Treatments[0].treatment_name;
+    // ctd = chronicTreatment.Treatments[0].dose;
   });
 
   // on submit btn click
@@ -170,25 +170,23 @@ $(document.body).ready(function() {
 
 
 
-
-
-
-
-
-
   // show all migraine and assoicated data
-  $("#show").on("click", function() {
-    $.get("/api/migraines/" + userId, function(data) {
-      var migraineData = [];
-      console.log(data);
+  $("#show-history").on("click", function() {
+    event.preventDefault();
+    $.get("/api/migraines/" + userId, {}).then(function(result) {
+      console.log("TEST");
+      
+      // location.reload(); //// reloads entire page
+    });
+      
       // migraineData.push(getMigraineData(migraineData));
-    })
   });    
 
 
 
   // if UPDATE button is clicked 
   $("#update").on("click", function() {
+    event.preventDefault();
     updating = true;
     // TODO, change update button to don't update
     // function to update previous migraines

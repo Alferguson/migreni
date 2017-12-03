@@ -21,7 +21,29 @@ router.get("/api/migraines/:id", function(req, res) {
     ]
   }).then(function(dbMigraine) {
     // display on handlebars, may not work
-    res.json(dbMigraine);
+
+    // console.log(dbMigraine);
+    // var hbsObject = { migraines: [] };
+    var migraines = [];
+    for (var i = 0; i < dbMigraine.length; i++) {
+      var oneMigraine = {
+        id: dbMigraine[i].id,
+        date: dbMigraine[i].date,
+        trigger: dbMigraine[i].trigger,
+        treatment_name: "temp",// dbMigraine[i].Treatments[0].treatment_name,
+        treatment_dose: "temp",// dbMigraine[i].Treatments[0].treatment_dose,
+        acute_name: "temp",// dbMigraine[i].Treatments[1].treatment_name,
+        acute_dose: "temp",// dbMigraine[i].Treatments[1].treatment_dose,
+        temperature: dbMigraine[i].Weather.temp,
+        precipitation: dbMigraine[i].Weather.precip,
+        humidity: dbMigraine[i].Weather.humidity
+      };
+      console.log(oneMigraine);
+      migraines.push(oneMigraine);
+    }
+    console.log("====");
+    // console.log(hbsObject);
+    res.render("survey", { migraines });
   });
 });
 
