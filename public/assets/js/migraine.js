@@ -22,8 +22,8 @@ function clearSurveyForm() {
 
 
 $(document.body).ready(function() {
-  var ctn;
-  var ctd;
+  var ctn = 0;
+  var ctd = 0;
   var updating = false;
   var url = window.location.href;
   // Get the user id from the url
@@ -108,10 +108,12 @@ $(document.body).ready(function() {
   }
 
   // function to get last chronic treatment value for user
-  $.get("/api/migraines1/" + userId, function(chronicTreatment) {
+  $.get("/api/migraines/" + userId, function(chronicTreatment) {
     // This will throw error until registration fully implemented
-    ctn = chronicTreatment.Treatments[0].treatment_name;
-    ctd = chronicTreatment.Treatments[0].dose;
+    if (chronicTreatment.Treatments) {
+      ctn = chronicTreatment.Treatments[0].treatment_name;
+      ctd = chronicTreatment.Treatments[0].dose;
+    }
   });
 
   // on submit btn click
@@ -119,7 +121,6 @@ $(document.body).ready(function() {
     event.preventDefault();
     var dateVal = $("#date-val").val() == undefined ? '' : $("#date-val").val().trim();
     if (dateVal === "") dateVal = moment().format('YYYY-MM-DD');
-
 
     // object for migraine data
     var migraine = {
@@ -142,8 +143,10 @@ $(document.body).ready(function() {
       }
     };
 
-
     // POST new migraine and assoicated data
+    // $.post("/api/migraines/" + userId, function() {
+    //   window.location.href = "/user";
+    // });
     $.ajax("/api/migraines/" + userId, {
       type: "POST",
       data: migraine
@@ -154,25 +157,25 @@ $(document.body).ready(function() {
       $(".survey").hide();
       $(".option-buttons").show();
       console.log("Migraine data has been logged");
+      //TODO: reload page after migraine logged so shows in history
     });
-  // END OF SUBMIT  
+  // END OF SUBMIT
   });  
  
   // show all migraine and assoicated data
-  $("#show").on("click", function() {
-    $.get("/api/migraines/" + userId, function(data) {
-      var migraineData = [];
-      console.log(data);
-      // migraineData.push(getMigraineData(migraineData));
-    })
-  });    
-
-
+  $("#show-history").on("click", function() {
+    event.preventDefault();
+    $.get("/api/migraines/" + userId, function(result) {
+      // console.log(result);
+    });
+  });
 
   // if UPDATE button is clicked 
-  $("#update-finish-migraine").on("click", function() {
+  $(".update-migraine").on("click", function() {
+    event.preventDefault();
+    var migraineId = $(this)[0].name;
     var upMigraine = {
-      id: $(this).find("#id").attr.val().trim(),
+      id: migraineId,
       intensity: $(this).find("#intensity").val().trim(),
       trigger: $(this).find("#trigger").val().trim(),
       ctn: $(this).find("#ctn").val().trim(),
@@ -184,33 +187,28 @@ $(document.body).ready(function() {
     // TODO, change update button to don't update
     // function to update previous migraines
     if (updating === true) {
-      function updateMigraine() {
-
-        $.ajax({
-          method: "PUT",
-          url: "/api/migraines",
-          data: upMigraine
-        }).done(function() {
-          // set updating to false
-          updating = false
-        })
-      }
+      $.ajax({
+        type: "PUT",
+        url: "/api/migraines/" + migraineId
+        // data: upMigraine
+      }).done(function() {
+        // set updating to false
+        updating = false
+      });
     }  
-  })
-
+  });
 
   // if DELETE button is clicked 
-  $("#delete-migraine").on("click", function() {
-    var migraineRowId = $("#migraine-row-id").val().trim();
-    function deleteMigraine() {
-      $.ajax({
-        method: "DELETE",
-        url: "/api/migraines",
-        data: migraineRowId
-      }).done(function() {
-        console.log("It has been deleted");
-      })
-    }
+  $(".delete-migraine").on("click", function() {
+    var migraineId = $(this)[0].name;
+    var migraineRowInfo = {};//$("#migraine-row-id").val().trim(); will add object here
+    $.ajax({
+      type: "DELETE",
+      url: "/api/migraines/" + migraineId,
+      data: migraineRowInfo
+    }).done(function() {
+      console.log("It has been deleted");
+    });
   });
-  // END OF DOC READ HERE 
+  // END OF DOC READ HERE
 });

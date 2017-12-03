@@ -134,14 +134,13 @@ router.get("/logout", function(req, res) {
   });
 });
 
-passport.serializeUser((user_id, done) => {
-  done(null, user_id);
-});
+router.get("/user/update", authCheck(), function(req, res) {
+  res.render("updateUser", {title: "update", loggedIn: req.isAuthenticated()})
+})
 
-passport.deserializeUser((user_id, done) => {
-  done(null, user_id)
-});
+router.put("/user/updateUser", authCheck(), function(req, res) {
 
+})
 // to delete user account 
 router.delete("/api/user/:id", function(req, res) {
   db.User.destroy({

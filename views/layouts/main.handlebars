@@ -2,21 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-        <title>Mígreni{{#if title}}: {{title}}{{/if}}</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/assets/css/pignose.calendar.css">
-        <link rel="stylesheet" href="/assets/css/migraine_style.css">
-        <link rel="icon" href="/assets/img/brain.png" type="image/png">
-    </head>
-    <body>
-		{{{ body }}}
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
-        <script src="/assets/js/pignose.calendar.js"></script>
-        <script src="/assets/js/migraine.js"></script>
-        {{!-- TODO MAKE THINGS UNIQUER --}}
-        <script src="/assets/js/user.js"></script>
-    </body>
+    <title>Mígreni{{#if title}}: {{title}}{{/if}}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/pignose.calendar.css">
+    <link rel="stylesheet" href="/assets/css/migraine_style.css">
+    <link rel="icon" href="/assets/img/brain.png" type="image/png">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+    <style>
+        .overlay {
+            background-color: rgba(99,214,249,0.8);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+    		{{{ body }}}
+    </div>
+</body>
 </html>
