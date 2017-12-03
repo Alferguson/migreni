@@ -6,13 +6,13 @@ var rootDir = { root: __dirname + '/..' };
 
 // default route for index
 router.get("/", function(req, res) {
-    res.render("index", {loggedIn: req.isAuthenticated() });
+  res.render("index", {loggedIn: req.isAuthenticated() });
 });
 
 // GET route to display the survey page
 // TODO: id is actually mandatory
-router.get("/user/:id?", function(req, res) {
-    res.render("survey");
+router.get("/user/:id", function(req, res) {
+  res.render("survey");
 });
 
 

@@ -1,14 +1,13 @@
 <tr>
-  <h2>hi</h2>
-  <th scope="row">{{id}}</th>
-  <td>{{id}}</td>
+  <th scope="row">{{row_num}}</th>
   <td data="date">{{date}}</td>
+  <td data="intensity">{{intensity}}</td>
   <td data="trigger">{{trigger}}</td>
-  <td data="treatment_name">{{treatment_name}}</td>
-  <td data="treatment_dose">{{treatment_dose}}</td>
-  <td data="acute_name">{{acute_name}}</td>
-  <td data="acute_dose">{{acute_dose}}</td>
-  <td data="temperature">{{temperature}}</td>
+  <td data="chronic_treatment">{{treatment_name}}, {{treatment_dose}} {{treatment_unit}}</td>
+  <td data="acute_treatment">{{acute_name}}, {{acute_dose}} {{acute_unit}}</td>
+  <td data="temperature">{{temperature}}&deg; F</td>
   <td data="precipitation">{{precipitation}}</td>
   <td data="humidity">{{humidity}}</td>
+  <td><button type="button" class="btn btn-dark btn-sm update-migraine" name="{{id}}">Update</button></td>
+  <td><button type="button" class="btn btn-dark btn-sm delete-migraine" name="{{id}}">Delete</button></td>
 </tr>

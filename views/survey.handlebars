@@ -32,24 +32,21 @@
         <h2>Your migraine history</h2>
 
 
-        <table class="table table-striped">
+        <table class="table table-striped table-responsive table-sm">
           <thead>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Date</th>
               <th scope="col">Intensity</th>
               <th scope="col">Trigger</th>
-              <th scope="col">Chronic Drug Name</th>
-              <th scope="col">Chronic Drug Dose</th>
-              <th scope="col">Acute Drug Name</th>
-              <th scope="col">Acute Drug Dose</th>
+              <th scope="col">Chronic Treatment</th>
+              <th scope="col">Acute Treatment</th>
               <th scope="col">Temperature</th>
               <th scope="col">Precipitation</th>
               <th scope="col">Humidity</th>
             </tr>
           </thead>
           <tbody>
-            {{!-- {{migraines}} --}}
             {{#each migraines}}
               {{> migraines/migraine-block}}
             {{/each}}
