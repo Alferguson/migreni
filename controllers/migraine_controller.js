@@ -137,30 +137,25 @@ router.post("/api/migraines/:id", function(req, res) {
   });
 });   
 
-// // PUT route to update previous migraines
+// PUT route to update previous migraines
 router.put("/api/migraines/:id", function(req, res) {
-//   db.Migraine.update({
-//     req.body, 
-//     {    
-//       where: {
-//         id: req.params.id
-//       },
-//       include: [
-//         {
-//           model: db.Treatment,
-//           include: [db.Dose]
-//         }
-//       ],
-//       include:   
-//   }).then(function(dbMigraine) {
-//     res.json(dbMigraine);
-
-//   }).catch(function(err) {
-// // do error catching
-//     res.statusMessage = error.errors[0].message;
-//     res.sendStatus(404).end();
-//   });
+  db.Migraine.update (
+    req.body, 
+    {    
+      where: {
+        id: req.params.id
+      },
+      include: [
+        {
+          model: db.Treatment
+        }
+      ]
+    }    
+  }).then(function(dbMigraine) {
+    res.json(dbMigraine);
+  });  
 });  
+  
 
 // // to delete previous migraines
 router.delete("/api/migraines/:id", function(req, res) {
