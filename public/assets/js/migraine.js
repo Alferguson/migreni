@@ -1,5 +1,4 @@
-
-
+// function to convert kevlin to fahrenheit for weather.js
 function toFahrenheit(kelvin) {
     return ((9 / 5) * (kelvin - 273)  + 32);
 }
@@ -20,10 +19,11 @@ function clearSurveyForm() {
   $(".meds-2-visibility").hide();
 }
 
-
 $(document.body).ready(function() {
-  var ctn = 0;
+  // ctn is chronic treatment name and ctd is chronic treatment dose, this is for if user's answer no to not changing therapy if they don't have pre-existing therapy
+  var ctn = "N/A";
   var ctd = 0;
+  // updating is for update migraine function
   var updating = false;
   var url = window.location.href;
   // Get the user id from the url
@@ -35,6 +35,7 @@ $(document.body).ready(function() {
   $(".survey").hide();
   $(".option-buttons").show();
 
+  // show and hide functions when buttons are clicked
   $("#show-history").on("click", function() {
     $(".option-buttons").hide();
     $(".history").show();
@@ -83,7 +84,6 @@ $(document.body).ready(function() {
         url: queryURL,
         method: "GET" 
       }).done(function(response) {
-        // console.log(response);
         $("#weather-temp").html(toFahrenheit(response.main.temp).toFixed(2) + "&deg; (F)");
         $("#weather-city").html(response.name);
         var rain = 0;
@@ -143,10 +143,7 @@ $(document.body).ready(function() {
       }
     };
 
-    // POST new migraine and assoicated data
-    // $.post("/api/migraines/" + userId, function() {
-    //   window.location.href = "/user";
-    // });
+    // POST new migraine data via create in migraine_controller.js
     $.ajax("/api/migraines/" + userId, {
       type: "POST",
       data: migraine
@@ -157,7 +154,6 @@ $(document.body).ready(function() {
       $(".survey").hide();
       $(".option-buttons").show();
       console.log("Migraine data has been logged");
-      //TODO: reload page after migraine logged so shows in history
     });
   // END OF SUBMIT
   });  
@@ -184,13 +180,11 @@ $(document.body).ready(function() {
       atd: $(this).find("#atd").val().trim()
     }
     updating = true;
-    // TODO, change update button to don't update
-    // function to update previous migraines
+    // PUT function to update previous migraines
     if (updating === true) {
       $.ajax({
         type: "PUT",
         url: "/api/migraines/" + migraineId
-        // data: upMigraine
       }).done(function() {
         // set updating to false
         updating = false
@@ -201,7 +195,8 @@ $(document.body).ready(function() {
   // if DELETE button is clicked 
   $(".delete-migraine").on("click", function() {
     var migraineId = $(this)[0].name;
-    var migraineRowInfo = {};//$("#migraine-row-id").val().trim(); will add object here
+    var migraineRowInfo = {};
+    // DELETE function to do DESTROY in migraine_controller.js
     $.ajax({
       type: "DELETE",
       url: "/api/migraines/" + migraineId,

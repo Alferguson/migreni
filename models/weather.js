@@ -14,6 +14,7 @@ module.exports = function(sequelize, DataTypes) {
 		timestamps: true
 	});
 
+	// Weather model has a one to one relationship with Migraine model
 	Weather.associate = function(models){
 		Weather.belongsTo(models.Migraine, {
 			foreignKey: {
@@ -21,7 +22,5 @@ module.exports = function(sequelize, DataTypes) {
 			}
 		});
 	};
-
 	return Weather;
-}
-		
+}		

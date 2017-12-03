@@ -1,6 +1,4 @@
 var express = require('express');
-
-
 var router = express.Router();
 var rootDir = { root: __dirname + '/..' };
 
@@ -10,11 +8,8 @@ router.get("/", function(req, res) {
 });
 
 // GET route to display the survey page
-// TODO: id is actually mandatory
 router.get("/user/:id", function(req, res) {
   res.render("survey");
 });
-
-
 
 module.exports = router;

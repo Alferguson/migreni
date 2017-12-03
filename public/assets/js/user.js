@@ -13,7 +13,7 @@ $(document.body).ready(function() {
       var location = document.forms["signup"]["location"].value;
       var fine = true;
 
-      //Password validation
+      // Password validation
       if (password == "") {
         $("#noPassword").show();
         fine = false;
@@ -30,7 +30,7 @@ $(document.body).ready(function() {
         fine = false;
       }
 
-      //Age validation
+      // Age validation
       if (isNaN(age) || age < 1 || age > 100) {
         $("#wrongAge").show();
         fine = false;
@@ -38,13 +38,13 @@ $(document.body).ready(function() {
       }
 
       var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-      //Email validation
+      // Email validation
       if (!filter.test(email)) {
         $("#wrongEmail").show();
         fine = false;
       }
 
-      //Username can not be null
+      // Username can not be null
       if (username == "") {
         $("#usernameNull").show();
         fine = false;

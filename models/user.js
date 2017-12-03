@@ -1,9 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define("User", {
-    // id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false
-    // },
     username: {
       type: DataTypes.STRING(40),
       allowNull: false,
@@ -38,7 +34,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(40),
     }
   });
-
+  // User model has a one to many relationship with Migraine model and many to many relationship with Treatment model
   User.associate = function(models) {
     User.hasMany(models.Migraine, {
       onDelete: "CASCADE",
@@ -49,6 +45,5 @@ module.exports = function(sequelize, DataTypes) {
       through: { model: models.UserTreatment }
     });
   };
-
   return User;
 }

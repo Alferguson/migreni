@@ -37,9 +37,8 @@ module.exports = function(sequelize, Datatypes) {
   }, {
     timestamps: false
   });
-
+  // Treatment model has a many to many relationship with Migraine model and many to many relationship with User model
   Treatment.associate = function(models) {
-
     Treatment.belongsToMany(models.Migraine, {
       through: {model: models.MigraineTreatment}
     });
@@ -48,6 +47,5 @@ module.exports = function(sequelize, Datatypes) {
     	through: {model: models.UserTreatment}
     });
   }
-
   return Treatment;
 }

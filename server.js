@@ -1,17 +1,17 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
+// methodOverride to ensure HTML verbs can be used by all users in AJAX calls
 var methodOverride = require('method-override');
 var exphbs = require("express-handlebars");
-// var doseRoutes = require("./controllers/dose_controller");
+
+// Routes
 var migraineRoutes = require("./controllers/migraine_controller");
-// var treatmentRoutes = require("./controllers/treatment_controller");
 var userRoutes = require("./controllers/user_controller");
-// var weatherRoutes = require("./controllers/weather_controller");
 var htmlRoutes = require("./controllers/html_controller");
 var chartRoutes = require("./controllers/chart_controller");
-var db = require("./models");
-//Authentication 
+
+// Authentication 
 var validator = require('express-validator');
 var session = require("express-session");
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
@@ -37,7 +37,7 @@ app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(validator());
 
-//Authentication setup
+// Authentication setup
 app.use(session({
   secret: 'ubu9fhv9b33v8hq0e3q', // should be generated with random string generator
   store: new SequelizeStore({
@@ -94,11 +94,8 @@ passport.deserializeUser((user_id, done) => {
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// app.use("/", doseRoutes);
 app.use("/", migraineRoutes);
-// app.use("/", treatmentRoutes);
 app.use("/", userRoutes);
-// app.use("/", weatherRoutes);
 app.use("/", htmlRoutes);
 app.use("/", chartRoutes);
 

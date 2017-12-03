@@ -28,6 +28,7 @@ module.exports = function(sequelize, DataTypes) {
 	});
 
 	Migraine.associate = function(models) {
+		// Migraine model has a one to one relationship with Weather model, one to one relationship with User model and many to many relationship with Treatment model
 		Migraine.hasOne(models.Weather, {
 			foreignKey: {
 				allowNull: false
@@ -43,6 +44,5 @@ module.exports = function(sequelize, DataTypes) {
 			through: {model: models.MigraineTreatment}
 		});
 	};
-
 	return Migraine;
 }

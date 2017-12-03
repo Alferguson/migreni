@@ -105,7 +105,6 @@ router.post("/api/migraines/:id", function(req, res) {
       humidity: req.body.currentWeather.humidity,
       precip: req.body.currentWeather.precip
     });  
-
     // to ADD chronic treatment
     db.Treatment.create({
       treatment_name: req.body.chronicTreatment.treatment_name,
@@ -156,8 +155,7 @@ router.put("/api/migraines/:id", function(req, res) {
   });  
 });  
   
-
-// // to delete previous migraines
+// to delete previous migraines
 router.delete("/api/migraines/:id", function(req, res) {
   db.Migraine.destroy({
     where: {
