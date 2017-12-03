@@ -170,32 +170,79 @@ $(document.body).ready(function() {
     });
   });
 
+  var upMigraine = {};
   // if UPDATE button is clicked 
   $(".update-migraine").on("click", function() {
     event.preventDefault();
     var migraineId = $(this)[0].name;
-    var upMigraine = {
-      id: migraineId,
-      intensity: $(this).find("#intensity").val().trim(),
-      trigger: $(this).find("#trigger").val().trim(),
-      ctn: $(this).find("#ctn").val().trim(),
-      ctd: $(this).find("#ctd").val().trim(),
-      atn: $(this).find("#atn").val().trim(),
-      atd: $(this).find("#atd").val().trim()
-    }
-    updating = true;
+    console.log(migraineId);
+    $.get("/api/migraines/" + userId, function(data) {
+      if (data) {
+
+        console.log(data);
+        var defaultTreatment = {
+          treatment_name: "N/A",
+          dose: "N/A",
+          dose_unit: ""
+        };
+
+        if (data.Treatments[0] == undefined) {
+          data.Treatments[0] = { dataValues: defaultTreatment };
+        }
+
+        if (data.Treatments[1] == undefined) {
+          data.Treatments[1] = { dataValues: defaultTreatment };
+        }
+
+        upMigraine = {
+          id: data.id,
+          date: data.date,
+          intensity: data.intensity,
+          trigger: data.trigger,
+          ctn: data.Treatments[0].treatment_name,
+          ctd: data.Treatments[0].dose,
+          atn: data.Treatments[1].treatment_name,
+          atd: data.Treatments[1].dose
+        }
+        console.log(upMigraine);
+        updating = true;
+        $("#migraine-update").modal("toggle");
+      }
+    });
+  });
+    // var thisMigraine = $(this)
+    //   .parent()
+    //   .parent()
+    //   .data("migraine");
+    // console.log(thisMigraine);
+    // console.log($(this).parent().parent());
+    // window.location.href = "/cms?post_id=" + thisMigraine.id;
+    // var migraineId = $(this)[0].name;
+    // var upMigraine = {
+    //   id: migraineId,
+    //   intensity: $(this).find("#intensity").val().trim(),
+    //   trigger: $(this).find("#trigger").val().trim(),
+    //   ctn: $(this).find("#ctn").val().trim(),
+    //   ctd: $(this).find("#ctd").val().trim(),
+    //   atn: $(this).find("#atn").val().trim(),
+    //   atd: $(this).find("#atd").val().trim()
+    // }
+    // updating = true;
     // TODO, change update button to don't update
     // function to update previous migraines
+  $("#submit-update").on("click", function() {
+
     if (updating === true) {
       $.ajax({
-        type: "PUT",
-        url: "/api/migraines/" + migraineId
-        // data: upMigraine
+        method: "PUT",
+        url: "/api/migraines/" + userId,
+        data: upMigraine
       }).done(function() {
         // set updating to false
-        updating = false
+        updating = false;
       });
     }  
+    
   });
 
   // if DELETE button is clicked 
@@ -203,7 +250,7 @@ $(document.body).ready(function() {
     var migraineId = $(this)[0].name;
     var migraineRowInfo = {};//$("#migraine-row-id").val().trim(); will add object here
     $.ajax({
-      type: "DELETE",
+      method: "DELETE",
       url: "/api/migraines/" + migraineId,
       data: migraineRowInfo
     }).done(function() {
