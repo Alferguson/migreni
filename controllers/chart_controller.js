@@ -4,19 +4,26 @@ var router = express.Router();
 var authCheck = require("../authCheck.js");
 
 router.get("/chart", authCheck(), function(req, res) {
-	res.render("chartIntensity", {title: "Intensity Over Time", user: req.user});
+  res.render("chartIntensity", { title: "Intensity Over Time", user: req.user });
 });
 
 router.get("/api/intensity", authCheck(), function(req, res) {
-	db.Migraine.findAll({
-		where: {
-			UserId: req.user.id
-		},
-		attributes: ["date", "intensity"],
-		order: ["date"]
-	}).then(function(data) {
-		res.json(data);
-	})
+  console.log("req", req.query);
+  var query = {
+    UserId: req.user.id
+  }
+  if (req.query.end && req.query.start) {
+    query.date = {
+    	$between: [req.query.start, req.query.end]
+    }
+  }
+  db.Migraine.findAll({
+    where: query,
+    attributes: ["date", "intensity"],
+    order: ["date"]
+  }).then(function(data) {
+    res.json(data);
+  })
 });
 
 module.exports = router;

@@ -4,9 +4,9 @@ $(document.body).ready(function() {
   var graphdata = {
     type: 'line',
     options: {
-    	chart: {
-    		fontColor: "black",
-    	},
+      chart: {
+        fontColor: "black",
+      },
       responsive: true,
       title: {
         display: true,
@@ -22,12 +22,12 @@ $(document.body).ready(function() {
         intersect: true
       },
       legend: {
-      	display: false,
+        display: false,
         labels: {
           fontSize: 20
         },
         scales: {
-        	fontSize: 20
+          fontSize: 20
         }
       },
       scales: {
@@ -36,10 +36,10 @@ $(document.body).ready(function() {
           scaleLabel: {
             display: true,
             labelString: 'Date',
-        		fontSize: 20,
+            fontSize: 20,
           },
           ticks: {
-        		fontSize: 16
+            fontSize: 16
           }
         }],
         yAxes: [{
@@ -47,12 +47,12 @@ $(document.body).ready(function() {
           ticks: {
             min: 0,
             max: 10,
-        		fontSize: 16
+            fontSize: 16
           },
           scaleLabel: {
             display: true,
             labelString: 'Intensity',
-        		fontSize: 20,
+            fontSize: 20,
           }
         }]
       }
@@ -60,17 +60,18 @@ $(document.body).ready(function() {
   };
 
   $.get("/api/intensity", function(data) {
-  	var size = data.length;
-  	$("#startDate").val(moment(data[0].date).format("YYYY-MM-DD"));
-  	$("#endDate").val(moment(data[size-1].date).format("YYYY-MM-DD"));
-    setChartData(data, size);
+    var size = data.length;
+    $("#startDate").val(moment.parseZone(data[0].date).format("YYYY-MM-DD"));
+    $("#endDate").val(moment.parseZone(data[size - 1].date).format("YYYY-MM-DD"));
+    setChartData(data);
   });
 
-  function setChartData(data, size = data.length) {
+  function setChartData(data) {
+    var size = data.length
     var dates = [];
     var intensities = [];
     for (var i = 0; i < size; i++) {
-      dates.push(moment(data[i].date).format("M-D-YYYY"));
+      dates.push(moment.parseZone(data[i].date).format("MM-DD-YYYY"));
       intensities.push(data[i].intensity);
     }
     console.log(dates);
@@ -83,13 +84,21 @@ $(document.body).ready(function() {
       }],
     }
     var myLineChart = new Chart(ctx, graphdata);
-  	
+
   }
 
   $("#range").on("click", function(event) {
     event.preventDefault();
-     $.get("/api/intensity", function(data) {
-      setChartData(data);
+    var data = {
+      start: moment.parseZone($("#startDate").val(), "YYYY-MM-DD").format(),
+      end: moment.parseZone($("#endDate").val(), "YYYY-MM-DD").format()
     }
+    console.log(data)
+    $.ajax("/api/intensity", {
+      type:"get",
+      data: data
+    }).then(function(data) {
+      setChartData(data);
+    });
   });
 });
