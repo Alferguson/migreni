@@ -184,7 +184,50 @@
         <button type="button" class="close close-clear" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <h6></h6>
+        <form>
+          <br>
+          <div class="form-group">
+            <label for="date-val-update">Which day was your migraine?</label>
+            <input class="response" type="date" id="date-val" value="" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="intensity-val">How intense was your migraine (1: no intensity, 10: extreme intensity)?</label>
+            <select class="form-control response" id="intensity-val-update">
+              <option value=""></option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="ctn-update">What preventative drug therapy were you using?</label>
+            <input type="text" id="ctn-update">
+          </div>
+          <div class="form-group">
+            <label for="ctd-update">What was the preventative drug therapy dosage?</label>
+            <input type="text" id="ctd-update">
+          </div>
+          <div class="form-group">
+            <label for="atn-update">What was the acute drug therapy you were using?</label>
+            <input type="text" id="atn-update">
+          </div>
+          <div class="form-group">
+            <label for="atd-update">What was the acute drug therapy dosage?</label>
+            <input type="text" id="atd-update">
+          </div>
+          <div class="form-group">
+            <label for="trigger-val-update">Do you know the trigger?</label>
+            <input class="response" type="text" id="trigger-val-update">
+          </div>
+          <br>
+        </form>
       </div>
       <div class="modal-footer">
         <button id="submit-update" type="button" class="btn btn-secondary close-clear" data-dismiss="modal">Submit</button>

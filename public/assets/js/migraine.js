@@ -29,6 +29,7 @@ $(document.body).ready(function() {
   // Get the user id from the url
   // In localhost:8080/user/id
   var userId = url.split("user/")[1];
+  var upMigraine = {};
   // calendar stuff
   $(".calendar").pignoseCalendar();
   $(".history").hide();
@@ -144,11 +145,8 @@ $(document.body).ready(function() {
     };
 
     // POST new migraine and assoicated data
-    // $.post("/api/migraines/" + userId, function() {
-    //   window.location.href = "/user";
-    // });
     $.ajax("/api/migraines/" + userId, {
-      type: "POST",
+      method: "POST",
       data: migraine
     }).then(function(resultMigraine) {
       $("#migraine-success").modal("toggle");
@@ -170,7 +168,6 @@ $(document.body).ready(function() {
     });
   });
 
-  var upMigraine = {};
   // if UPDATE button is clicked 
   $(".update-migraine").on("click", function() {
     event.preventDefault();
@@ -206,33 +203,35 @@ $(document.body).ready(function() {
         }
         console.log(upMigraine);
         updating = true;
+        $("#date-val-update").attr("value", upMigraine.date);
+        $("#date-val-update").attr("placeholder", upMigraine.date);
+        $("#intensity-val-update").attr("value", upMigraine.intensity);
+        $("#ctn-update").attr("value", upMigraine.ctn);
+        $("#ctn-update").attr("placeholder", upMigraine.ctn);
+        $("#ctd-update").attr("value", upMigraine.ctd);
+        $("#ctd-update").attr("placeholder", upMigraine.ctd);
+        $("#atn-update").attr("value", upMigraine.atn);
+        $("#atn-update").attr("placeholder", upMigraine.atn);
+        $("#atd-update").attr("value", upMigraine.atd);
+        $("#atd-update").attr("placeholder", upMigraine.atd);
+        $("#trigger-val-update").attr("value", upMigraine.trigger);
+        $("#trigger-val-update").attr("placeholder", upMigraine.trigger);
         $("#migraine-update").modal("toggle");
       }
     });
   });
-    // var thisMigraine = $(this)
-    //   .parent()
-    //   .parent()
-    //   .data("migraine");
-    // console.log(thisMigraine);
-    // console.log($(this).parent().parent());
-    // window.location.href = "/cms?post_id=" + thisMigraine.id;
-    // var migraineId = $(this)[0].name;
-    // var upMigraine = {
-    //   id: migraineId,
-    //   intensity: $(this).find("#intensity").val().trim(),
-    //   trigger: $(this).find("#trigger").val().trim(),
-    //   ctn: $(this).find("#ctn").val().trim(),
-    //   ctd: $(this).find("#ctd").val().trim(),
-    //   atn: $(this).find("#atn").val().trim(),
-    //   atd: $(this).find("#atd").val().trim()
-    // }
-    // updating = true;
-    // TODO, change update button to don't update
-    // function to update previous migraines
-  $("#submit-update").on("click", function() {
 
+  // function to update previous migraines
+  $("#submit-update").on("click", function() {
     if (updating === true) {
+      upMigraine.date = $("#date-val-update").val().trim();
+      upMigraine.intensity = $("#intensity-val-update").val().trim();
+      upMigraine.ctn = $("#ctn-update").val().trim();
+      upMigraine.ctd = $("#ctd-update").val().trim();
+      upMigraine.atn = $("#atn-update").val().trim();
+      upMigraine.atd = $("#atd-update").val().trim();
+      upMigraine.trigger = $("#trigger-val-update").val().trim();
+
       $.ajax({
         method: "PUT",
         url: "/api/migraines/" + userId,
@@ -242,17 +241,14 @@ $(document.body).ready(function() {
         updating = false;
       });
     }  
-    
   });
 
   // if DELETE button is clicked 
   $(".delete-migraine").on("click", function() {
     var migraineId = $(this)[0].name;
-    var migraineRowInfo = {};//$("#migraine-row-id").val().trim(); will add object here
     $.ajax({
       method: "DELETE",
       url: "/api/migraines/" + migraineId,
-      data: migraineRowInfo
     }).done(function() {
       console.log("It has been deleted");
     });

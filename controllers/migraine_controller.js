@@ -139,9 +139,8 @@ router.post("/api/migraines/:id", function(req, res) {
 
 // PUT route to update previous migraines
 router.put("/api/migraines/:id", function(req, res) {
-  db.Migraine.update({
-    date: "1/1/2011" //temp, req.body invalid
-    }, {    
+  db.Migraine.update(req.body,
+    {    
       where: {
         id: req.params.id
       },
