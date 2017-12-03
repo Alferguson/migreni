@@ -1,6 +1,5 @@
 var express = require("express");
 var db = require("../models");
-var bodyParser = require("body-parser");
 var router = express.Router();
 
 // GET route to display all migraine data when user clicks "Display previous migraines"
