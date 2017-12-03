@@ -63,6 +63,10 @@ $(document.body).ready(function() {
   	var size = data.length;
   	$("#startDate").val(moment(data[0].date).format("YYYY-MM-DD"));
   	$("#endDate").val(moment(data[size-1].date).format("YYYY-MM-DD"));
+    setChartData(data, size);
+  });
+
+  function setChartData(data, size = data.length) {
     var dates = [];
     var intensities = [];
     for (var i = 0; i < size; i++) {
@@ -79,9 +83,13 @@ $(document.body).ready(function() {
       }],
     }
     var myLineChart = new Chart(ctx, graphdata);
-  });
-
-  function setChartData(data, size) {
   	
   }
+
+  $("#range").on("click", function(event) {
+    event.preventDefault();
+     $.get("/api/intensity", function(data) {
+      setChartData(data);
+    }
+  });
 });
