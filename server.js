@@ -9,6 +9,7 @@ var migraineRoutes = require("./controllers/migraine_controller");
 var userRoutes = require("./controllers/user_controller");
 // var weatherRoutes = require("./controllers/weather_controller");
 var htmlRoutes = require("./controllers/html_controller");
+var chartRoutes = require("./controllers/chart_controller");
 var db = require("./models");
 //Authentication 
 var validator = require('express-validator');
@@ -26,15 +27,15 @@ var PORT = process.env.PORT || 8080;
 // Requiring our models for syncing
 var db = require("./models");
 
+// Static directory
+app.use(express.static("public"));
+
 // Sets up the Express app to handle data parsing
+app.use(cookieParser());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(validator());
-app.use(cookieParser());
-
-// Static directory
-app.use(express.static("public"));
 
 //Authentication setup
 app.use(session({
@@ -79,6 +80,17 @@ passport.use(new LocalStrategy(
   }));
 
 
+passport.serializeUser((user_id, done) => {
+  console.log("serializeUser " + user_id);
+  done(null, user_id);
+});
+
+passport.deserializeUser((user_id, done) => {
+  console.log("deserializeUser " + JSON.stringify(user_id, null, 2));
+  done(null, user_id)
+});
+
+
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
@@ -88,6 +100,7 @@ app.use("/", migraineRoutes);
 app.use("/", userRoutes);
 // app.use("/", weatherRoutes);
 app.use("/", htmlRoutes);
+app.use("/", chartRoutes);
 
 
 // Syncing our sequelize models and then starting our Express app
