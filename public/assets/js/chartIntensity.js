@@ -81,7 +81,7 @@ $(document.body).ready(function() {
     var myLineChart = new Chart(ctx, graphdata);
   });
 
-  function setChartData(data) {
+  function setChartData(data, size) {
   	
   }
 });
