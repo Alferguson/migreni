@@ -80,6 +80,7 @@ $(document.body).ready(function() {
       url: "/api/migraines/" + migraineId,
     }).done(function() {
       console.log("It has been deleted");
+      location.reload();
     });
   });
 });
