@@ -14,28 +14,21 @@ router.get("/api/migraine/:id", authCheck(), function(req, res) {
   })
 })
 
-// // GET route to get data on treatment name and dose for chronic if null
-// router.get("/api/migraines/:id", authCheck(), function(req, res) {
-//   db.Migraine.findOne({
-//     // display all migraines for id
-//     where: {
-//       id: req.params.id
-//     },
-//     include: [
-//       {
-//         model: db.Treatment,
-//         where: {
-//           acute: false
-//         }
-//       }
-//     ],
-//     order: [
-//       ["createdAt", "DESC"]
-//     ]
-//   }).then(function(dbMigraine) {
-//     res.json(dbMigraine);
-//   });
-// });
+// // GET route to get all migrains for a specific user
+router.get("/api/migraines", authCheck(), function(req, res) {
+  db.Migraine.findAll({
+    // display all migraines for id
+    where: {
+      UserId: req.user.id
+    },
+    include: [db.Treatment, db.Weather],
+    order: [
+      ["date", "DESC"]
+    ]
+  }).then(function(dbMigraine) {
+    res.json(dbMigraine);
+  });
+});
 
 
 // POST route to create new migraines when user clicks submit

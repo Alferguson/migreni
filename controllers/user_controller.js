@@ -136,11 +136,11 @@ router.get("/logout", function(req, res) {
 
 router.get("/user/update", authCheck(), function(req, res) {
   res.render("updateUser", {title: "update", loggedIn: req.isAuthenticated()})
-})
+});
 
 router.put("/user/updateUser", authCheck(), function(req, res) {
 
-})
+});
 // to delete user account 
 router.delete("/api/user", function(req, res) {
   db.User.destroy({

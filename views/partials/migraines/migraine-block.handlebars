@@ -3,11 +3,11 @@
   <td data="date">{{date}}</td>
   <td data="intensity">{{intensity}}</td>
   <td data="trigger">{{trigger}}</td>
-  <td data="chronic_treatment">{{treatment_name}}, {{treatment_dose}} {{treatment_unit}}</td>
-  <td data="acute_treatment">{{acute_name}}, {{acute_dose}} {{acute_unit}}</td>
-  <td data="temperature">{{temperature}}&deg; F</td>
-  <td data="precipitation">{{precipitation}}</td>
-  <td data="humidity">{{humidity}}</td>
+  <td data="chronic_treatment">{{Treatments.0.treatment_name}}, {{Treatments.0.dose}} {{Treatments.0.dose_unit}}</td>
+  <td data="acute_treatment">{{Treatments.1.treatment_name}}, {{Treatments.1.dose}} {{Treatments.1.dose_unit}}</td>
+  <td data="temperature">{{Weather.temp}}&deg; F</td>
+  <td data="precipitation">{{Weather.precip}}</td>
+  <td data="humidity">{{Weather.humidity}}</td>
   <td><button type="button" class="btn btn-dark btn-sm update-migraine" name="{{id}}">Update</button></td>
   <td><button type="button" class="btn btn-dark btn-sm delete-migraine" name="{{id}}">Delete</button></td>
 </tr>
