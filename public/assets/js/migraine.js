@@ -35,11 +35,11 @@ $(document.body).ready(function() {
   $(".survey").hide();
   $(".option-buttons").show();
 
-  // show and hide functions when buttons are clicked
-  $("#show-history").on("click", function() {
-    $(".option-buttons").hide();
-    $(".history").show();
-  });
+  // // show and hide functions when buttons are clicked
+  // $("#show-history").on("click", function() {
+  //   $(".option-buttons").hide();
+  //   $(".history").show();
+  // });
 
   $("#show-survey").on("click", function() {
     $(".option-buttons").hide();
@@ -154,6 +154,7 @@ $(document.body).ready(function() {
       $(".survey").hide();
       $(".option-buttons").show();
       console.log("Migraine data has been logged");
+      // window.location.href = "/user/" + userId;
     });
   // END OF SUBMIT
   });  
@@ -161,20 +162,23 @@ $(document.body).ready(function() {
   // show all migraine and assoicated data
   $("#show-history").on("click", function() {
     event.preventDefault();
-    $.get("/api/migraines/" + userId, function(result) {
+    $.get("/showHistory/" + userId, function(result) {
+      console.log(result);
     });
   });
 
-  var upMigraine = {};
+
   // if UPDATE button is clicked 
   $(".update-migraine").on("click", function() {
     event.preventDefault();
+    var upMigraine = {};
     var migraineId = $(this)[0].name;
+    console.log(migraineId)
     $.get("/api/migraines/" + userId, function(data) {
       if (data) {
         var defaultTreatment = {
           treatment_name: "N/A",
-          dose: "N/A",
+          dose: "0",
           dose_unit: ""
         };
 
@@ -201,28 +205,9 @@ $(document.body).ready(function() {
       }
     });
   });
-    // var thisMigraine = $(this)
-    //   .parent()
-    //   .parent()
-    //   .data("migraine");
-    // console.log(thisMigraine);
-    // console.log($(this).parent().parent());
-    // window.location.href = "/cms?post_id=" + thisMigraine.id;
-    // var migraineId = $(this)[0].name;
-    // var upMigraine = {
-    //   id: migraineId,
-    //   intensity: $(this).find("#intensity").val().trim(),
-    //   trigger: $(this).find("#trigger").val().trim(),
-    //   ctn: $(this).find("#ctn").val().trim(),
-    //   ctd: $(this).find("#ctd").val().trim(),
-    //   atn: $(this).find("#atn").val().trim(),
-    //   atd: $(this).find("#atd").val().trim()
-    // }
-    // updating = true;
-    // TODO, change update button to don't update
-    // function to update previous migraines
-  $("#submit-update").on("click", function() {
 
+  $("#submit-update").on("click", function() {
+    console.log(userId);
     if (updating === true) {
       $.ajax({
         method: "PUT",
@@ -231,9 +216,12 @@ $(document.body).ready(function() {
       }).done(function() {
         // set updating to false
         updating = false;
+        location.reload();
       });
     }  
   });
+
+
 
   // if DELETE button is clicked 
   $(".delete-migraine").on("click", function() {
@@ -246,6 +234,8 @@ $(document.body).ready(function() {
       data: migraineRowInfo
     }).done(function() {
       console.log("It has been deleted");
+      event.preventDefault();
+      location.reload();
     });
   });
   // END OF DOC READ HERE

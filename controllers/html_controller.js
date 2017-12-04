@@ -12,4 +12,9 @@ router.get("/user/:id", function(req, res) {
   res.render("survey");
 });
 
+// GET route to display the survey page
+router.get("/user/history/:id", function(req, res) {
+  res.render("history");
+});
+
 module.exports = router;

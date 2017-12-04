@@ -30,7 +30,7 @@ router.get("/user/:id", function(req, res) {
 
       var defaultTreatment = {
         treatment_name: "N/A",
-        dose: "N/A",
+        dose: "0",
         dose_unit: ""
       };
 
@@ -62,12 +62,12 @@ router.get("/user/:id", function(req, res) {
       hbsObject.migraines.push(oneMigraine);
     }
 
-    res.render("survey", hbsObject);
+    res.render("history", hbsObject);
   });
 });
 
 // GET route to get data on treatment name and dose for chronic if null
-router.get("/api/migraines/:id", function(req, res) {
+router.get("/history/:id", function(req, res) {
   db.Migraine.findOne({
     // display all migraines for id
     where: {
@@ -88,7 +88,6 @@ router.get("/api/migraines/:id", function(req, res) {
     res.json(dbMigraine);
   });
 });
-
 
 // POST route to create new migraines when user clicks submit
 router.post("/api/migraines/:id", function(req, res) {
@@ -138,9 +137,8 @@ router.post("/api/migraines/:id", function(req, res) {
 
 // PUT route to update previous migraines
 router.put("/api/migraines/:id", function(req, res) {
-  db.Migraine.update({
-    date: "1/1/2011" //temp, req.body invalid
-    }, {    
+  db.Migraine.update(req.body,
+    {    
       where: {
         id: req.params.id
       },
@@ -159,10 +157,18 @@ router.delete("/api/migraines/:id", function(req, res) {
   db.Migraine.destroy({
     where: {
       id: req.params.id
-    }
+    },
+    include: [
+        {
+          model: db.Treatment
+        }
+    ]
   }).then(function(dbMigraine) {
     res.json(dbMigraine);
   })
 });
 
+router.get("/showHistory/:id", function(req, res) {
+  res.redirect("/user/history/" + req.params.id);
+});
 module.exports = router;
