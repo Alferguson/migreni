@@ -23,6 +23,11 @@ h1, p {
   color: #f0f0eb;
 }
 
+.overlay {
+  background-color: rgba(98, 159, 246, 0.7);
+  min-height: 100vh;
+}
+
 .temperature {
   color: #222529;
 }

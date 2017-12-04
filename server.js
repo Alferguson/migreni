@@ -3,6 +3,8 @@ var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var methodOverride = require('method-override');
 var exphbs = require("express-handlebars");
+var Handlebars     = require('handlebars');
+var MomentHandler = require('handlebars.moment');
 // var doseRoutes = require("./controllers/dose_controller");
 var migraineRoutes = require("./controllers/migraine_controller");
 // var treatmentRoutes = require("./controllers/treatment_controller");
@@ -93,6 +95,7 @@ passport.deserializeUser((user_id, done) => {
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+MomentHandler.registerHelpers(Handlebars);
 
 // app.use("/", doseRoutes);
 app.use("/", migraineRoutes);
