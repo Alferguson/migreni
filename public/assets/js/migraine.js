@@ -148,6 +148,7 @@ $(document.body).ready(function() {
       $(".survey").hide();
       $(".option-buttons").show();
       console.log("Migraine data has been logged");
+      location.reload();
       //TODO: reload page after migraine logged so shows in history
     });
   // END OF SUBMIT
