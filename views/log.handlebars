@@ -1,6 +1,6 @@
 {{> header}}
-<div class="container-fluid">
-  <div class="modal fade" id="migraine-update" tabindex="-1" role="dialog">
+  <div class="container-fluid">
+    <div class="modal fade" id="migraine-update" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -12,7 +12,9 @@
             <br>
             <div class="form-group">
               <label for="date-val-update">Which day was your migraine?</label>
-              <input class="response" type="date" id="date-val" value="" placeholder="">
+              <div class="input-group">
+                <input class="form-control" type="date" id="date-val-update" value="" placeholder="">
+              </div>
             </div>
             <div class="form-group">
               <label for="intensity-val">How intense was your migraine (1: no intensity, 10: extreme intensity)?</label>
@@ -30,25 +32,36 @@
                 <option value="10">10</option>
               </select>
             </div>
+
             <div class="form-group">
               <label for="ctn-update">What preventative drug therapy were you using?</label>
-              <input type="text" id="ctn-update">
+              <div class="input-group">
+                <input class="form-control" type="text" id="ctn-update">
+              </div>
             </div>
             <div class="form-group">
               <label for="ctd-update">What was the preventative drug therapy dosage?</label>
-              <input type="text" id="ctd-update">
+              <div class="input-group">
+                <input class="form-control" type="text" id="ctd-update">
+              </div>
             </div>
             <div class="form-group">
               <label for="atn-update">What was the acute drug therapy you were using?</label>
-              <input type="text" id="atn-update">
+              <div class="input-group">
+                <input class="form-control" type="text" id="atn-update">
+              </div>
             </div>
             <div class="form-group">
               <label for="atd-update">What was the acute drug therapy dosage?</label>
-              <input type="text" id="atd-update">
+              <div class="input-group">
+                <input class="form-control" type="text" id="atd-update">
+              </div>
             </div>
             <div class="form-group">
               <label for="trigger-val-update">Do you know the trigger?</label>
-              <input class="response" type="text" id="trigger-val-update">
+              <div class="input-group">
+                <input class="form-control" type="text" id="trigger-val-update">
+              </div>
             </div>
             <br>
           </form>

@@ -52,7 +52,7 @@ $(document.body).ready(function() {
   // function to update previous migraines
   $("#submit-update").on("click", function() {
     if (updating === true) {
-      upMigraine.date = $("#date-val").val().trim();
+      upMigraine.date = $("#date-val-update").val().trim();
       upMigraine.intensity = $("#intensity-val-update").val().trim();
       upMigraine.ctn = $("#ctn-update").val().trim();
       upMigraine.ctd = $("#ctd-update").val().trim();

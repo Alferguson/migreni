@@ -31,16 +31,16 @@ $(document.body).ready(function() {
   var userId = url.split("user/")[1];
   // calendar stuff
   $(".calendar").pignoseCalendar();
-  $(".history").attr('hidden', false);
-  $(".history").hide();
+  // $(".history").attr('hidden', false);
+  // $(".history").hide();
   $(".survey").attr('hidden', false);
   $(".survey").hide();
   $(".option-buttons").show();
 
-  $("#show-history").on("click", function() {
-    $(".option-buttons").hide();
-    $(".history").show();
-  });
+  // $("#show-history").on("click", function() {
+  //   $(".option-buttons").hide();
+  //   $(".history").show();
+  // });
 
   $("#show-survey").on("click", function() {
     $(".option-buttons").hide();
@@ -52,7 +52,7 @@ $(document.body).ready(function() {
 
   $(".cancel").on("click", function(event) {
     clearSurveyForm();
-    $(".history").hide();
+    // $(".history").hide();
     $(".survey").hide();
     $(".option-buttons").show();
   });
@@ -142,13 +142,13 @@ $(document.body).ready(function() {
       method: "POST",
       data: migraine
     }).then(function(resultMigraine) {
-      $("#migraine-success").modal("toggle");
       clearSurveyForm();
       $(".history").hide();
       $(".survey").hide();
       $(".option-buttons").show();
       console.log("Migraine data has been logged");
       location.reload();
+      $("#migraine-success").modal("toggle");
       //TODO: reload page after migraine logged so shows in history
     });
   // END OF SUBMIT
