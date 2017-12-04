@@ -19,8 +19,8 @@ router.get("/api/intensity", authCheck(), function(req, res) {
   }
   db.Migraine.findAll({
     where: query,
-    attributes: ["date", "intensity"],
-    order: ["date"]
+    order: ["date"],
+    include: [db.Weather, db.Treatment]
   }).then(function(data) {
     res.json(data);
   })

@@ -22,7 +22,7 @@ $(document.body).ready(function() {
         intersect: true
       },
       legend: {
-        display: false,
+        display: true,
         labels: {
           fontSize: 20
         },
@@ -70,9 +70,11 @@ $(document.body).ready(function() {
     var size = data.length
     var dates = [];
     var intensities = [];
+    var treatNum = [];
     for (var i = 0; i < size; i++) {
       dates.push(moment.parseZone(data[i].date).format("MM-DD-YYYY"));
       intensities.push(data[i].intensity);
+      treatNum.push(data[i].Treatments.length)
     }
     console.log(dates);
     console.log(intensities);
@@ -81,6 +83,12 @@ $(document.body).ready(function() {
       datasets: [{
         data: intensities,
         label: 'Intensity'
+      },
+      {
+        data: treatNum,
+        label: 'Number of Treatments',
+        borderColor: 'rgba(255,0,0,0.5)',
+        backgroundColor: 'rgba(255,0,0,0.4)'
       }],
     }
     var myLineChart = new Chart(ctx, graphdata);
