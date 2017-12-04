@@ -11,7 +11,8 @@ $(document.body).ready(function() {
       title: {
         display: true,
         text: username + ' Intensity Over Time',
-        fontSize: 24
+        fontSize: 24,
+        fontColor: "#383837"
       },
       tooltips: {
         mode: 'index',
@@ -24,10 +25,12 @@ $(document.body).ready(function() {
       legend: {
         display: true,
         labels: {
-          fontSize: 20
+          fontSize: 20,
+          fontColor: "#383837"
         },
         scales: {
-          fontSize: 20
+          fontSize: 20,
+          fontColor: "#383837"
         }
       },
       scales: {
@@ -37,9 +40,11 @@ $(document.body).ready(function() {
             display: true,
             labelString: 'Date',
             fontSize: 20,
+            fontColor: "#383837"
           },
           ticks: {
-            fontSize: 16
+            fontSize: 16,
+            fontColor: "#383837"
           }
         }],
         yAxes: [{
@@ -47,12 +52,14 @@ $(document.body).ready(function() {
           ticks: {
             min: 0,
             max: 10,
-            fontSize: 16
+            fontSize: 16,
+            fontColor: "#383837"
           },
           scaleLabel: {
             display: true,
             labelString: 'Intensity',
             fontSize: 20,
+            fontColor: "#383837"
           }
         }]
       }
