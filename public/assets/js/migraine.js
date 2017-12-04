@@ -31,16 +31,9 @@ $(document.body).ready(function() {
   var userId = url.split("user/")[1];
   // calendar stuff
   $(".calendar").pignoseCalendar();
-  // $(".history").attr('hidden', false);
-  // $(".history").hide();
   $(".survey").attr('hidden', false);
   $(".survey").hide();
   $(".option-buttons").show();
-
-  // $("#show-history").on("click", function() {
-  //   $(".option-buttons").hide();
-  //   $(".history").show();
-  // });
 
   $("#show-survey").on("click", function() {
     $(".option-buttons").hide();
@@ -52,7 +45,6 @@ $(document.body).ready(function() {
 
   $(".cancel").on("click", function(event) {
     clearSurveyForm();
-    // $(".history").hide();
     $(".survey").hide();
     $(".option-buttons").show();
   });
