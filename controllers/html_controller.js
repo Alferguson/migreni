@@ -26,7 +26,7 @@ router.get("/user", authCheck(), function(req, res) {
 });
 
 // Log of user's migraines
-router.get("/log", function(req, res) {
+router.get("/log", authCheck(), function(req, res) {
   db.Migraine.findAll({
     where: {
       UserId: req.user.id
