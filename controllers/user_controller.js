@@ -117,7 +117,7 @@ router.get("/login", function(req, res) {
 
 router.get("/loginSuccess", function(req, res) {
   req.session.save(function() {
-    res.redirect("/user/" + req.user.id);
+    res.redirect("/user");
   });
 });
 
@@ -142,10 +142,10 @@ router.put("/user/updateUser", authCheck(), function(req, res) {
 
 })
 // to delete user account 
-router.delete("/api/user/:id", function(req, res) {
+router.delete("/api/user", function(req, res) {
   db.User.destroy({
     where: {
-      id: req.params.id
+      id: req.user.id
     }
   }).then(function(dbUser) {
     res.json(dbUser);
