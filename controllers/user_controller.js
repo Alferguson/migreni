@@ -124,7 +124,7 @@ router.get("/loginSuccess", function(req, res) {
 router.post("/login",
   passport.authenticate('local', {
     successRedirect: '/loginSuccess',
-    failureRedirect: '/login'
+    failureRedirect: '/'
   }));
 
 router.get("/logout", function(req, res) {

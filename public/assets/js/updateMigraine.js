@@ -1,3 +1,4 @@
+
 $(document.body).ready(function() {
 	 // if UPDATE button is clicked 
   var upMigraine = {};
