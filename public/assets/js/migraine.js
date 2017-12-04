@@ -72,34 +72,29 @@ $(document.body).ready(function() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var key = "75c2d4ad99db9a0ce09e0a27d9dca4fd";
-      var queryURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&APPID=" + key;
+      var queryURL = "https://api.openweathermap.org/data/2.5/weather?&lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&APPID=" + key;
+      console.log(queryURL);
       $.ajax({
         url: queryURL,
         method: "GET" 
       }).done(function(response) {
-        // console.log(response);
+        console.log(response);
         $("#weather-temp").html(toFahrenheit(response.main.temp).toFixed(2) + "&deg; (F)");
         $("#weather-city").html(response.name);
         var rain = 0;
         if (response.rain) rain = response.rain;
-        currentWeather = {
-          temp: toFahrenheit(response.main.temp),
-          temp_min: toFahrenheit(response.main.temp_min),
-          temp_max: toFahrenheit(response.main.temp_max),
-          humidity: response.main.humidity,
-          pressure: response.main.pressure,
-          sea_level: 0,
-          grnd_level: 0,
-          precip: response.main.precip
-        };
+        // conditional if rain is blank
+        currentWeather = response.main;
+        if (response.rain) {
+          currentWeather.precip = response.rain["3h"];
+        } else {
+
+          currentWeather.precip = 0;
+        }
       });
     });
   }
 
-  // conditional if precip is blank
-  if (currentWeather.precip === "") {
-    currentWeather.precip = 0;
-  }
 
 
   // on submit btn click

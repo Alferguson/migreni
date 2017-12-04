@@ -68,9 +68,11 @@ $(document.body).ready(function() {
 
   $.get("/api/intensity", function(data) {
     var size = data.length;
-    $("#startDate").val(moment.parseZone(data[0].date).format("YYYY-MM-DD"));
-    $("#endDate").val(moment.parseZone(data[size - 1].date).format("YYYY-MM-DD"));
-    setChartData(data);
+    if(data.length > 0) {
+      $("#startDate").val(moment.parseZone(data[0].date).format("YYYY-MM-DD"));
+      $("#endDate").val(moment.parseZone(data[size - 1].date).format("YYYY-MM-DD"));
+      setChartData(data);
+    }
   });
 
   function setChartData(data) {
@@ -113,7 +115,8 @@ $(document.body).ready(function() {
       type:"get",
       data: data
     }).then(function(data) {
-      setChartData(data);
+      if(data.length > 0)
+        setChartData(data);
     });
   });
 });

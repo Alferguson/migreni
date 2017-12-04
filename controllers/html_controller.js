@@ -3,6 +3,10 @@ var db = require("../models");
 var router = express.Router();
 var authCheck = require("../authCheck.js")
 
+function toFahrenheit(kelvin) {
+    return ((9 / 5) * (kelvin - 273)  + 32);
+}
+
 // default route for index
 router.get("/", function(req, res) {
   res.render("index", {loggedIn: req.isAuthenticated() });
@@ -21,6 +25,7 @@ router.get("/user", authCheck(), function(req, res) {
       [["date", "DESC"]]
     ]
   }).then(function(dbMigraine) {
+    data[0].dataValues.Weather.dataValues.temp = toFahrenheit(data[0].dataValues.Weather.dataValues.temp).toFixed(2);
     res.render("survey", {title: "home", user: req.user, migraines: dbMigraine});
   });
 });
@@ -35,7 +40,8 @@ router.get("/log", authCheck(), function(req, res) {
     order: [["updatedAt", "DESC"]]
   }
   ).then(function(data) {
-
+  	console.log(data[0].dataValues.Weather.dataValues.temp);
+  	data[0].dataValues.Weather.dataValues.temp = toFahrenheit(data[0].dataValues.Weather.dataValues.temp).toFixed(2);
     res.render("log", {
       title: "Migraine Journal",
       user: req.user,

@@ -1,8 +1,6 @@
-
+{{#unless loggedIn}}
 <nav class="navbar navbar-dark bg-dark">
-  <div class="col-md-7"></div>
-  <div align="right" class="col-md-5">
-    {{#unless loggedIn}}
+  <div class="ml-auto">
     <form class="form-inline" id="login" method="post" action="/login">
       <div class="input-group">
         <!-- <span class="input-group-addon" id="basic-addon1">Log in</span> -->
@@ -11,12 +9,12 @@
         <button type="submit" class="btn btn-primary" id="login-button">Log in</button>
       </div>
     </form>
-    {{/unless}}
-    {{#if loggedIn}}
-      <a href="/logout"><button class="btn btn-primary">Logout</button></a>
-    {{/if}}
   </div>
 </nav>
+{{/unless}}
+{{#if loggedIn}}
+  {{> header}}
+{{/if}}
 <div class="fluid-container" id="welcome">
   <div class="col-md-12">
     <h1 id="main">Welcome To Mígreni</h1>
