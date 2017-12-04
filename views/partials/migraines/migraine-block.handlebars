@@ -1,6 +1,6 @@
 <tr>
   <th scope="row">{{row_num}}</th>
-  <td data="date">{{formatDate date}}</td>
+  <td data="date">{{moment date add="days" amount="1" format="MM/DD/YYYY"}}</td>
   <td data="intensity">{{intensity}}</td>
   <td data="trigger">{{trigger}}</td>
   <td data="chronic_treatment">{{Treatments.0.treatment_name}}, {{Treatments.0.dose}} {{Treatments.0.dose_unit}}</td>
