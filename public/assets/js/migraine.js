@@ -139,11 +139,13 @@ $(document.body).ready(function() {
       $(".survey").hide();
       $(".option-buttons").show();
       console.log("Migraine data has been logged");
-      location.reload();
       $("#migraine-success").modal("toggle");
-      //TODO: reload page after migraine logged so shows in history
     });
   // END OF SUBMIT
-  });  
+  });
+
+  $(".migraine-success-close").on("click", function(event) {
+    location.reload(); //moved here so modal shows success before refresh
+  });
   // END OF DOC READ HERE
 });
