@@ -80,8 +80,6 @@ router.post("/api/migraines", authCheck(), function(req, res) {
 
 // PUT route to update previous migraines
 router.put("/api/migraines/:id", authCheck(), function(req, res) {
-  console.log(req.body);
-  if (req.body.date === "") req.body.date = moment().format('YYYY-MM-DD');
   db.Migraine.update(req.body,
     {    
       where: {

@@ -7,7 +7,7 @@ $(document.body).ready(function() {
   	event.preventDefault();
     var migraineId = $(this)[0].name;
     console.log(migraineId);
-    $.get("/api/migraine/"+migraineId, function(data) {
+    $.get("/api/migraine/" + migraineId, function(data) {
     	console.log(data);
       if (data) {
 
@@ -36,8 +36,9 @@ $(document.body).ready(function() {
           atn: data.Treatments[1].treatment_name,
           atd: data.Treatments[1].dose
         }
+        console.log(upMigraine);
         updating = true;
-        $("#date-val").attr("value", moment(upMigraine.date).format("YYYY-MM-DD"));
+        $("#date-val-update").attr("value", moment(upMigraine.date).format("YYYY-MM-DD"));
         $("#intensity-val-update option[value='"+ upMigraine.intensity + "']").prop('selected', true);
         $("#ctn-update").attr("value", upMigraine.ctn);
         $("#ctd-update").attr("value", upMigraine.ctd);
