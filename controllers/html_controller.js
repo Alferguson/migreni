@@ -24,9 +24,8 @@ router.get("/user", authCheck(), function(req, res) {
     order: [
       [["date", "DESC"]]
     ]
-  }).then(function(dbMigraine) {
-    data[0].dataValues.Weather.dataValues.temp = toFahrenheit(data[0].dataValues.Weather.dataValues.temp).toFixed(2);
-    res.render("survey", {title: "home", user: req.user, migraines: dbMigraine});
+  }).then(function(data) {
+    res.render("survey", {title: "home", user: req.user, migraines: data});
   });
 });
 
