@@ -6,7 +6,7 @@ A Migraine Diary App
 
 
 
-## Live version
+[Live site](https://glacial-fortress-86427.herokuapp.com/)
 
 ![Log Migraine](public/assets/img/Log-migraine.gif "Log Migraine")
 ![View Chart](public/assets/img/login-chart.gif "View Chart")
