@@ -39,8 +39,12 @@ router.get("/log", authCheck(), function(req, res) {
     order: [["updatedAt", "DESC"]]
   }
   ).then(function(data) {
-  	console.log(data[0].dataValues.Weather.dataValues.temp);
-  	data[0].dataValues.Weather.dataValues.temp = toFahrenheit(data[0].dataValues.Weather.dataValues.temp).toFixed(2);
+    var size = data.length;
+    for (var i = 0; i < size; i++) { 
+      console.log(data[i]);
+      console.log(data[i].dataValues);
+    	data[i].dataValues.Weather.dataValues.temp = toFahrenheit(data[i].dataValues.Weather.dataValues.temp).toFixed(2);
+    }
     res.render("log", {
       title: "Migraine Journal",
       user: req.user,
