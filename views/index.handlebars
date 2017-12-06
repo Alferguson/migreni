@@ -1,0 +1,103 @@
+{{#unless loggedIn}}
+<nav class="navbar navbar-dark bg-dark">
+  <div class="ml-auto">
+    <form class="form-inline" id="login" method="post" action="/login">
+      <div class="input-group">
+        <!-- <span class="input-group-addon" id="basic-addon1">Log in</span> -->
+        <input type="text" class="form-control" name="username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
+        <input type="password" class="form-control" name="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required>
+        <button type="submit" class="btn btn-primary" id="login-button">Log in</button>
+      </div>
+    </form>
+  </div>
+</nav>
+{{/unless}}
+{{#if loggedIn}}
+  {{> header}}
+{{/if}}
+<div class="fluid-container" id="welcome">
+  <div class="col-md-12">
+    <h1 id="main">Welcome To Mígreni</h1>
+    <p>Mígreni is an app to help people log migraines</p>
+  </div>
+</div>
+  <div class="container-fluid">
+
+    
+    <div class="col-md-6">
+      <h1>Sign Up</h1>
+      <!--  <p>It's Free</p> -->
+      {{#if errors}}
+      {{#each errors}}
+        <div class="alert alert-danger" role="alert">
+          {{this.msg}}
+        </div>
+      {{/each}}
+    {{/if}}
+
+      <form class="container" method="post" action="/register" id="signup" novalidate>
+        <div class="form-row">
+          <div class="col-md-6">
+            <label class="lable">Username</label>
+            <br>
+            <input id="username" type="text" name="username" class="form-control" placeholder="UserName" required>
+            <small id="usernameNull" class="error form-text text-danger" > Please enter a username</small>
+          </div>
+          <div class="col-md-6">
+            <label class="lable">Email</label>
+            <br>
+            <input id="email" type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <small id="wrongEmail" class="error form-text text-danger" > Please enter correct Email address</small>
+          </div>        
+        </div>
+        <br>
+        <div class="form-row">
+          <div class="col-md-6">
+            <label class="lable">Password</label>
+            <br>
+            <input id="password" type="password" name="password" class="form-control" placeholder="Password" required>
+            <small id="noPassword" class="error form-text text-danger" > Please enter a Password</small>
+            <small id="shortPassword" class="error form-text text-danger" > Password must be at least 8 characters</small>
+          </div>
+          <div class="col-md-6">
+            <label class="lable">Confirm Password</label>
+            <br>
+            <input id="confirmpass" type="password" name="passwordMatch" class="form-control" placeholder="Re-enter Password" required>
+            <small id="passwordMismatch" class="error form-text text-danger" >Passwords must match</small>
+          </div>
+        </div>
+        <br>
+        <div class="form-row">
+          <div class="col-md-3">
+            <label class="lable">Age</label>
+            <br>
+            <input id="age" type="number" name="age" class="form-control" placeholder="Age" required>
+            <small id="wrongAge" class="error form-text text-danger" > Age must be between 1 - 100</small>
+          </div>
+          <div class="col-md-3">
+            <label class="lable">Gender</label>
+            <br>
+            <select class="form-control response" name="gender" id="intensity-val" required>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+            <div class="col-md-6">
+            <label class="lable">Location</label>
+            <br>
+            <input id="location" type="text" name="location" class="form-control" placeholder="Location" required>
+            <small id="noLocation" class="error form-text text-danger" > Please enter a Location</small>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col"><br>
+            <button type="submit" class="btn btn-primary" id="submit-login">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/js/user.js"></script>

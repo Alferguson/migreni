@@ -1,0 +1,117 @@
+{{> header}}
+  <div class="container-fluid">
+    <div class="modal fade" id="migraine-update" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="title"><strong>Update Migraine</strong></h2>
+          <button type="button" class="close close-clear" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <br>
+            <div class="form-group">
+              <label for="date-val-update">Which day was your migraine?</label>
+              <div class="input-group">
+                <input class="form-control" type="date" id="date-val-update" value="" placeholder="">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="intensity-val">How intense was your migraine (1: no intensity, 10: extreme intensity)?</label>
+              <select class="form-control response" id="intensity-val-update">
+                <option value=""></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="ctn-update">What preventative drug therapy were you using?</label>
+              <div class="input-group">
+                <input class="form-control" type="text" id="ctn-update">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="ctd-update">What was the preventative drug therapy dosage?</label>
+              <div class="input-group">
+                <input class="form-control" type="text" id="ctd-update">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="atn-update">What was the acute drug therapy you were using?</label>
+              <div class="input-group">
+                <input class="form-control" type="text" id="atn-update">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="atd-update">What was the acute drug therapy dosage?</label>
+              <div class="input-group">
+                <input class="form-control" type="text" id="atd-update">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="trigger-val-update">Do you know the trigger?</label>
+              <div class="input-group">
+                <input class="form-control" type="text" id="trigger-val-update">
+              </div>
+            </div>
+            <br>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="submit-update" type="button" class="btn btn-secondary close-clear" data-dismiss="modal">Submit</button>
+          <button type="button" class="btn btn-secondary close-clear" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-striped table-responsive table-sm">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">Intensity</th>
+            <th scope="col">Trigger</th>
+            <th scope="col">Chronic Treatment</th>
+            <th scope="col">Acute Treatment</th>
+            <th scope="col">Temperature</th>
+            <th scope="col">Precipitation</th>
+            <th scope="col">Humidity</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each migraines}} {{> migraines/migraine-block}} {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="delete-success" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="title"><strong>Confirm</strong></h2>
+        <button type="button" class="delete-success-close close close-clear" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h6>Your migraine was deleted successfully.</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-clear delete-success-close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/js/updateMigraine.js"></script>

@@ -1,0 +1,149 @@
+{{> header}}
+<div class="container-fluid">
+  <div class="row">
+    <!-- sidebar -->
+    <div class="col-lg-9 content-main">
+      <br><br>
+      <div class="option-buttons">
+        <button type="button" class="btn btn-dark btn-lg" id="show-survey">Log new migraine</button>
+      </div>
+      <!-- survey -->
+      <div class="survey" hidden>
+        <h2>Migraine questions</h2>
+        <form>
+          <br>
+          <div class="form-group">
+            <label for="q1">Was your migraine today?</label>
+            <select class="form-control response" id="q1">
+              <option value=""></option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+          <div class="date-visibility">
+            <div class="form-group">
+              <label for="date-val">Which day was your migraine?</label>
+              <div class="input-group">
+                <input class="form-control response" type="date" id="date-val">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="intensity-val">How intense was your migraine (1: no intensity, 10: extreme intensity)?</label>
+            <select class="form-control response" id="intensity-val">
+              <option value=""></option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="q4">Has your preventative drug therapy changed since the last time you entered a migraine?</label>
+            <select class="form-control response" id="q4">
+              <option value=""></option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+          <div class="meds-1-visibility">
+            <div class="form-group">
+              <label for="chronic-treatment">What is your current drug therapy for preventing migraines?</label>
+              <div class="input-group">
+                <input class="form-control response" type="text" id="chronic-treatment">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="chronic-dosage">What is the dosage for that medication?</label>
+              <div class="input-group">
+                <input class="form-control response" type="text" id="chronic-dosage">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="q7">Have you taken any additional medications or drugs today to help relieve your migraine?</label>
+            <select class="form-control response" id="q7">
+              <option value=""></option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+          <div class="meds-2-visibility">
+            <div class="form-group">
+              <label for="acute-treatment">Which medication?</label>
+              <div class="input-group">
+                <input class="form-control response" type="text" id="acute-treatment">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="acute-dosage">What is the dosage for that medication?</label>
+              <div class="input-group">
+                <input class="form-control response" type="text" id="acute-dosage">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="trigger-val">If you know the trigger for your migraine, please enter it here.</label>
+            <div class="input-group">
+              <input class="form-control response" type="text" id="trigger-val">
+            </div>
+          </div>
+          <br>
+          <!-- Submit Button -->
+          <button type="button" class="btn btn-dark btn-lg" id="submit-survey">Submit</button>
+          <button type="button" class="btn btn-dark btn-lg cancel">Cancel</button>
+        </form>
+      </div> {{!-- end survey --}}
+    </div> {{!-- end content main --}}
+    <div class="col-lg-3 sidebar">
+      <br>
+      <!-- weather -->
+      <div class="weather card bg-light">
+        <div class="card-header">Current Weather</div>
+        <div class="card-body">
+          <h4 class="card-title" id="weather-city">Loading...</h4>
+          <p class="card-text temperature" id="weather-temp"></p>
+        </div>
+      </div>
+      <br>
+      <!-- calendar -->
+      <div class="calendar"></div>
+      <br>
+    </div>
+  </div>
+  {{!-- <footer class="row">
+    <h1>Timeline</h1>
+  </footer> --}}
+</div>
+
+<div class="modal fade" id="migraine-success" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="title"><strong>Success!</strong></h2>
+        <button type="button" class="migraine-success-close close close-clear" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h6>Your migraine was successfully logged.</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-clear migraine-success-close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script src="/assets/js/pignose.calendar.js"></script>
+<script src="/assets/js/migraine.js"></script>
+<script src="/assets/js/updateMigraine.js"></script>
+{{!-- TODO MAKE THINGS UNIQUER --}}

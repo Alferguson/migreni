@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+		<link rel="stylesheet" href="style.css" type="text/css" />
+		<title>Mígreni</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+			<script src="/assets/js/migraine.js"></script>
+			<script src="https://code.jquery.com/jquery.js"></script>
+	</head>
+	<body>
+	<nav class="navbar navbar-dark bg-dark">
+	  <form class="form-inline" id="login">
+	    <div class="input-group">
+	      <!-- <span class="input-group-addon" id="basic-addon1">Log in</span> -->
+	      <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+	      <input type="text" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
+	      <button type="button" class="btn btn-primary" id="login-button">Log in</button>
+	    </div>
+	  </form>
+	</nav>
+
+		<div class="container-fluid">
+			<div class="col-md-6 sidebar">
+				<h1>Sign UP</h1>
+				<p>It's Free</p>
+
+				<form id="signup">
+				  <div class="form-row">
+				    <div class="col">
+				       <label for="username">Username</label>
+				      <input type="text" class="form-control" placeholder="UserName">
+				    </div>
+				    <div class="col">
+				       <label for="pasword">Password</label>
+				      <input type="text" class="form-control" placeholder="Password">
+				    </div>		    
+				  </div>
+				  <div class="form-row">
+				    <div class="col">
+				      <label for="email">Email</label>
+				      <input type="text" class="form-control" placeholder="Abc@yahoo.com">
+				    </div>
+				    <div class="col">
+				      <label for="age">Age</label>
+				      <input type="text" class="form-control" placeholder="Age">
+				    </div>
+				    
+				  </div>
+				  <div class="form-row">
+				    <div class="col">
+				      <label for="email">Confirm Password</label>
+				      <input type="text" class="form-control" placeholder="Re-enter Password">
+				    </div>
+				    <div class="col">
+				      <label for="Gander">Gander</label>
+				      <select class="form-control response" id="intensity-val">
+		                               
+		                                <option value="1">Male</option>
+		                                <option value="2">Female</option>
+		               </select>
+				    </div>
+				    
+				   		<button type="button" class="btn btn-primary" id="submit">Submit</button>
+			 		
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

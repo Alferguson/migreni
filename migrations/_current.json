@@ -1,0 +1,276 @@
+{
+    "tables": {
+        "Migraines": {
+            "tableName": "Migraines",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "intensity": {
+                    "allowNull": false,
+                    "validate": {
+                        "min": {
+                            "args": 1,
+                            "msg": "The intensity must be at least 1"
+                        },
+                        "max": {
+                            "args": 10,
+                            "msg": "The Intensity must be at most 10"
+                        }
+                    },
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "location": {
+                    "seqType": "Sequelize.STRING"
+                },
+                "date": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.NOW"
+                    },
+                    "seqType": "Sequelize.DATE"
+                },
+                "trigger": {
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "seqType": "Sequelize.DATE"
+                },
+                "UserId": {
+                    "allowNull": false,
+                    "references": {
+                        "model": "Users",
+                        "key": "id"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "MigraineTreatments": {
+            "tableName": "MigraineTreatments",
+            "schema": {
+                "MigraineId": {
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Migraines",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "TreatmentId": {
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Treatments",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "Treatments": {
+            "tableName": "Treatments",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "treatment_name": {
+                    "allowNull": false,
+                    "validate": {
+                        "len": {
+                            "args": [
+                                1,
+                                255
+                            ],
+                            "msg": "Treatment name must be between 1 and 255 characters"
+                        }
+                    },
+                    "seqType": "Sequelize.STRING"
+                },
+                "acute": {
+                    "allowNull": false,
+                    "seqType": "Sequelize.BOOLEAN"
+                },
+                "dose": {
+                    "allowNull": true,
+                    "validate": {
+                        "len": {
+                            "args": [
+                                1
+                            ],
+                            "msg": "Dose value cannot be empty."
+                        }
+                    },
+                    "seqType": "Sequelize.DECIMAL"
+                },
+                "dose_unit": {
+                    "allowNull": true,
+                    "validate": {
+                        "len": {
+                            "args": [
+                                1
+                            ],
+                            "msg": "Dose unit cannot be empty."
+                        }
+                    },
+                    "seqType": "Sequelize.STRING(20)"
+                }
+            },
+            "indexes": []
+        },
+        "Users": {
+            "tableName": "Users",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "username": {
+                    "allowNull": false,
+                    "unique": true,
+                    "validate": {
+                        "len": {
+                            "args": [
+                                3,
+                                40
+                            ],
+                            "msg": "The user name must have between 3 and 40 characters"
+                        }
+                    },
+                    "seqType": "Sequelize.STRING(40)"
+                },
+                "password": {
+                    "seqType": "Sequelize.STRING"
+                },
+                "email": {
+                    "validate": {
+                        "isEmail": {
+                            "args": true,
+                            "msg": "The email must be in a valid format"
+                        }
+                    },
+                    "seqType": "Sequelize.STRING"
+                },
+                "gender": {
+                    "seqType": "Sequelize.STRING(20)"
+                },
+                "age": {
+                    "seqType": "Sequelize.INTEGER(4)"
+                },
+                "location": {
+                    "seqType": "Sequelize.STRING(40)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "UserTreatments": {
+            "tableName": "UserTreatments",
+            "schema": {
+                "TreatmentId": {
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Treatments",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "UserId": {
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Users",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "Weather": {
+            "tableName": "Weather",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "temp": {
+                    "seqType": "Sequelize.DECIMAL"
+                },
+                "temp_min": {
+                    "seqType": "Sequelize.DECIMAL"
+                },
+                "temp_max": {
+                    "seqType": "Sequelize.DECIMAL"
+                },
+                "humidity": {
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "pressure": {
+                    "seqType": "Sequelize.DECIMAL"
+                },
+                "sea_level": {
+                    "seqType": "Sequelize.DECIMAL"
+                },
+                "grnd_level": {
+                    "seqType": "Sequelize.DECIMAL"
+                },
+                "precip": {
+                    "seqType": "Sequelize.DECIMAL"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "seqType": "Sequelize.DATE"
+                },
+                "MigraineId": {
+                    "allowNull": false,
+                    "references": {
+                        "model": "Migraines",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        }
+    },
+    "revision": 3
+}
